@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cnb_unselectedColor="#468C73">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home"
+        app:cnb_iconColor="@color/white" />
+
+    <item
+        android:id="@+id/news"
+        android:icon="@drawable/ic_news"
+        android:title="@string/news"
+        app:cnb_iconColor="@color/white" />
+
+    <item
+        android:id="@+id/emergency"
+        android:icon="@drawable/ic_emergency"
+        android:title="@string/emergency"
+        app:cnb_iconColor="@color/white"/>
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_user"
+        android:title="@string/profile"
+        app:cnb_iconColor="@color/white"/>
+
+
+
+
+
+</menu>

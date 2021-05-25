@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+ <!-- Custom 1 -->
+    <color name="primary">#93BF34</color>
+    <color name="font1">#434542</color>
+    <color name="background">#FDFFFA</color>
+    <color name="background_2">#F2FDDA</color>
+    <color name="yellowpop">#F2CB05</color>
+    <color name="dark_shadow">#CDD5EA</color>
+    <color name="light_shadow">#F8F9FE</color>
+    <color name="dark_icon">#212121</color>
+    <!-- Custom 2 -->
+    <color name="dark_shadow_2">#E6C207</color>
 </resources>

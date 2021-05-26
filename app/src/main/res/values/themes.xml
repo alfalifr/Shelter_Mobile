@@ -32,4 +32,9 @@
         <item name="neumorph_cornerFamily">rounded</item>
         <item name="neumorph_cornerSize">10dp</item>
     </style>
+
+    <style name="NeumorphsimCard_2">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">20dp</item>
+    </style>
 </resources>

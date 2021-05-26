@@ -1,132 +1,377 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     tools:context=".HomeFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/selamat_datang"
-        android:textColor="@color/font1"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
-    <TextView
-        android:id="@+id/tv_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="80dp"
-        android:textColor="@color/font1"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="User" />
-
-    <soup.neumorphism.NeumorphCardView
-        android:id="@+id/card_location"
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user"
-        app:neumorph_backgroundColor="@color/background"
-        app:neumorph_shadowColorDark="@color/dark_shadow"
-        app:neumorph_shadowColorLight="@color/light_shadow"
-        app:neumorph_shadowElevation="2dp"
-        app:neumorph_lightSource="rightBottom"
-        app:neumorph_shapeAppearance="@style/NeumorphsimCard"
-        app:neumorph_shapeType="basin">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/selamat_datang"
+            android:textColor="@color/font1"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/iv_location"
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="80dp"
+            android:textColor="@color/font1"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="User" />
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/card_location"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user"
+            app:neumorph_backgroundColor="@color/background"
+            app:neumorph_lightSource="rightBottom"
+            app:neumorph_shadowColorDark="@color/dark_shadow"
+            app:neumorph_shadowColorLight="@color/light_shadow"
+            app:neumorph_shadowElevation="2dp"
+            app:neumorph_shapeAppearance="@style/NeumorphsimCard"
+            app:neumorph_shapeType="basin">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                app:drawableStartCompat="@drawable/ic_placeholder"
-                android:drawablePadding="10dp"
-                tools:text="Sidikalang, Sumatera Utara " />
-        </LinearLayout>
-    </soup.neumorphism.NeumorphCardView>
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="15dp">
 
-    <soup.neumorphism.NeumorphCardView
-        android:id="@+id/card_notifications"
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_location"
-        app:neumorph_backgroundColor="@color/yellowpop"
-        app:neumorph_shadowColorDark="@color/dark_shadow_2"
-        app:neumorph_shadowColorLight="@color/light_shadow"
-        app:neumorph_shadowElevation="1dp"
-        app:neumorph_shapeAppearance="@style/NeumorphsimCard"
-        app:neumorph_shapeType="flat">
+                <TextView
+                    android:id="@+id/iv_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:textSize="15sp"
+                    app:drawableStartCompat="@drawable/ic_placeholder"
+                    tools:text="Sidikalang, Sumatera Utara " />
+            </LinearLayout>
+        </soup.neumorphism.NeumorphCardView>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/card_notifications"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:padding="15dp">
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_location"
+            app:neumorph_backgroundColor="@color/yellowpop"
+            app:neumorph_shadowColorDark="@color/dark_shadow_2"
+            app:neumorph_shadowColorLight="@color/light_shadow"
+            app:neumorph_shadowElevation="1dp"
+            app:neumorph_shapeAppearance="@style/NeumorphsimCard"
+            app:neumorph_shapeType="flat">
 
-            <ImageView
-                android:id="@+id/iv_notification"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                tools:src="@drawable/ic_flood1" />
+                android:orientation="vertical"
+                android:padding="15dp">
 
-            <TextView
-                android:id="@+id/tv_title_notif"
+                <ImageView
+                    android:id="@+id/iv_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    tools:src="@drawable/ic_flood1" />
+
+                <TextView
+                    android:id="@+id/tv_title_notif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/font1"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="Tetap Tenang dan Waspada" />
+
+                <TextView
+                    android:id="@+id/tv_note_notif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/note_notif" />
+
+                <TextView
+                    android:id="@+id/tv_notif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="15dp"
+                    tools:text="Zona Kuning Banjir" />
+
+            </LinearLayout>
+        </soup.neumorphism.NeumorphCardView>
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/card_temperature"
+            android:layout_width="330dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_notifications"
+            app:neumorph_backgroundColor="@color/background_3"
+            app:neumorph_shadowColorDark="@color/dark_shadow"
+            app:neumorph_shadowColorLight="@color/light_shadow"
+            app:neumorph_shadowElevation="2dp"
+            app:neumorph_shapeAppearance="@style/NeumorphsimCard_2"
+            app:neumorph_shapeType="flat">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:textStyle="bold"
-                android:textColor="@color/font1"
-                android:textSize="15sp"
-                tools:text="Tetap Tenang dan Waspada" />
+                android:orientation="vertical"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tv_note_notif"
-                android:layout_gravity="center_horizontal"
+                <TextView
+                    android:id="@+id/tv_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:paddingTop="15dp"
+                    android:textColor="@color/font1"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Senin" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    tools:text="15 Februari 2021" />
+
+            </LinearLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/note_notif"
-                android:layout_marginTop="15dp"/>
-            <TextView
-                android:id="@+id/tv_notif"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Zona Kuning Banjir"
-                android:padding="15dp"/>
+                android:layout_height="wrap_content">
 
-        </LinearLayout>
-    </soup.neumorphism.NeumorphCardView>
+                <TextView
+                    android:id="@+id/tv_temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:paddingTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:textColor="@color/font1"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:text="32" />
 
+                <TextView
+                    android:id="@+id/tv_temperature_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:paddingTop="30dp"
+                    android:paddingEnd="20dp"
+                    android:textStyle="bold"
+                    tools:text="o" />
 
+                <ImageView
+                    android:id="@+id/iv_weather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="70dp"
+                    android:src="@drawable/ic_weather_lightrain" />
 
+            </RelativeLayout>
+        </soup.neumorphism.NeumorphCardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_detail_temperature"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            app:cardBackgroundColor="@color/background_4"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_temperature" />
 
+        <TextView
+            android:id="@+id/tv_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:paddingStart="40dp"
+            android:paddingTop="10dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_detail_temperature"
+            app:layout_constraintTop_toBottomOf="@+id/card_temperature"
+            tools:text="Humadity" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_windspeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_humidity"
+            app:layout_constraintTop_toBottomOf="@+id/card_temperature"
+            tools:text="Windspeed" />
+
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_windspeed"
+            app:layout_constraintTop_toBottomOf="@+id/card_temperature"
+            tools:text="UV" />
+
+        <TextView
+            android:id="@+id/tv_rainfall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:paddingStart="25dp"
+            android:paddingTop="10dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_duration"
+            app:layout_constraintTop_toBottomOf="@+id/card_temperature"
+            tools:text="Rainfall" />
+
+        <ImageView
+            android:id="@+id/iv_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:paddingStart="50dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/ic_humidity"
+            app:layout_constraintStart_toStartOf="@id/card_detail_temperature"
+            app:layout_constraintTop_toBottomOf="@+id/tv_humidity" />
+
+        <ImageView
+            android:id="@+id/iv_windspeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:paddingStart="45dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/ic_wind"
+            app:layout_constraintStart_toEndOf="@id/iv_humidity"
+            app:layout_constraintTop_toBottomOf="@+id/tv_windspeed" />
+
+        <ImageView
+            android:id="@+id/iv_sun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:paddingStart="35dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/ic_sun"
+            app:layout_constraintStart_toEndOf="@id/iv_windspeed"
+            app:layout_constraintTop_toBottomOf="@+id/tv_duration" />
+
+        <ImageView
+            android:id="@+id/iv_rainfall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:paddingStart="30dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/ic_rainfall"
+            app:layout_constraintStart_toEndOf="@id/iv_sun"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rainfall" />
+
+        <TextView
+            android:id="@+id/tv_humadity_src"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="90%"
+            android:elevation="8dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@id/card_detail_temperature"
+            app:layout_constraintTop_toBottomOf="@+id/iv_humidity"/>
+
+        <TextView
+            android:id="@+id/tv_windspeed_src"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="10 km/jam"
+            android:elevation="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@id/tv_humadity_src"
+            app:layout_constraintTop_toBottomOf="@+id/iv_windspeed"/>
+
+        <TextView
+            android:id="@+id/tv_duration_src"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2"
+            android:elevation="8dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@id/tv_windspeed_src"
+            app:layout_constraintTop_toBottomOf="@+id/iv_sun"/>
+
+        <TextView
+            android:id="@+id/tv_rainfall_src"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="12%"
+            android:elevation="8dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@id/tv_duration_src"
+            app:layout_constraintTop_toBottomOf="@+id/iv_rainfall"/>
+
+        <TextView
+            android:id="@+id/tv_siaga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/siaga_bencana"
+            android:textColor="@color/font1"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_detail_temperature" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

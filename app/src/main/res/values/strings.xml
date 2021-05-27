@@ -10,6 +10,7 @@
     <string name="note_notif">Anda berada di wilayah</string>
     <string name="siaga_bencana">Siaga Bencana</string>
     <string name="siaga_lapor">Siaga Lapor</string>
-    <string name="info_lapor">Hubungi kami jika anda  membutuhkan bantuan  terkait status bencana  lokasi anda.</string>
+    <string name="info_lapor">Hubungi kami melalui panggilan jika anda  membutuhkan bantuan  terkait status bencana  lokasi anda.</string>
     <string name="hubungi_dengan_teks">Hubungi dengan Teks</string>
+    <string name="atau">atau</string>
 </resources>

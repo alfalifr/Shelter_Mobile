@@ -10,7 +10,8 @@
  <!-- Custom 1 -->
     <color name="primary">#93BF34</color>
     <color name="font1">#434542</color>
-    <color name="background">#FDFFFA</color>
+    <color name="background">#FCFFF7</color>
+    <color name="background_main">#F7FCEF</color>
     <color name="background_2">#F2FDDA</color>
     <color name="background_3">#E0E9FF</color>
     <color name="background_4">#EDF1F8</color>

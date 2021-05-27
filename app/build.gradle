@@ -57,4 +57,10 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-analytics'
+
+    //neumorphism
+    implementation 'com.github.fornewid:neumorphism:0.3.0'
+
+    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+    implementation 'com.google.firebase:firebase-analytics'
 }

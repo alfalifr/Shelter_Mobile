@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soup.neumorphism.NeumorphCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/card_location"
+    android:layout_width="330dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_title"
+    app:neumorph_backgroundColor="@color/background"
+    app:neumorph_lightSource="rightBottom"
+    app:neumorph_shadowColorDark="@color/dark_shadow"
+    app:neumorph_shadowColorLight="@color/light_shadow"
+    app:neumorph_shadowElevation="2dp"
+    app:neumorph_shapeAppearance="@style/NeumorphsimCard"
+    app:neumorph_shapeType="basin">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/iv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:textSize="15sp"
+            app:drawableStartCompat="@drawable/ic_placeholder"
+            tools:text="Sidikalang, Sumatera Utara " />
+    </LinearLayout>
+</soup.neumorphism.NeumorphCardView>

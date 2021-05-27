@@ -1,4 +1,4 @@
-package sidev.app.bangkit.capstone.sheltermobile
+package sidev.app.bangkit.capstone.sheltermobile.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

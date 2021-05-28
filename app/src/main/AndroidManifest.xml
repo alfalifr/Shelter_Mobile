@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Shelter_Mobile">
-        <activity android:name=".MainActivity"
+        <activity android:name=".ui.RegisterActivity"></activity>
+        <activity android:name=".ui.LoginActivity" />
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

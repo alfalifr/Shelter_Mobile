@@ -1,12 +1,18 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import java.sql.Timestamp
+
+@Parcelize
 data class WarningStatus(
     val disaster: Disaster,
     val emergency: Emergency,
     val title: String,
-    val date: String,
+    val timestamp: Timestamp,
     val location: Location,
-)
+    val imgLink: String,
+): Parcelable
 
 
 /*

@@ -1,4 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+def props = new Properties()
+file("setting.properties").withInputStream { props.load(it) }
+
+def githubUser= props.githubUser
+def githubApiKey= props.githubKey
+def githubRepo= props.githubRepo
+
+
 buildscript {
     ext.kotlin_version = "1.4.32"
     repositories {
@@ -20,9 +29,22 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/$githubUser/$githubRepo")
+            credentials {
+                username = githubUser
+                password = githubApiKey
+            }
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    anko_version='0.10.8'
 }

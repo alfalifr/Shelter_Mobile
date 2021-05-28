@@ -15,27 +15,5 @@
         <item name="fontFamily">@font/nunitosans</item>
     </style>
 
-    <!-- Custome Styles -->
-    <style name="fullscreen" parent="Theme.Shelter_Mobile">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
 
-    <style name="NeumorphismImage">
-        <item name="neumorph_cornerFamily">rounded</item>
-        <item name="neumorph_cornerSize">4dp</item>
-    </style>
-    
-    <style name="NeumorphsimCard">
-        <item name="neumorph_cornerFamily">rounded</item>
-        <item name="neumorph_cornerSize">10dp</item>
-    </style>
-
-    <style name="NeumorphsimCard_2">
-        <item name="neumorph_cornerFamily">rounded</item>
-        <item name="neumorph_cornerSize">20dp</item>
-    </style>
-    </style>
 </resources>

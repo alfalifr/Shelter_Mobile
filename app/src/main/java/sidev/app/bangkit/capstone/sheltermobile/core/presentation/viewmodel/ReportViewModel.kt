@@ -1,4 +1,4 @@
-package sidev.app.bangkit.capstone.sheltermobile.core.presentation
+package sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.LiveData

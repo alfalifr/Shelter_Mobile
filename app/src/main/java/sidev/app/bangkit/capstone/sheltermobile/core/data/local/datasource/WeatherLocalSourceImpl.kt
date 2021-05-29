@@ -11,13 +11,13 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
 class WeatherLocalSourceImpl(private val dao: WeatherDao, private val ctx: Context): WeatherLocalSource {
-    override suspend fun getWeatherForecast(timestamp: String): Result<WeatherForecast> {
-        val data = dao.getWeatherForecast(timestamp)?.toModel() ?: return Util.noEntityFailResult()
+    override suspend fun getWeatherForecast(timestamp: String, locationId: Int): Result<WeatherForecast> {
+        val data = dao.getWeatherForecast(timestamp, locationId)?.toModel() ?: return Util.noEntityFailResult()
         return Success(data, 0)
     }
 
-    override suspend fun getWeatherForecastBatch(startTimestamp: String): Result<List<WeatherForecast>> {
-        val list = dao.getWeatherForecastBatch(startTimestamp).map { it.toModel() }
+    override suspend fun getWeatherForecastBatch(startTimestamp: String, locationId: Int): Result<List<WeatherForecast>> {
+        val list = dao.getWeatherForecastBatch(startTimestamp, locationId).map { it.toModel() }
         return Success(list, 0)
     }
 

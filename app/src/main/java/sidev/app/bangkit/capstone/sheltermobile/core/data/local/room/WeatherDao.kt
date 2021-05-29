@@ -8,11 +8,11 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.WeatherEntity
 
 @Dao
 interface WeatherDao {
-    @Query("SELECT * FROM weather WHERE timestamp = :timestamp")
-    fun getWeatherForecast(timestamp: String): WeatherEntity?
+    @Query("SELECT * FROM weather WHERE timestamp = :timestamp AND locationId = :locationId")
+    fun getWeatherForecast(timestamp: String, locationId: Int): WeatherEntity?
 
-    @Query("SELECT * FROM weather WHERE timestamp >= :startTimestamp")
-    fun getWeatherForecastBatch(startTimestamp: String): List<WeatherEntity>
+    @Query("SELECT * FROM weather WHERE locationId = :locationId AND timestamp >= :startTimestamp")
+    fun getWeatherForecastBatch(startTimestamp: String, locationId: Int): List<WeatherEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveWeatherForecastList(list: List<WeatherEntity>): Int

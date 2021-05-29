@@ -79,4 +79,13 @@ object DataMapper {
         is Success -> Success(data.first(), 0)
         is Fail -> this
     }
+
+    fun Result<List<WarningDetail>>.toWarningStatusListResult(): Result<List<WarningStatus>> = when(this){
+        is Success -> Success(data.map { it.status }, 0)
+        is Fail -> this
+    }
+    fun Result<List<ReportDetail>>.toReportListResult(): Result<List<Report>> = when(this){
+        is Success -> Success(data.map { it.report }, 0)
+        is Fail -> this
+    }
 }

@@ -9,7 +9,6 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.ReportUseCase
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.UserUseCase
 import sidev.lib.`val`.SuppressLiteral
 
 class ReportViewModel(app: Application?, private val useCase: ReportUseCase): AsyncVm(app) {

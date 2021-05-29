@@ -6,4 +6,5 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.UserRepo
 
 interface UserLocalSource: UserRepo {
     suspend fun getCurrentUser(): Result<User>
+    suspend fun saveEmail(email: String): Result<Boolean>
 }

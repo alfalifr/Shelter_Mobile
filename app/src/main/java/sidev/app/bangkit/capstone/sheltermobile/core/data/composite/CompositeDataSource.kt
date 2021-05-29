@@ -7,7 +7,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 abstract class CompositeDataSource<T> {
     abstract suspend fun getLocalDataList(args: Map<String, Any?>): Result<List<T>>
     abstract suspend fun getRemoteDataList(args: Map<String, Any?>): Result<List<T>>
-    abstract fun shouldFetch(localDataList: List<T>, args: Map<String, Any?>): Boolean
+    open fun shouldFetch(localDataList: List<T>, args: Map<String, Any?>): Boolean = localDataList.isEmpty()
     abstract suspend fun saveDataList(remoteDataList: List<T>): Result<Int>
 
     suspend fun getDataList(args: Map<String, Any?>): Result<List<T>> {

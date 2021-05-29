@@ -1,7 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource
 
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.room.ReportDao
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.News
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.ReportDetail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
@@ -12,8 +11,15 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModelDeta
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
 class ReportLocalSourceImpl(private val dao: ReportDao): ReportLocalSource {
-    override suspend fun getReportList(): Result<List<Report>> {
-        val list = dao.getReportList().map { it.toModel() }
+    override suspend fun getReportList(top: Int): Result<List<Report>> {
+        val entityList = if(top <= 0) dao.getAllReportList() else dao.getTopReportList(top)
+        val list = entityList.map { it.toModel() }
+        return Success(list, 0)
+    }
+
+    override suspend fun getReportDetailList(top: Int): Result<List<ReportDetail>> {
+        val entityList = if(top <= 0) dao.getAllReportList() else dao.getTopReportList(top)
+        val list = entityList.map { it.toModelDetail() }
         return Success(list, 0)
     }
 
@@ -22,9 +28,15 @@ class ReportLocalSourceImpl(private val dao: ReportDao): ReportLocalSource {
         return Success(data, 0)
     }
 
-    override suspend fun saveReport(data: Report): Result<Int> {
-        val entity = ReportDetail(data, "").toEntity()
+    override suspend fun saveReportDetail(data: ReportDetail): Result<Int> {
+        val entity = data.toEntity() //ReportDetail(data, "").toEntity()
         val insertedCount = dao.saveReport(entity)
         return Util.getInsertResult(insertedCount, 1)
+    }
+
+    override suspend fun saveReportDetailList(list: List<ReportDetail>): Result<Int> {
+        val entityList = list.map { it.toEntity() } //ReportDetail(data, "").toEntity()
+        val insertedCount = dao.saveReportList(entityList)
+        return Util.getInsertResult(insertedCount, entityList.size)
     }
 }

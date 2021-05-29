@@ -53,4 +53,8 @@ class AuthViewModel(app: Application?, private val useCase: UserUseCase): AsyncV
             }
         }
     }
+
+    fun saveUser(user: User) {
+        //TODO Alif
+    }
 }

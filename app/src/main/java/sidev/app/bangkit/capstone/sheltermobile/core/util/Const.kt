@@ -15,6 +15,8 @@ object Const {
     const val SHARED_PREF_NAME = "_shared_pref_"
 
 
+    const val GENDER_MALE = 'M'
+    const val GENDER_FEMALE = 'F'
 
     /*
     =====================

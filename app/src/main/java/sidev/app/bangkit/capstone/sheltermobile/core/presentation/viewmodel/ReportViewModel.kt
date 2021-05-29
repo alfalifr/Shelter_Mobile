@@ -1,8 +1,7 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -10,8 +9,26 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.ReportUseCase
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.UserUseCase
+import sidev.lib.`val`.SuppressLiteral
 
 class ReportViewModel(app: Application?, private val useCase: ReportUseCase): AsyncVm(app) {
+    companion object {
+        fun getInstance(
+            owner: ViewModelStoreOwner,
+            app: Application?,
+            useCase: ReportUseCase,
+        ): ReportViewModel = ViewModelProvider(
+            owner,
+            object: ViewModelProvider.Factory {
+                @Suppress(SuppressLiteral.UNCHECKED_CAST)
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T = ReportViewModel(
+                    app, useCase
+                ) as T
+            }
+        ).get(ReportViewModel::class.java)
+    }
+
     val reportHistory: LiveData<List<Report>> get()= mReportHistory
     private val mReportHistory = MutableLiveData<List<Report>>()
 

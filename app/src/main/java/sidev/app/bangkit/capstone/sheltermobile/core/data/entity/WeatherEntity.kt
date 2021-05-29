@@ -7,7 +7,7 @@ import java.sql.Timestamp
 data class WeatherEntity(
     val timestamp: Timestamp,
     val locationId: Int,
-    val temperature: String,
+    val temperature: Double,
     val humidity: Float,
     val rainfall: Float,
     val windSpeed: Float,

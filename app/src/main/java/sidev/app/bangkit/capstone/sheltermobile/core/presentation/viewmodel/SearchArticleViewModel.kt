@@ -1,8 +1,7 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -10,9 +9,27 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.News
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.NewsUseCase
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.ReportUseCase
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import sidev.lib.`val`.SuppressLiteral
 
 class SearchArticleViewModel(app: Application?, private val useCase: NewsUseCase): AsyncVm(app) {
+    companion object {
+        fun getInstance(
+            owner: ViewModelStoreOwner,
+            app: Application?,
+            useCase: NewsUseCase,
+        ): SearchArticleViewModel = ViewModelProvider(
+            owner,
+            object: ViewModelProvider.Factory {
+                @Suppress(SuppressLiteral.UNCHECKED_CAST)
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T = SearchArticleViewModel(
+                    app, useCase
+                ) as T
+            }
+        ).get(SearchArticleViewModel::class.java)
+    }
+
     val searchResult: LiveData<List<News>> get()= mSearchResult
     private val mSearchResult = MutableLiveData<List<News>>()
 

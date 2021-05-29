@@ -32,6 +32,7 @@
 
             <TextView
                 android:id="@+id/tv_title"
+                android:fontFamily="@font/nunitosans_bold"
                 android:layout_gravity="center"
                 style="@style/viewParent.headerText.NoMode"
                 android:text="@string/already_nhave_an_naccount" />
@@ -45,7 +46,9 @@
                 <EditText
                     android:id="@+id/editTextEmail"
                     style="@style/modifiedEditText"
+                    android:fontFamily="@font/nunitosans_light"
                     android:hint="@string/email"
+                    app:endIconMode="clear_text"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -58,7 +61,9 @@
                 <EditText
                     android:id="@+id/editTextPassword"
                     style="@style/modifiedEditText"
+                    android:fontFamily="@font/nunitosans_light"
                     android:hint="@string/password"
+                    app:endIconMode="clear_text"
                     android:inputType="textPassword"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -69,6 +74,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/forgot_password"
                 android:textColor="@color/greenbow"
+                android:fontFamily="@font/nunitosans_regular"
                 android:textSize="@dimen/newsMoreTextSize" />
 
             <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
@@ -77,15 +83,17 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:text="@string/login"
+                android:fontFamily="@font/nunitosans_bold"
                 app:initialCornerAngle="27dp"
                 app:spinning_bar_color="#FFF"
                 app:spinning_bar_padding="6dp"
                 app:spinning_bar_width="4dp" />
 
             <TextView
+                android:id="@+id/on_register_word"
                 style="@style/parent"
+                android:fontFamily="@font/nunitosans_bold"
                 android:layout_marginTop="@dimen/loginViewsMargin"
-                android:onClick="onLoginClick"
                 android:text="@string/register"
                 android:textAlignment="center"
                 android:textColor="@color/greenbow"
@@ -104,13 +112,13 @@
         android:background="@drawable/ic_side_logreg" />
 
     <ImageView
+        android:id="@+id/on_register_plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="11dp"
         android:layout_marginBottom="30dp"
-        android:onClick="onLoginClick"
         android:src="@drawable/ic_add_logreg" />
 
 </RelativeLayout>

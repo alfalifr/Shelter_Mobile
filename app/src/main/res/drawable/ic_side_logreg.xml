@@ -3,7 +3,7 @@
         android:width="11dp"
         android:height="787dp"/>
     <solid
-        android:color="@color/primary"/>
+        android:color="@color/green_lite"/>
     <corners
         android:topLeftRadius="17dp"/>
 </shape>

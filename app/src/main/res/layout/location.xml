@@ -31,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
+            android:fontFamily="@font/nunitosans_light"
             android:textSize="15sp"
             app:drawableStartCompat="@drawable/ic_placeholder"
             tools:text="Sidikalang, Sumatera Utara " />

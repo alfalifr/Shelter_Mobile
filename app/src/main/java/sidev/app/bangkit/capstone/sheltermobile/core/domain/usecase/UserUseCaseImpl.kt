@@ -2,6 +2,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase
 
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.LocationLocalSource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.UserLocalSource
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.AuthData
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
@@ -14,5 +15,15 @@ class UserUseCaseImpl(
 ): UserUseCase, UserRepo by repo {
     override suspend fun getCurrentLocation(): Result<Location> = locationLocalSrc.getCurrentLocation()
     override suspend fun getCurrentUser(): Result<User> = userLocalSrc.getCurrentUser()
+    override suspend fun login(authData: AuthData): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
 
+    override suspend fun signup(data: User, authData: AuthData): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun changePassword(oldPassword: String, newPassword: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
 }

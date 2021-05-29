@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_main">
+        android:background="@drawable/gradient_2">
 
         <TextView
             android:layout_width="match_parent"
@@ -19,6 +19,7 @@
             android:layout_marginTop="40dp"
             android:text="@string/selamat_datang"
             android:textColor="@color/font1"
+            android:fontFamily="@font/nunitosans_bold"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +34,7 @@
             android:layout_marginTop="80dp"
             android:textColor="@color/font1"
             android:textSize="25sp"
+            android:fontFamily="@font/nunitosans_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -67,6 +69,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
                     android:textSize="15sp"
+                    android:fontFamily="@font/nunitosans_light"
                     app:drawableStartCompat="@drawable/ic_placeholder"
                     tools:text="Sidikalang, Sumatera Utara " />
             </LinearLayout>
@@ -130,20 +133,18 @@
             </LinearLayout>
         </soup.neumorphism.NeumorphCardView>
 
-        <soup.neumorphism.NeumorphCardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/card_temperature"
-            android:layout_width="330dp"
-            android:layout_height="120dp"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:background="@color/background_3"
+            app:cardCornerRadius="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_notifications"
-            app:neumorph_backgroundColor="@color/background_3"
-            app:neumorph_shadowColorDark="@color/dark_shadow"
-            app:neumorph_shadowColorLight="@color/light_shadow"
-            app:neumorph_shadowElevation="2dp"
-            app:neumorph_shapeAppearance="@style/NeumorphsimCard_2"
-            app:neumorph_shapeType="flat">
+            app:neumorph_shadowElevation="9dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -207,13 +208,14 @@
                     android:src="@drawable/ic_weather_lightrain" />
 
             </RelativeLayout>
-        </soup.neumorphism.NeumorphCardView>
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_detail_temperature"
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="30dp"
             app:cardBackgroundColor="@color/background_4"
             app:cardCornerRadius="15dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -227,7 +229,7 @@
             android:layout_height="wrap_content"
             android:elevation="8dp"
             android:paddingStart="40dp"
-            android:paddingTop="10dp"
+            android:layout_marginTop="40dp"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/card_detail_temperature"
@@ -239,6 +241,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="8dp"
+            android:layout_marginTop="30dp"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:textSize="12sp"
@@ -252,6 +255,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="8dp"
+            android:layout_marginTop="30dp"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:textSize="12sp"
@@ -265,6 +269,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="8dp"
+            android:layout_marginTop="30dp"
             android:paddingStart="25dp"
             android:paddingTop="10dp"
             android:textSize="12sp"

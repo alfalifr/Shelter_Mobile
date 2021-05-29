@@ -22,4 +22,9 @@
     <string name="login">Masuk</string>
     <string name="berita_terkini">Berita Terkini</string>
     <string name="artikel_terpercaya">Artikel Terpercaya</string>
+    <string name="pengaturan">Pengaturan</string>
+    <string name="siaga_lapor_pesan">Siaga Lapor Pesan</string>
+    <string name="tulis_lapor">Tuliskan Laporan Anda</string>
+    <string name="judul_laporan">Judul laporan</string>
+    <string name="gender">Gender</string>
 </resources>

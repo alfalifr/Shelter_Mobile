@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/gradient_2"
     tools:context=".ui.LaporFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
+            android:fontFamily="@font/nunitosans_bold"
             android:text="@string/siaga_lapor"
             android:textColor="@color/font1"
             android:textSize="25sp"
@@ -103,7 +104,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            app:cardBackgroundColor="@color/green_lite"
+            app:cardBackgroundColor="@color/background"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
             app:layout_constraintEnd_toEndOf="parent"

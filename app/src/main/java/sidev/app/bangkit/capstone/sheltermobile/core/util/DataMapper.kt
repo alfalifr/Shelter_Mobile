@@ -1,7 +1,10 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.util
 
 import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.*
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.DisasterGroup
 import java.lang.IllegalArgumentException
 
@@ -67,4 +70,13 @@ object DataMapper {
         rainfall = rainfall,
         windSpeed = windSpeed,
     )
+
+    fun <T> Result<T>.toListResult(): Result<List<T>> = when(this){
+        is Success -> Success(listOf(data), 0)
+        is Fail -> this
+    }
+    fun <T> Result<List<T>>.toSingleResult(): Result<T> = when(this){
+        is Success -> Success(data.first(), 0)
+        is Fail -> this
+    }
 }

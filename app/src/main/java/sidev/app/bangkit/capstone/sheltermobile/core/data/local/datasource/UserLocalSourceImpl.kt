@@ -23,6 +23,12 @@ class UserLocalSourceImpl(private val dao: UserDao, private val ctx: Context): U
         else Util.cantInsertFailResult()
     }
 
+    override suspend fun getCurrentUser(): Result<User> {
+        val email = Util.getSharedPref(ctx).getString(Const.KEY_USER_EMAIL, null)
+            ?: return Util.noValueFailResult()
+        return getUser(email)
+    }
+
     override suspend fun savePassword(password: String): Result<Boolean> {
         Util.editSharedPref(ctx, true) {
             putString(Const.KEY_PASSWORD, password)

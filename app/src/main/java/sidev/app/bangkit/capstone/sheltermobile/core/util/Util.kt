@@ -68,4 +68,5 @@ object Util {
     fun noEntityFailResult(): Fail = failResult("No entity")
     fun noValueFailResult(): Fail = failResult("No value")
     fun cantInsertFailResult(): Fail = failResult("Can't insert")
+    fun cantGetFailResult(): Fail = failResult("Can't get")
 }

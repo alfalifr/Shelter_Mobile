@@ -9,5 +9,8 @@ object Const {
 
     const val KEY_PASSWORD = "_user_password_"
     const val KEY_LOCATION_ID = "_user_location_id_"
+    const val KEY_USER_EMAIL = "_user_email_"
+    const val KEY_ID = "id"
+    const val KEY_COORDINATE = "coordinate"
     const val SHARED_PREF_NAME = "_shared_pref_"
 }

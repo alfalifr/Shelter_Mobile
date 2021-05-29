@@ -53,7 +53,7 @@ class DashboardUseCaseImpl(
 
         val warningStatusLists = mutableListOf<List<WarningStatus>>()
         for(disaster in disasterList){
-            when(val warningStatusListResult = warningUseCase.getWarningStatusBatch(disaster.id, location.coordinate, timestamp)) {
+            when(val warningStatusListResult = warningUseCase.getWarningStatusBatch(disaster.id, location.id, timestamp)) {
                 is Success -> warningStatusLists += warningStatusListResult.data
                 is Fail -> {
                     return warningStatusListResult

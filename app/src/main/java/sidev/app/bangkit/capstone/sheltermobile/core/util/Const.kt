@@ -13,4 +13,14 @@ object Const {
     const val KEY_ID = "id"
     const val KEY_COORDINATE = "coordinate"
     const val SHARED_PREF_NAME = "_shared_pref_"
+
+
+
+    /*
+    =====================
+    Mella
+    =====================
+     */
+
+
 }

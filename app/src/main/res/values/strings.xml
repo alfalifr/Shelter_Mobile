@@ -27,4 +27,5 @@
     <string name="tulis_lapor">Tuliskan Laporan Anda</string>
     <string name="judul_laporan">Judul laporan</string>
     <string name="gender">Gender</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>

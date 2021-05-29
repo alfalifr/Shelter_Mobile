@@ -44,6 +44,9 @@ object Util {
         return data as T
     }
 
+    fun validateEmail(email: String): Boolean = email.isNotBlank() //TODO Alif: 29 Mei 2021
+    fun validatePassword(pswd: String): Boolean = pswd.isNotBlank()
+
     fun editSharedPref(
         c: Context,
         commit: Boolean = false,

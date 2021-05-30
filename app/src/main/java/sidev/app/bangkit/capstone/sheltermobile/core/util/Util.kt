@@ -60,6 +60,8 @@ object Util {
         return ""
     }
 
+    fun getTimestamp(timeStr: String): Timestamp = Timestamp.valueOf(timeStr)
+
     fun Timestamp.timestampToString(pattern: String = "dd-mm-yyyy"): String = toString() //TODO 29 Mei 2021: pattern blum kepake
 
     fun getInsertResult(count: Int, totalCount: Int): Result<Int> = when(count) {
@@ -72,4 +74,7 @@ object Util {
     fun noValueFailResult(): Fail = failResult("No value")
     fun cantInsertFailResult(): Fail = failResult("Can't insert")
     fun cantGetFailResult(): Fail = failResult("Can't get")
+    fun unknownFailResult(): Fail = failResult("Unknown failure")
+    fun operationNotAvailableFailResult(): Fail = failResult("Operation is not available")
+    fun operationNotAvailableError(): Nothing = throw IllegalAccessError("Operation is not available")
 }

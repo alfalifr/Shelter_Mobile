@@ -51,6 +51,22 @@ class UserUseCaseImpl(
         is Fail -> remoteRes
     }
 
-    override suspend fun changePassword(oldPassword: String, newPassword: String): Result<Boolean> = TODO()
+    override suspend fun changePassword(oldPassword: String, newPassword: String): Result<Boolean> =
+        when(val localRes = userLocalSrc.getCurrentUser()){
+            is Success -> {
+                val email = localRes.data.email
+                when(val remoteRes = userRemoteSrc.changePassword(email, oldPassword, newPassword)){
+                    is Success -> {
+                        when(val localRes2 = userLocalSrc.savePassword(newPassword)){
+                            is Success -> Success(true, 0)
+                            is Fail -> localRes2
+                        }
+                    }
+                    is Fail -> remoteRes
+                }
+            }
+            is Fail -> localRes
+        }
+
 //= when(val remoteRes = userRemoteSrc.savePassword())
 }

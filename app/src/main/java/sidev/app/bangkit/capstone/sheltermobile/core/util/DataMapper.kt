@@ -1,12 +1,18 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.util
 
+import retrofit2.Call
 import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.*
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LoginBody
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.LoginResponse
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.NewsResponse
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.DisasterGroup
 import java.lang.IllegalArgumentException
+import java.sql.Timestamp
 
 object DataMapper {
     fun toDisasterGroupList(
@@ -71,6 +77,35 @@ object DataMapper {
         windSpeed = windSpeed,
     )
 
+
+    fun NewsResponse.toModel(type: Int): News = News(
+        timestamp = Util.getTimestamp(timestamp),
+        title = title,
+        briefDesc = desc,
+        linkImage = imgLink,
+        link = link,
+        type = type,
+    )
+
+    fun LoginResponse.toModel(): User = User(
+        email = data.email,
+        name = data.full_name,
+        gender = data.gender,
+    )
+
+    fun AuthData.toLoginBody(): LoginBody = LoginBody(
+        _email = email,
+        _password = password,
+    )
+
+    fun User.toSignupData(password: String): SignupBody = SignupBody(
+        _email = email,
+        _password = password,
+        _fname = name,
+        _gender = gender,
+    )
+
+
     fun <T> Result<T>.toListResult(): Result<List<T>> = when(this){
         is Success -> Success(listOf(data), 0)
         is Fail -> this
@@ -87,5 +122,27 @@ object DataMapper {
     fun Result<List<ReportDetail>>.toReportListResult(): Result<List<Report>> = when(this){
         is Success -> Success(data.map { it.report }, 0)
         is Fail -> this
+    }
+
+
+    suspend fun <I, O> Call<List<I>>.toListResult(mapper: (I) -> O): Result<List<O>> {
+        return try {
+            val resp = execute()
+            if (resp.isSuccessful) {
+                val bodyList = resp.body()!!
+                val modelList = mutableListOf<O>()
+                for (body in bodyList) {
+                    val model = mapper(body)
+                    modelList += model
+                }
+                Success(modelList, 0)
+            } else {
+                val code = resp.code()
+                val msg = resp.message()
+                Fail(msg, code, null)
+            }
+        } catch (e: Throwable) {
+            Fail(e.message, -1, e)
+        }
     }
 }

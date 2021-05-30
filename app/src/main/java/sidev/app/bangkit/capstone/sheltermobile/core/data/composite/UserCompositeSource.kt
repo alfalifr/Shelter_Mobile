@@ -12,7 +12,7 @@ import java.lang.IllegalArgumentException
 class UserCompositeSource(
     private val localSrc: UserLocalSource,
     private val remoteSrc: UserRemoteSource,
-): CompositeDataSource<User>(), UserRepo {
+): CompositeDataSource<User>(), UserRepo, UserLocalSource {
     override suspend fun getLocalDataList(args: Map<String, Any?>): Result<List<User>> = getDataList(localSrc, args)
 
     override suspend fun getRemoteDataList(args: Map<String, Any?>): Result<List<User>> = getDataList(remoteSrc, args)
@@ -33,25 +33,19 @@ class UserCompositeSource(
         Const.KEY_EMAIL to email,
     )).toSingleResult()
 
-    override suspend fun saveUser(data: User): Result<Boolean> = when(val remoteRes = remoteSrc.saveUser(data)){
-        is Success -> {
-            when(val localRes = localSrc.saveUser(data)){
-                is Success -> Success(true, 0)
-                else -> Success(true, 1)
-            }
-        }
-        is Fail -> remoteRes
+    override suspend fun saveUser(data: User): Result<Boolean> = when(val localRes = localSrc.saveUser(data)){
+        is Success -> Success(true, 0)
+        is Fail -> localRes
     }
 
-    override suspend fun savePassword(password: String): Result<Boolean> = when(val remoteRes = remoteSrc.savePassword(password)){
-        is Success -> {
-            when(val localRes = localSrc.savePassword(password)){
-                is Success -> Success(true, 0)
-                else -> Success(true, 1)
-            }
-        }
-        is Fail -> remoteRes
+    override suspend fun savePassword(password: String): Result<Boolean> = when(val localRes = localSrc.savePassword(password)){
+        is Success -> Success(true, 0)
+        is Fail -> localRes
     }
 
     override suspend fun getPassword(): Result<String> = localSrc.getPassword()
+
+    override suspend fun getCurrentUser(): Result<User> = localSrc.getCurrentUser()
+
+    override suspend fun saveEmail(email: String): Result<Boolean> = localSrc.saveEmail(email)
 }

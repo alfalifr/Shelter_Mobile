@@ -20,9 +20,17 @@ object Const {
     const val KEY_IS_SINGLE = "is_single"
     const val SHARED_PREF_NAME = "_shared_pref_"
 
+    const val CODE_USER_NOT_FOUND = 101
+    const val CODE_BAD_PARAMETER = 102
+    const val CODE_USER_ALREADY_REGISTERED = 103
+    const val CODE_REGIS_SUCCESS = 104
+    const val CODE_REGIS_FAIL = 105
+
 
     const val GENDER_MALE = 'M'
     const val GENDER_FEMALE = 'F'
+
+    const val API_ROOT = "http://35.240.165.229/API/v1/shelter_api.php"
 
     /*
     =====================

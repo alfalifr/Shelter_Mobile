@@ -11,7 +11,6 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WeatherForecas
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.DashboardUseCase
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.UserUseCase
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.DisasterGroup
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
@@ -64,7 +63,7 @@ class DashboardViewModel(app: Application?, val useCase: DashboardUseCase): Asyn
         doOnPreAsyncTask()
         job = GlobalScope.launch(Dispatchers.IO) {
             val timestamp = Util.getTimestamp()
-            when(val result = useCase.getWeatherForecast(timestamp)){
+            when(val result = useCase.getWeatherForecast(timestamp,)){
                 is Success -> mWeatherForecast.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
             }

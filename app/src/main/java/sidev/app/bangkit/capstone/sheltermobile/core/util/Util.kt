@@ -55,12 +55,8 @@ object Util {
 
     fun getSharedPref(c: Context): SharedPreferences = c.getSharedPreferences(Const.SHARED_PREF_NAME, Context.MODE_PRIVATE)
 
-    fun getTimestamp(): String {
-        //TODO 28 Mei 2021
-        return ""
-    }
-
-    fun getTimestamp(timeStr: String): Timestamp = Timestamp.valueOf(timeStr)
+    fun getTimestampStr(): String = getTimestamp(null).toString()
+    fun getTimestamp(timeStr: String? = null): Timestamp = Timestamp.valueOf(timeStr)
 
     fun Timestamp.timestampToString(pattern: String = "dd-mm-yyyy"): String = toString() //TODO 29 Mei 2021: pattern blum kepake
 

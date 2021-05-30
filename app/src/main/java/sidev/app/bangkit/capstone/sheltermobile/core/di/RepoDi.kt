@@ -4,10 +4,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.composite.*
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.*
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.room.RoomDb
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.AppRetrofit
-import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.NewsRemoteSource
-import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.NewsRemoteSourceImpl
-import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.UserRemoteSource
-import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.UserRemoteSourceImpl
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.*
 
 object RepoDi {
     object Local {
@@ -28,17 +25,23 @@ object RepoDi {
         fun getWeatherSrc(): WeatherLocalSource = WeatherLocalSourceImpl(getDb().getWeatherDao(), AppDi.getContext())
     }
     object Remote {
+        fun getDisasterSrc(): DisasterRemoteSource = DisasterRemoteSourceDummy
+        fun getEmergencySrc(): EmergencyRemoteSource = EmergencyRemoteSourceDummy
+        fun getLocationSrc(): LocationRemoteSource = LocationRemoteSourceDummy
+        fun getReportSrc(): ReportRemoteSource = ReportRemoteSourceDummy
+        fun getWarningSrc(): WarningRemoteSource = WarningRemoteSourceDummy
+        fun getWeatherSrc(): WeatherRemoteSource = WeatherRemoteSourceDummy
         fun getNewsSrc(): NewsRemoteSource = NewsRemoteSourceImpl(AppRetrofit.newsApi)
         fun getUserSrc(): UserRemoteSource = UserRemoteSourceImpl(AppRetrofit.authApi)
     }
 
 
-    fun getDisasterRepo(): DisasterCompositeSource = DisasterCompositeSource(Local.getDisasterSrc(), )
-    fun getEmergencyRepo(): EmergencyCompositeSource = EmergencyCompositeSource(Local.getEmergencySrc(), )
-    fun getLocationRepo(): LocationCompositeSource = LocationCompositeSource(Local.getLocationSrc(), )
+    fun getDisasterRepo(): DisasterCompositeSource = DisasterCompositeSource(Local.getDisasterSrc(), Remote.getDisasterSrc())
+    fun getEmergencyRepo(): EmergencyCompositeSource = EmergencyCompositeSource(Local.getEmergencySrc(), Remote.getEmergencySrc())
+    fun getLocationRepo(): LocationCompositeSource = LocationCompositeSource(Local.getLocationSrc(), Remote.getLocationSrc())
     fun getNewsRepo(): NewsCompositeSource = NewsCompositeSource(Local.getNewsSrc(), Remote.getNewsSrc())
-    fun getReportRepo(): ReportCompositeSource = ReportCompositeSource(Local.getReportSrc(), )
+    fun getReportRepo(): ReportCompositeSource = ReportCompositeSource(Local.getReportSrc(), Remote.getReportSrc())
     fun getUserRepo(): UserCompositeSource = UserCompositeSource(Local.getUserSrc(), Remote.getUserSrc())
-    fun getWarningRepo(): WarningCompositeSource = WarningCompositeSource(Local.getWarningSrc(), )
-    fun getWeatherRepo(): WeatherCompositeSource = WeatherCompositeSource(Local.getWeatherSrc(), )
+    fun getWarningRepo(): WarningCompositeSource = WarningCompositeSource(Local.getWarningSrc(), Remote.getWarningSrc())
+    fun getWeatherRepo(): WeatherCompositeSource = WeatherCompositeSource(Local.getWeatherSrc(), Remote.getWeatherSrc())
 }

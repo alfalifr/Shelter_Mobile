@@ -9,7 +9,6 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.News
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.NewsUseCase
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.ReportUseCase
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.lib.`val`.SuppressLiteral
 
@@ -41,7 +40,7 @@ class SearchArticleViewModel(app: Application?, private val useCase: NewsUseCase
         cancelJob()
         doOnPreAsyncTask()
         job = GlobalScope.launch(Dispatchers.IO) {
-            val timestamp = Util.getTimestamp()
+            val timestamp = Util.getTimestampStr()
             when(val result = useCase.searchNews(keyword, timestamp)){
                 is Success -> mSearchResult.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)

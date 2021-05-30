@@ -62,7 +62,7 @@ class DashboardViewModel(app: Application?, val useCase: DashboardUseCase): Asyn
         cancelJob()
         doOnPreAsyncTask()
         job = GlobalScope.launch(Dispatchers.IO) {
-            val timestamp = Util.getTimestamp()
+            val timestamp = Util.getTimestampStr()
             when(val result = useCase.getWeatherForecast(timestamp,)){
                 is Success -> mWeatherForecast.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
@@ -75,7 +75,7 @@ class DashboardViewModel(app: Application?, val useCase: DashboardUseCase): Asyn
         cancelJob()
         doOnPreAsyncTask()
         job = GlobalScope.launch(Dispatchers.IO) {
-            val timestamp = Util.getTimestamp()
+            val timestamp = Util.getTimestampStr()
             when(val result = useCase.getHighlightedWarningStatus(timestamp)){
                 is Success -> mhiglightedWarningStatus.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
@@ -88,7 +88,7 @@ class DashboardViewModel(app: Application?, val useCase: DashboardUseCase): Asyn
         cancelJob()
         doOnPreAsyncTask()
         job = GlobalScope.launch(Dispatchers.IO) {
-            val timestamp = Util.getTimestamp()
+            val timestamp = Util.getTimestampStr()
             when(val result = useCase.getDisasterGroupList(timestamp)){
                 is Success -> {
                     val disasterWarningList = DataMapper.toDisasterGroupList(result.data)

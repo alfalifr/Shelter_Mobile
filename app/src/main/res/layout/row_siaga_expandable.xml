@@ -36,17 +36,17 @@
             android:layout_marginStart="70dp"
             android:padding="20dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_siaga1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_siaga1"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="2dp"
-            tools:listitem="@layout/row_siaga_detil_expandable">
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rv_siaga1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/tv_siaga1"-->
+<!--            android:layout_marginStart="30dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginBottom="2dp"-->
+<!--            tools:listitem="@layout/row_siaga_detil_expandable">-->
 
-        </androidx.recyclerview.widget.RecyclerView>
+<!--        </androidx.recyclerview.widget.RecyclerView>-->
 
 
     </RelativeLayout>

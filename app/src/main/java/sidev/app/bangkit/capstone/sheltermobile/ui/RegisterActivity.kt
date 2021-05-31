@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import sidev.app.bangkit.capstone.sheltermobile.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.R
+import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.AuthData
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.AuthViewModel
@@ -30,7 +31,7 @@ class RegisterActivity : AppCompatActivity() {
     private var isPswdValid = false
     private var isRePswdValid = false
     private val isGenderValid: Boolean get()= gender == Const.GENDER_MALE || gender == Const.GENDER_FEMALE
-    private val isAllValid: Boolean get() = isEmailValid && isPswdValid //TODO Mella: tambahin isValid
+    private val isAllValid: Boolean get() = isEmailValid && isPswdValid && isRePswdValid && isGenderValid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +89,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-//        model = VmDI.getAuthViewModel(this, application)
+        model = ViewModelDi.getAuthViewModel(this)
         model.onAuth.observe(this) {
             if (it != null) {
                 if (it) {

@@ -31,7 +31,7 @@ class ReportViewModel(app: Application?, private val useCase: ReportUseCase): As
     val reportHistory: LiveData<List<Report>> get()= mReportHistory
     private val mReportHistory = MutableLiveData<List<Report>>()
 
-    fun getReportList(top: Int = -1, forceLoad: Boolean = false) {
+    fun getReportList(top: Int = 5, forceLoad: Boolean = false) {
         if (reportHistory.value != null && !forceLoad) return
         cancelJob()
         doOnPreAsyncTask()

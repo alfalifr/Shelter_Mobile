@@ -42,7 +42,7 @@
             app:boxCornerRadiusTopStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusBottomEnd="10dp"
-            android:hint="Judul Laporan"
+            android:hint="@string/judul_laporan"
             android:textColorHint="@color/green"
             app:counterEnabled="true"
             app:counterMaxLength="40"

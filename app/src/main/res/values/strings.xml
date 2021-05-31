@@ -25,8 +25,11 @@
     <string name="pengaturan">Pengaturan</string>
     <string name="siaga_lapor_pesan">Siaga Lapor Pesan</string>
     <string name="tulis_lapor">Tuliskan Laporan Anda</string>
-    <string name="judul_laporan">Judul laporan</string>
+    <string name="judul_laporan">Judul Laporan</string>
     <string name="gender">Gender</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="kirim_laporan">Kirim Laporan</string>
+    <string name="akun_nonvalid">Maaf, akun yang anda masukkan tidak valid</string>
+    <string name="daftar">Daftar Sekarang</string>
+    <string name="error_account">Maaf, akun sudah terdaftar</string>
 </resources>

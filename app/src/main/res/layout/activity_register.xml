@@ -150,11 +150,21 @@
                         style="@style/loginButton"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:text="Register"
+                        android:text="@string/daftar"
                         app:initialCornerAngle="27dp"
                         app:spinning_bar_color="#FFF"
                         app:spinning_bar_padding="6dp"
                         app:spinning_bar_width="4dp" />
+
+                    <TextView
+                        android:id="@+id/tv_error_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/nunitosans_regular"
+                        android:textColor="@color/red"
+                        android:padding="10dp"
+                        android:text="@string/error_account" />
 
                     <TextView
                         android:id="@+id/on_Login_Word"

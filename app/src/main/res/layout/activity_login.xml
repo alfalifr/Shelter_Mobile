@@ -90,6 +90,16 @@
                 app:spinning_bar_width="4dp" />
 
             <TextView
+                android:id="@+id/tv_error_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:fontFamily="@font/nunitosans_regular"
+                android:textAlignment="center"
+                android:textColor="@color/red"
+                android:text="@string/akun_nonvalid"/>
+
+            <TextView
                 android:id="@+id/on_register_word"
                 style="@style/parent"
                 android:fontFamily="@font/nunitosans_bold"

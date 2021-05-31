@@ -13,8 +13,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import sidev.app.bangkit.capstone.sheltermobile.MainActivity
+import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
+import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.ReportViewModel
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentLaporPesanBinding
+import sidev.lib.android.std.tool.util.`fun`.startAct
 
 
 @Suppress("DEPRECATION")
@@ -26,6 +34,16 @@ class LaporPesanFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentLaporPesanBinding
+    private lateinit var model: ReportViewModel
+    private lateinit var data : Report
+
+    private var titleLaporan: String = ""
+    private var isiLaporan: String = ""
+    private var isTitleLaporanNotBlank = false
+    private var isIsiLaporanNotBlank = false
+
+    private val isAllValid: Boolean get() = isTitleLaporanNotBlank && isIsiLaporanNotBlank
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +58,50 @@ class LaporPesanFragment : Fragment() {
 
         //call the function
         cameraFuction()
+        laporPesan()
+    }
+
+    private fun laporPesan() {
+
+        binding.apply {
+            cardHubungiTeks.setOnClickListener {
+                send()
+            }
+            textInputJudulLapor.addTextChangedListener {
+                if (it != null) {
+                    isTitleLaporanNotBlank = Util.validateFormTitle(it.toString())
+                    if (isTitleLaporanNotBlank) {
+                        textInputJudulLapor.error = null
+                    } else {
+                        textInputJudulLapor.error = "Judul laporan tidak boleh kosong"
+                    }
+                }
+            }
+            textInputLapor.addTextChangedListener {
+                if (it != null){
+                    isIsiLaporanNotBlank = Util.validateFormDesc(it.toString())
+                    if (isIsiLaporanNotBlank){
+                        textInputLapor.error = null
+                    } else {
+                        textInputLapor.error = "Isi laporan tidak boleh kosong"
+                    }
+                }
+            }
+        }
+
+        model = ViewModelDi.getReportViewModel(this)
+        model.sendReport(data)
+
+
+    }
+
+    private fun send() {
+        if (!isAllValid) return
+
+        titleLaporan = binding.textInputJudulLapor.text.toString()
+        isiLaporan = binding.textInputLapor.text.toString()
+
+        val data
     }
 
     private fun cameraFuction() {

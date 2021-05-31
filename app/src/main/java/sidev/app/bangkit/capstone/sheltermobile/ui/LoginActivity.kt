@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
                     startAct<MainActivity>()
                 } else {
                     binding.tvErrorAccount.visibility =
-                        View.VISIBLE //TODO Mella: ganti pake text error
+                        View.VISIBLE
                 }
             }
         }

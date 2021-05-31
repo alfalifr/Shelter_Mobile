@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.RiwayatLaporAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.ReportViewModel
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentLaporBinding
@@ -33,7 +34,7 @@ class LaporFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getReportList()
+        viewModel = ViewModelDi.getReportViewModel(this)
 
         //call the function
         telephoneCall()
@@ -43,12 +44,13 @@ class LaporFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.getReportList(5,false).observe(viewLifecycleOwner) { shelter ->
+        viewModel.reportHistory.observe(viewLifecycleOwner) { shelter ->
             if (shelter != null) {
                 adapter.setList(shelter)
             }
 
         }
+        viewModel.getReportList(5,false)
     }
 
     private fun riwayatLaporRV() {

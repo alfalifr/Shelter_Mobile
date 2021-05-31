@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.databinding.HistoryLaporListBinding
+import java.lang.IllegalStateException
 
 class RiwayatLaporAdapter(private val listener: (Report) -> Unit) :
     RecyclerView.Adapter<RiwayatLaporAdapter.LaporViewHolder>() {
@@ -33,19 +35,15 @@ class RiwayatLaporAdapter(private val listener: (Report) -> Unit) :
             val tvDateForecast = binding.tvDateForecast
             val tvGenreLapor = binding.tvGenreLapor
             val tvLokasi = binding.tvLocation
-            val bullet = binding.ivBullet
-
-            Glide.with(itemView.context)
-                .load(shelter.)
-                .into(bullet)
 
 
-            tvDateForecast.text = shelter.
-                tvGenreLapor.text = "halo"
-                tvGenreLapor.text =
-                tvLokasi.text =
-
-
+            tvDateForecast.text = shelter.timestamp.toString()
+            tvGenreLapor.text = when(shelter.method){
+                Const.METHOD_CALL -> "Siaga Lapor Telepon"
+                Const.METHOD_FORM -> "Siaga Lapor Pesan"
+                else -> throw IllegalStateException("Invalid method")
+            }
+            tvLokasi.text = shelter.location.toString()
         }
 
     }

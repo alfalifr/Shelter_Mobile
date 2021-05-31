@@ -42,4 +42,12 @@ class ReportViewModel(app: Application?, private val useCase: ReportUseCase): As
             }
         }
     }
+
+    fun sendReport(data: Report){
+        cancelJob()
+        doOnPreAsyncTask()
+        job = GlobalScope.launch(Dispatchers.IO) {
+            //useCase. TODO ALIF: 31 Mei 2021
+        }
+    }
 }

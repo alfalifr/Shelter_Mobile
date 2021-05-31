@@ -7,15 +7,13 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import org.jetbrains.anko.support.v4.startActivityForResult
-import sidev.app.bangkit.capstone.sheltermobile.R
+import androidx.fragment.app.Fragment
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentLaporPesanBinding
 
 
@@ -27,7 +25,7 @@ class LaporPesanFragment : Fragment() {
         private const val CAMERA_REQUEST_CODE = 2
     }
 
-    private lateinit var binding : FragmentLaporPesanBinding
+    private lateinit var binding: FragmentLaporPesanBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,13 +47,14 @@ class LaporPesanFragment : Fragment() {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
                     Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED
-            ){
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(intent, CAMERA_REQUEST_CODE)
-            }else{
-                ActivityCompat.requestPermissions((
-                        requireActivity()),
+            } else {
+                ActivityCompat.requestPermissions(
+                    (
+                            requireActivity()),
                     arrayOf(Manifest.permission.CAMERA),
                     CAMERA_PERMISSION_CODE
                 )
@@ -70,21 +69,26 @@ class LaporPesanFragment : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == CAMERA_REQUEST_CODE){
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(intent, CAMERA_REQUEST_CODE)
             } else {
-                Toast.makeText(context,"Ups anda menolak Shelter menggunakan kamera anda", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "Ups anda menolak Shelter menggunakan kamera anda",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK){
-            if (requestCode == CAMERA_REQUEST_CODE){
-                val thumbNail: Bitmap = data?.extras?.get("data") as Bitmap //data can be from any type but we convert it to Bitmap hehe :p
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == CAMERA_REQUEST_CODE) {
+                val thumbNail: Bitmap =
+                    data?.extras?.get("data") as Bitmap //data can be from any type but we convert it to Bitmap hehe :p
                 binding.ivImage.setImageBitmap(thumbNail)
             }
         }

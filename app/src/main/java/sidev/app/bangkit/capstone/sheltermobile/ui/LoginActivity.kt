@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import sidev.app.bangkit.capstone.sheltermobile.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.R
+import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.AuthData
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.AuthViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
@@ -40,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
             cirLoginButton.setOnClickListener {
                 login()
             }
-            textInputEmail.visibility = View.GONE
+            tvErrorAccount.visibility = View.GONE
             editTextEmail.addTextChangedListener {
                 if (it != null) {
                     isEmailValid = Util.validateEmail(it.toString())
@@ -64,12 +65,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-        //model = AuthViewModel.getInstance(this, application, ) //TODO Mella: instansiasi VM
-//        model = VmDI.getAuthViewModel(this, application)
+        model = ViewModelDi.getAuthViewModel(this)
         model.onAuth.observe(this) {
             if (it != null) {
                 if (it) {
-                    binding.textInputEmail.visibility = View.GONE
+                    binding.tvErrorAccount.visibility = View.GONE
                     Util.editSharedPref(this) {
                         putString(Const.KEY_USER_EMAIL, email)
                         putString(Const.KEY_PASSWORD, pswd)
@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
                     //val email = Util.getSharedPref(this).getString(Const.KEY_USER_EMAIL, null)
                     startAct<MainActivity>()
                 } else {
-                    binding.textInputEmail.visibility =
+                    binding.tvErrorAccount.visibility =
                         View.VISIBLE //TODO Mella: ganti pake text error
                 }
             }

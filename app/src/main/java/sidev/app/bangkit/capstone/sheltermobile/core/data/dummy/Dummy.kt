@@ -64,6 +64,10 @@ object Dummy {
         WeatherForecast(14f, 12f, 256f, 110f, Util.getTimestamp()),
     )
 
+    val formList = listOf<Form>(
+        Form(1, "Ini judul 1", "Ini desc 1", emptyList()),
+        Form(2, "Ini judul 2", "Ini desc 2", emptyList()),
+    )
 
 
     fun getWarningStatusList(disasterId: Int, locationId: Int, startTimestamp: String): List<WarningStatus> = warningListAll.filter {

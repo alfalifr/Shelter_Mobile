@@ -13,7 +13,8 @@ object RepoDi {
         fun getEmergencySrc(): EmergencyLocalSource = EmergencyLocalSourceImpl(getDb().getEmergencyDao())
         fun getLocationSrc(): LocationLocalSource = LocationLocalSourceImpl(getDb().getLocationDao(), AppDi.getContext())
         fun getNewsSrc(): NewsLocalSource = NewsLocalSourceImpl(getDb().getNewsDao())
-        fun getReportSrc(): ReportLocalSource = ReportLocalSourceImpl(getDb().getReportDao(), getDb().getLocationDao())
+        fun getReportSrc(): ReportLocalSource = ReportLocalSourceImpl(getDb().getReportDao(), getLocationSrc(), getFormSrc())
+        fun getFormSrc(): FormLocalSource = FormLocalSourceImpl(getDb().getFormDao())
         fun getUserSrc(): UserLocalSource = UserLocalSourceImpl(getDb().getUserDao(), AppDi.getContext())
         fun getWarningSrc(): WarningLocalSource = WarningLocalSourceImpl(
             getDb().getWarningDao(),
@@ -29,6 +30,7 @@ object RepoDi {
         fun getEmergencySrc(): EmergencyRemoteSource = EmergencyRemoteSourceDummy
         fun getLocationSrc(): LocationRemoteSource = LocationRemoteSourceDummy
         fun getReportSrc(): ReportRemoteSource = ReportRemoteSourceDummy
+        fun getFormSrc(): FormRemoteSource = FormRemoteSourceDummy
         fun getWarningSrc(): WarningRemoteSource = WarningRemoteSourceDummy
         fun getWeatherSrc(): WeatherRemoteSource = WeatherRemoteSourceDummy
         fun getNewsSrc(): NewsRemoteSource = NewsRemoteSourceImpl(AppRetrofit.newsApi)
@@ -41,6 +43,7 @@ object RepoDi {
     fun getLocationRepo(): LocationCompositeSource = LocationCompositeSource(Local.getLocationSrc(), Remote.getLocationSrc())
     fun getNewsRepo(): NewsCompositeSource = NewsCompositeSource(Local.getNewsSrc(), Remote.getNewsSrc())
     fun getReportRepo(): ReportCompositeSource = ReportCompositeSource(Local.getReportSrc(), Remote.getReportSrc())
+    fun getFormRepo(): FormCompositeSource = FormCompositeSource(Local.getFormSrc(), Remote.getFormSrc())
     fun getUserRepo(): UserCompositeSource = UserCompositeSource(Local.getUserSrc(), Remote.getUserSrc())
     fun getWarningRepo(): WarningCompositeSource = WarningCompositeSource(Local.getWarningSrc(), Remote.getWarningSrc())
     fun getWeatherRepo(): WeatherCompositeSource = WeatherCompositeSource(Local.getWeatherSrc(), Remote.getWeatherSrc())

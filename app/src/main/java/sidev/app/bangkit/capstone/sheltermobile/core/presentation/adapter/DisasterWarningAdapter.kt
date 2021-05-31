@@ -4,11 +4,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
+import com.thoughtbot.expandablerecyclerview.models.ExpandableList
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Disaster
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.DisasterGroup
+import sidev.lib.`val`.SuppressLiteral
 
 
 class DisasterViewHolder(view: View): GroupViewHolder(view) {
@@ -24,6 +26,15 @@ class WarningViewHolder(view: View): ChildViewHolder(view) {
 
 class DisasterWarningAdapter(disasterWarnings: List<DisasterGroup>)
     : ExpandableRecyclerViewAdapter<DisasterViewHolder, WarningViewHolder>(disasterWarnings) {
+
+    var dataList: List<DisasterGroup>
+        @Suppress(SuppressLiteral.UNCHECKED_CAST)
+        get() = expandableList.groups as List<DisasterGroup>
+        set(v){
+            expandableList = ExpandableList(v)
+            notifyDataSetChanged()
+        }
+
     /**
      * Called from [.onCreateViewHolder] when  the list item created is a group
      *

@@ -1,10 +1,13 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.entity
 
-import java.sql.Timestamp
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 
+@Entity(tableName = "form")
 data class FormEntity(
-    val timestamp: Timestamp,
+    @PrimaryKey
+    val id: Int,
     val title: String,
     val desc: String,
     /**

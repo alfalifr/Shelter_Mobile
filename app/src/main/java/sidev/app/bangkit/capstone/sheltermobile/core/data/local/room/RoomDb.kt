@@ -13,6 +13,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.*
         LocationEntity::class,
         NewsEntity::class,
         ReportEntity::class,
+        FormEntity::class,
         UserEntity::class,
         WarningEntity::class,
         WeatherEntity::class,
@@ -25,6 +26,7 @@ abstract class RoomDb: RoomDatabase() {
     abstract fun getLocationDao(): LocationDao
     abstract fun getNewsDao(): NewsDao
     abstract fun getReportDao(): ReportDao
+    abstract fun getFormDao(): FormDao
     abstract fun getUserDao(): UserDao
     abstract fun getWarningDao(): WarningDao
     abstract fun getWeatherDao(): WeatherDao

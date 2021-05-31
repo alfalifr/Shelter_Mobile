@@ -8,7 +8,7 @@ object UseCaseDi {
     )
     fun getLocationUseCase(): LocationUseCase = LocationUseCaseImpl(RepoDi.getLocationRepo())
     fun getNewsUseCase(): NewsUseCase = NewsUseCaseImpl(RepoDi.getNewsRepo())
-    fun getReportUseCase(): ReportUseCase = ReportUseCaseImpl(RepoDi.getReportRepo())
+    fun getReportUseCase(): ReportUseCase = ReportUseCaseImpl(RepoDi.getReportRepo(), RepoDi.Local.getLocationSrc())
     fun getUserUseCase(): UserUseCase = UserUseCaseImpl(
         RepoDi.getUserRepo(),
         RepoDi.Local.getUserSrc(),

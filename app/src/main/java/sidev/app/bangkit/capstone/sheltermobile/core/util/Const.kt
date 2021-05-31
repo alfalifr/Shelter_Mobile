@@ -32,6 +32,9 @@ object Const {
     const val GENDER_MALE = 'M'
     const val GENDER_FEMALE = 'F'
 
+    //const val LEN_FORM_TITLE = 30
+    //const val LEN_FORM_DESC = 300
+
     const val API_ROOT = "http://35.240.165.229/API/v1/shelter_api.php"
 
     /*

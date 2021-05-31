@@ -3,6 +3,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Disaster
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WeatherForecast
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.DisasterRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
@@ -35,6 +36,15 @@ class DashboardUseCaseImpl(
         if(result is Success)
             currentLocation = result.data
         return result
+    }
+
+    override suspend fun getWeatherForecast(timestamp: String): Result<WeatherForecast> {
+        if(currentLocation == null) {
+            val res = getCurrentLocation()
+            if(res is Fail)
+                return res
+        }
+        return getWeatherForecast(timestamp, currentLocation!!.id)
     }
 
     override suspend fun getDisasterGroupList(timestamp: String): Result<List<Pair<Disaster, List<WarningStatus>>>> {

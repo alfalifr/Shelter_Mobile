@@ -11,6 +11,7 @@ data class WeatherEntity(
     val humidity: Float,
     val rainfall: Float,
     val windSpeed: Float,
+    val ultraviolet: Float,
 )
 
 /*

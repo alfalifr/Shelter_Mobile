@@ -63,7 +63,7 @@ class DashboardViewModel(app: Application?, val useCase: DashboardUseCase): Asyn
         doOnPreAsyncTask()
         job = GlobalScope.launch(Dispatchers.IO) {
             val timestamp = Util.getTimestampStr()
-            when(val result = useCase.getWeatherForecast(timestamp,)){
+            when(val result = useCase.getWeatherForecast(timestamp)){
                 is Success -> mWeatherForecast.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
             }

@@ -7,6 +7,7 @@ data class WeatherForecast(
     val humidity: Float,
     val rainfall: Float,
     val windSpeed: Float,
+    val ultraviolet: Float,
     val timestamp: Timestamp,
 )
 

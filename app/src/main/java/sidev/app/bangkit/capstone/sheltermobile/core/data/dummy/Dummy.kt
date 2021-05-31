@@ -1,11 +1,26 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.dummy
 
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LoginBody
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
 object Dummy {
+    val userList = listOf<User>(
+        User("b@b.b", "bayu", 'M'),
+        User("a@a.a", "ayu", 'M'),
+    )
+
+    val userPswd = listOf<String>(
+        "abc123",
+        "a1",
+    )
+
+    fun getLoginBody(i: Int): LoginBody = LoginBody(userList[i].email, userPswd[i])
+    fun getSignupBody(i: Int): SignupBody = userList[i].let { SignupBody(it.email, userPswd[i], it.name, it.gender) }
+
     val disasterList = listOf<Disaster>(
         Disaster(1, "Kebakaran Hutan"),
         Disaster(2, "Banjir"),
@@ -60,8 +75,8 @@ object Dummy {
     val warningListAll = warningList1 + warningList2 + warningList3
 
     val weatherList = listOf<WeatherForecast>(
-        WeatherForecast(10f, 11f, 25f, 180f, Util.getTimestamp()),
-        WeatherForecast(14f, 12f, 256f, 110f, Util.getTimestamp()),
+        WeatherForecast(10f, 11f, 25f, 180f, 10f, Util.getTimestamp()),
+        WeatherForecast(14f, 12f, 256f, 110f, 3012f, Util.getTimestamp()),
     )
 
     val formList = listOf<Form>(

@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Emergency
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
@@ -59,6 +61,9 @@ object Util {
     fun getTimestamp(timeStr: String? = null): Timestamp = Timestamp.valueOf(timeStr)
 
     fun Timestamp.timestampToString(pattern: String = "dd-mm-yyyy"): String = toString() //TODO 29 Mei 2021: pattern blum kepake
+
+    fun getFormattedStr(value: Float, unit: String? = null): String = "%.2f".format(value) + (if(unit != null) " $unit" else "")
+    fun getFormattedStr(warning: WarningStatus): String = "Zona ${warning.emergency.name} ${warning.disaster.name}"
 
     fun getInsertResult(count: Int, totalCount: Int): Result<Int> = when(count) {
         totalCount -> Success(count, 0)

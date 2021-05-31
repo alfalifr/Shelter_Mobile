@@ -17,6 +17,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import sidev.app.bangkit.capstone.sheltermobile.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Form
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.ReportViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
@@ -101,7 +102,9 @@ class LaporPesanFragment : Fragment() {
         titleLaporan = binding.textInputJudulLapor.text.toString()
         isiLaporan = binding.textInputLapor.text.toString()
 
-        val data
+        val form = Form(Util.getTimestamp(),)
+        val location = model.getCurrentLocation()
+        val data = Report(Util.getTimestamp(),Const.METHOD_FORM, location, )
     }
 
     private fun cameraFuction() {

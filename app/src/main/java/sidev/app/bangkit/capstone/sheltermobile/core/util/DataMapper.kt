@@ -38,7 +38,7 @@ object DataMapper {
     fun NewsEntity.toModel(): News = News(timestamp, title, briefDesc, linkImage, link, type)
     fun ReportEntity.toModel(location: Location, form: Form): Report = Report(timestamp, method, location, form)
     fun ReportEntity.toModelDetail(location: Location, form: Form): ReportDetail = ReportDetail(toModel(location, form), response)
-    fun FormEntity.toModel(): Form = Form(id, title, desc, photoLinkList.split(Const.CHAR_LINK_SEPARATOR))
+    fun FormEntity.toModel(): Form = Form(timestamp, title, desc, photoLinkList.split(Const.CHAR_LINK_SEPARATOR))
     fun UserEntity.toModel(): User = User(email, name, gender)
     fun WarningEntity.toModel(disaster: Disaster, emergency: Emergency, location: Location): WarningStatus = WarningStatus(
         disaster, emergency, title, timestamp, location, imgLink
@@ -56,8 +56,8 @@ object DataMapper {
     fun Emergency.toEntity(): EmergencyEntity = EmergencyEntity(id, name, color, severity)
     fun Location.toEntity(parentId: Int): LocationEntity = LocationEntity(id, name, coordinate.latitude, coordinate.longitude, parentId)
     fun News.toEntity(): NewsEntity = NewsEntity(timestamp, title, briefDesc, linkImage, link, type)
-    fun ReportDetail.toEntity(): ReportEntity = ReportEntity(report.timestamp, report.method, response, report.location.id, report.form?.id ?: -1)
-    fun Form.toEntity(): FormEntity = FormEntity(id, title, desc, photoLinkList.joinToString(Const.CHAR_LINK_SEPARATOR.toString()))
+    fun ReportDetail.toEntity(): ReportEntity = ReportEntity(report.timestamp, report.method, response, report.location.id)
+    fun Form.toEntity(): FormEntity = FormEntity(timestamp, title, desc, photoLinkList.joinToString(Const.CHAR_LINK_SEPARATOR.toString()))
     fun User.toEntity(): UserEntity = UserEntity(email, name, gender)
     fun WarningDetail.toEntity(): WarningEntity = WarningEntity(
         timestamp = status.timestamp,

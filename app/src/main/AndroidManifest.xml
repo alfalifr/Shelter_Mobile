@@ -3,6 +3,7 @@
     package="sidev.app.bangkit.capstone.sheltermobile">
 
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:allowBackup="true"

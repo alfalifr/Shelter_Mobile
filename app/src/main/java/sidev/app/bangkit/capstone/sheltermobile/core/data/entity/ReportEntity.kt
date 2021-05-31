@@ -8,4 +8,5 @@ data class ReportEntity(
     val timestamp: Timestamp,
     val method: Int, //1 for call, 2 for form
     val response: String,
+    val locationId: Int,
 )

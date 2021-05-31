@@ -13,7 +13,7 @@ object RepoDi {
         fun getEmergencySrc(): EmergencyLocalSource = EmergencyLocalSourceImpl(getDb().getEmergencyDao())
         fun getLocationSrc(): LocationLocalSource = LocationLocalSourceImpl(getDb().getLocationDao(), AppDi.getContext())
         fun getNewsSrc(): NewsLocalSource = NewsLocalSourceImpl(getDb().getNewsDao())
-        fun getReportSrc(): ReportLocalSource = ReportLocalSourceImpl(getDb().getReportDao())
+        fun getReportSrc(): ReportLocalSource = ReportLocalSourceImpl(getDb().getReportDao(), getDb().getLocationDao())
         fun getUserSrc(): UserLocalSource = UserLocalSourceImpl(getDb().getUserDao(), AppDi.getContext())
         fun getWarningSrc(): WarningLocalSource = WarningLocalSourceImpl(
             getDb().getWarningDao(),

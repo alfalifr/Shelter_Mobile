@@ -5,4 +5,5 @@ import java.sql.Timestamp
 data class Report(
     val timestamp: Timestamp,
     val method: Int,
+    val location: Location,
 )

@@ -36,8 +36,8 @@ object DataMapper {
     fun EmergencyEntity.toModel(): Emergency = Emergency(id, name, color, severity)
     fun LocationEntity.toModel(): Location = Location(id, name, Coordinate(latitude, longitude))
     fun NewsEntity.toModel(): News = News(timestamp, title, briefDesc, linkImage, link, type)
-    fun ReportEntity.toModel(location: Location): Report = Report(timestamp, method, location)
-    fun ReportEntity.toModelDetail(location: Location): ReportDetail = ReportDetail(toModel(location), response)
+    fun ReportEntity.toModel(location: Location, form: Form): Report = Report(timestamp, method, location, form)
+    fun ReportEntity.toModelDetail(location: Location, form: Form): ReportDetail = ReportDetail(toModel(location, form), response)
     fun UserEntity.toModel(): User = User(email, name, gender)
     fun WarningEntity.toModel(disaster: Disaster, emergency: Emergency, location: Location): WarningStatus = WarningStatus(
         disaster, emergency, title, timestamp, location, imgLink

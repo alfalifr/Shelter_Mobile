@@ -6,4 +6,5 @@ data class Report(
     val timestamp: Timestamp,
     val method: Int,
     val location: Location,
+    val form: Form?, //null if `method` == Const.METHOD_CALL
 )

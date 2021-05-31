@@ -27,15 +27,12 @@ class WarningViewHolder(view: View): ChildViewHolder(view) {
 class DisasterWarningAdapter(disasterWarnings: List<DisasterGroup>)
     : ExpandableRecyclerViewAdapter<DisasterViewHolder, WarningViewHolder>(disasterWarnings) {
 
-    fun aga(){
-        expandableList =
-    }
-
     var dataList: List<DisasterGroup>
         @Suppress(SuppressLiteral.UNCHECKED_CAST)
         get() = expandableList.groups as List<DisasterGroup>
         set(v){
             expandableList = ExpandableList(v)
+            notifyDataSetChanged()
         }
 
     /**

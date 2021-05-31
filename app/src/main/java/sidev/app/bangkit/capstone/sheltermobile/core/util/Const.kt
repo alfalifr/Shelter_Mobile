@@ -7,6 +7,8 @@ object Const {
     const val METHOD_CALL = 1
     const val METHOD_FORM = 2
 
+    const val CHAR_LINK_SEPARATOR = '|'
+
     const val KEY_PASSWORD = "password"
     const val KEY_LOCATION_ID = "location_id"
     const val KEY_USER_EMAIL = "user_email"

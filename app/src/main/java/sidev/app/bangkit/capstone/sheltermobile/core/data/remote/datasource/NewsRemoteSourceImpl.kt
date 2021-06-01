@@ -31,8 +31,8 @@ class NewsRemoteSourceImpl(private val api: NewsApi): NewsRemoteSource {
 
     private suspend fun getData(timestamp: String, type: Int): Result<News> = when(val res = getDataList(timestamp, type)) {
         is Success -> {
-            val time = Util.getTimestamp(timestamp)
-            val news = res.data.find { it.timestamp.equals(time) }
+            //val time = Util.getTimestampStr(timestamp)
+            val news = res.data.find { it.timestamp == timestamp }
             if(news != null) Success(news, 0)
             else Util.noEntityFailResult()
         }

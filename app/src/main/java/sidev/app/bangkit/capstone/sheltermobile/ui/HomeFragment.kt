@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.DisasterWarningAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.DashboardViewModel
@@ -84,5 +85,15 @@ class HomeFragment : Fragment() {
         vm.getDisasterGroupList()
         vm.getWeatherForecast()
         vm.getHighlightedWarningStatus()
+    }
+
+    private fun showLoading(pb: ProgressBar, loadedView: View, show: Boolean = true) {
+        if(show){
+            pb.visibility = View.VISIBLE
+            loadedView.visibility = View.GONE
+        } else {
+            pb.visibility = View.GONE
+            loadedView.visibility = View.VISIBLE
+        }
     }
 }

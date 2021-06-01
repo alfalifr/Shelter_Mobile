@@ -8,7 +8,7 @@ import java.sql.Timestamp
 @Entity(tableName = "form")
 data class FormEntity(
     @PrimaryKey
-    val timestamp: Timestamp,
+    val timestamp: String,
     //val id: Int,
     val title: String,
     val desc: String,

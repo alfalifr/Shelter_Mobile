@@ -96,39 +96,51 @@
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:padding="15dp">
-
-                <ImageView
-                    android:id="@+id/iv_notification"
+                <LinearLayout
+                    android:id="@+id/vg_warning_highlight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_notification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        tools:src="@drawable/ic_flood1" />
+
+                    <TextView
+                        android:id="@+id/tv_title_notif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/font1"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        tools:text="Tetap Tenang dan Waspada" />
+
+                    <TextView
+                        android:id="@+id/tv_note_notif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/note_notif" />
+
+                    <TextView
+                        android:id="@+id/tv_notif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="15dp"
+                        tools:text="Zona Kuning Banjir" />
+
+                </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/pb_warning_highlight"
                     android:layout_gravity="center"
-                    tools:src="@drawable/ic_flood1" />
-
-                <TextView
-                    android:id="@+id/tv_title_notif"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/font1"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    tools:text="Tetap Tenang dan Waspada" />
-
-                <TextView
-                    android:id="@+id/tv_note_notif"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/note_notif" />
-
-                <TextView
-                    android:id="@+id/tv_notif"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:padding="15dp"
-                    tools:text="Zona Kuning Banjir" />
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
         </soup.neumorphism.NeumorphCardView>
@@ -146,249 +158,290 @@
             app:layout_constraintTop_toBottomOf="@+id/card_notifications"
             app:neumorph_shadowElevation="9dp">
 
-            <LinearLayout
+            <ProgressBar
+                android:id="@+id/pb_weather"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/tv_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:paddingTop="15dp"
-                    android:textColor="@color/font1"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:text="Senin" />
-
-                <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    tools:text="15 Februari 2021" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"/>
 
             <RelativeLayout
+                android:id="@+id/vg_weather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_temperature"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:paddingTop="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:textColor="@color/font1"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    tools:text="32" />
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/tv_temperature_c"
+                    <TextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingTop="15dp"
+                        android:textColor="@color/font1"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="Senin" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        tools:text="15 Februari 2021" />
+
+                </LinearLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:paddingTop="30dp"
-                    android:paddingEnd="20dp"
-                    android:textStyle="bold"
-                    tools:text="o" />
+                    android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/iv_weather"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:paddingTop="20dp"
-                    android:paddingEnd="70dp"
-                    android:src="@drawable/ic_weather_lightrain" />
 
+                    <TextView
+                        android:id="@+id/tv_temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:paddingTop="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:textColor="@color/font1"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        tools:text="32" />
+
+                    <TextView
+                        android:id="@+id/tv_temperature_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:paddingTop="30dp"
+                        android:paddingEnd="20dp"
+                        android:textStyle="bold"
+                        tools:text="o" />
+
+                    <ImageView
+                        android:id="@+id/iv_weather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="70dp"
+                        android:src="@drawable/ic_weather_lightrain" />
+
+                </RelativeLayout>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_detail_temperature"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="8dp"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/vg_weather_detail"
+            android:layout_width="320dp"
+            android:layout_height="120dp"
+            android:padding="10dp"
+            android:layout_marginStart="-20dp"
             android:layout_marginTop="30dp"
-            app:cardBackgroundColor="@color/background_4"
-            app:cardCornerRadius="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_temperature" />
+            app:layout_constraintStart_toStartOf="@+id/card_temperature"
+            app:layout_constraintTop_toBottomOf="@+id/card_temperature">
 
-        <TextView
-            android:id="@+id/tv_humidity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
-            android:paddingStart="40dp"
-            android:layout_marginTop="40dp"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/card_detail_temperature"
-            app:layout_constraintTop_toBottomOf="@+id/card_temperature"
-            tools:text="Humadity" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_detail_temperature"
+                app:cardBackgroundColor="@color/background_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowElevation="9dp"
+                android:elevation="9dp">
+                <ProgressBar
+                    android:id="@+id/pb_weather_detail"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/tv_windspeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
-            android:layout_marginTop="30dp"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/tv_humidity"
-            app:layout_constraintTop_toBottomOf="@+id/card_temperature"
-            tools:text="Windspeed" />
+            <TextView
+                android:id="@+id/tv_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:paddingStart="40dp"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Humadity"
+                app:layout_constraintStart_toStartOf="@+id/card_detail_temperature"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
-            android:layout_marginTop="30dp"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/tv_windspeed"
-            app:layout_constraintTop_toBottomOf="@+id/card_temperature"
-            tools:text="UV" />
+            <TextView
+                android:id="@+id/tv_windspeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/tv_humidity"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Windspeed" />
 
-        <TextView
-            android:id="@+id/tv_rainfall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
-            android:layout_marginTop="30dp"
-            android:paddingStart="25dp"
-            android:paddingTop="10dp"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/tv_duration"
-            app:layout_constraintTop_toBottomOf="@+id/card_temperature"
-            tools:text="Rainfall" />
+            <TextView
+                android:id="@+id/tv_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/tv_windspeed"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="UV" />
 
-        <ImageView
-            android:id="@+id/iv_humidity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="10dp"
-            android:paddingStart="50dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/ic_humidity"
-            app:layout_constraintStart_toStartOf="@id/card_detail_temperature"
-            app:layout_constraintTop_toBottomOf="@+id/tv_humidity" />
+            <TextView
+                android:id="@+id/tv_rainfall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:paddingStart="25dp"
+                android:paddingTop="10dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/tv_duration"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Rainfall" />
 
-        <ImageView
-            android:id="@+id/iv_windspeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="10dp"
-            android:paddingStart="45dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/ic_wind"
-            app:layout_constraintStart_toEndOf="@id/iv_humidity"
-            app:layout_constraintTop_toBottomOf="@+id/tv_windspeed" />
+            <ImageView
+                android:id="@+id/iv_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:paddingStart="50dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/ic_humidity"
+                app:layout_constraintStart_toStartOf="@id/card_detail_temperature"
+                app:layout_constraintTop_toBottomOf="@+id/tv_humidity" />
 
-        <ImageView
-            android:id="@+id/iv_sun"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="10dp"
-            android:paddingStart="35dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/ic_sun"
-            app:layout_constraintStart_toEndOf="@id/iv_windspeed"
-            app:layout_constraintTop_toBottomOf="@+id/tv_duration" />
+            <ImageView
+                android:id="@+id/iv_windspeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:paddingStart="45dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/ic_wind"
+                app:layout_constraintStart_toEndOf="@id/iv_humidity"
+                app:layout_constraintTop_toBottomOf="@+id/tv_windspeed" />
 
-        <ImageView
-            android:id="@+id/iv_rainfall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="10dp"
-            android:paddingStart="30dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/ic_rainfall"
-            app:layout_constraintStart_toEndOf="@id/iv_sun"
-            app:layout_constraintTop_toBottomOf="@+id/tv_rainfall" />
+            <ImageView
+                android:id="@+id/iv_sun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:paddingStart="35dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/ic_sun"
+                app:layout_constraintStart_toEndOf="@id/iv_windspeed"
+                app:layout_constraintTop_toBottomOf="@+id/tv_duration" />
 
-        <TextView
-            android:id="@+id/tv_humadity_src"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="90%"
-            android:elevation="8dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="@id/card_detail_temperature"
-            app:layout_constraintTop_toBottomOf="@+id/iv_humidity"/>
+            <ImageView
+                android:id="@+id/iv_rainfall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:paddingStart="30dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/ic_rainfall"
+                app:layout_constraintStart_toEndOf="@id/iv_sun"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rainfall" />
 
-        <TextView
-            android:id="@+id/tv_windspeed_src"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="10 km/jam"
-            android:elevation="8dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toEndOf="@id/tv_humadity_src"
-            app:layout_constraintTop_toBottomOf="@+id/iv_windspeed"/>
+            <TextView
+                android:id="@+id/tv_humadity_src"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="90%"
+                android:elevation="8dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@id/card_detail_temperature"
+                app:layout_constraintTop_toBottomOf="@+id/iv_humidity"/>
 
-        <TextView
-            android:id="@+id/tv_duration_src"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="2"
-            android:elevation="8dp"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toEndOf="@id/tv_windspeed_src"
-            app:layout_constraintTop_toBottomOf="@+id/iv_sun"/>
+            <TextView
+                android:id="@+id/tv_windspeed_src"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="10 km/jam"
+                android:elevation="8dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toEndOf="@id/tv_humadity_src"
+                app:layout_constraintTop_toBottomOf="@+id/iv_windspeed"/>
 
-        <TextView
-            android:id="@+id/tv_rainfall_src"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="12%"
-            android:elevation="8dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toEndOf="@id/tv_duration_src"
-            app:layout_constraintTop_toBottomOf="@+id/iv_rainfall"/>
+            <TextView
+                android:id="@+id/tv_duration_src"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="2"
+                android:elevation="8dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toEndOf="@id/tv_windspeed_src"
+                app:layout_constraintTop_toBottomOf="@+id/iv_sun"/>
 
-        <TextView
-            android:id="@+id/tv_siaga"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/siaga_bencana"
-            android:textColor="@color/font1"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="60dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_detail_temperature" />
+            <TextView
+                android:id="@+id/tv_rainfall_src"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="12%"
+                android:elevation="8dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toEndOf="@id/tv_duration_src"
+                app:layout_constraintTop_toBottomOf="@+id/iv_rainfall"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_card"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/row_siaga_expandable"
+            android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_siaga"/>
+            app:layout_constraintTop_toBottomOf="@+id/vg_weather_detail">
+
+            <TextView
+                android:id="@+id/tv_siaga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/siaga_bencana"
+                android:textColor="@color/font1"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="60dp"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_siaga"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/row_siaga_expandable"/>
+
+            <ProgressBar
+                android:id="@+id/pb_warning_disaster"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/tv_siaga"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

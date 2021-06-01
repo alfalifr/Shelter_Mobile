@@ -68,5 +68,7 @@ class UserUseCaseImpl(
             is Fail -> localRes
         }
 
-//= when(val remoteRes = userRemoteSrc.savePassword())
+    override suspend fun getPassword(): Result<String> = userLocalSrc.getPassword()
+
+    //= when(val remoteRes = userRemoteSrc.savePassword())
 }

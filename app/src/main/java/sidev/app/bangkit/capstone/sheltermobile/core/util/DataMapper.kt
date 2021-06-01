@@ -81,7 +81,7 @@ object DataMapper {
 
 
     fun NewsResponse.toModel(type: Int): News = News(
-        timestamp = Util.getTimestamp(timestamp),
+        timestamp = timestamp,
         title = title,
         briefDesc = desc,
         linkImage = imgLink,
@@ -106,6 +106,8 @@ object DataMapper {
         _fname = name,
         _gender = gender,
     )
+
+    //fun convertRemoteTimestampToLocalFormat(remoteTimestamp: String): String = remoteTimestamp.split(" ")[0]
 
 
     fun <T> Result<T>.toListResult(): Result<List<T>> = when(this){

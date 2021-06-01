@@ -5,7 +5,7 @@ import java.sql.Timestamp
 
 @Entity(tableName = "news", primaryKeys = ["timestamp", "type"])
 data class NewsEntity(
-    val timestamp: Timestamp,
+    val timestamp: String,
     val title: String,
     val briefDesc: String,
     val linkImage: String,

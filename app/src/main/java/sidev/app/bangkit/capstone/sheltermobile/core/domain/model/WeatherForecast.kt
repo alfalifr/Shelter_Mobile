@@ -8,7 +8,7 @@ data class WeatherForecast(
     val rainfall: Float,
     val windSpeed: Float,
     val ultraviolet: Float,
-    val timestamp: Timestamp,
+    val timestamp: String,
 )
 
 /*

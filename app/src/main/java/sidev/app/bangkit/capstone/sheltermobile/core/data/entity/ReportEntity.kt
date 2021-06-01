@@ -7,7 +7,7 @@ import java.sql.Timestamp
 @Entity(tableName = "report")
 data class ReportEntity(
     @PrimaryKey
-    val timestamp: Timestamp,
+    val timestamp: String,
     val method: Int, //1 for call, 2 for form
     val response: String,
     val locationId: Int,

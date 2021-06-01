@@ -102,9 +102,9 @@ class LaporPesanFragment : Fragment() {
         titleLaporan = binding.textInputJudulLapor.text.toString()
         isiLaporan = binding.textInputLapor.text.toString()
 
-        val form = Form(Util.getTimestamp(),)
+        val form = Form(Util.getTimestampStr(),)
         val location = model.getCurrentLocation()
-        val data = Report(Util.getTimestamp(),Const.METHOD_FORM, location, )
+        val data = Report(Util.getTimestampStr(),Const.METHOD_FORM, location, )
     }
 
     private fun cameraFuction() {

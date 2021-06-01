@@ -32,6 +32,11 @@ object Const {
     const val GENDER_MALE = 'M'
     const val GENDER_FEMALE = 'F'
 
+    const val DAY_PATTERN = "EEEE"
+    const val VIEW_DATE_PATTERN = "dd MMMM yyyy"
+    const val VIEW_DATE_PATTERN_WITH_DAY = "$DAY_PATTERN, $VIEW_DATE_PATTERN"
+    const val DB_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
+
     //const val LEN_FORM_TITLE = 30
     //const val LEN_FORM_DESC = 300
 

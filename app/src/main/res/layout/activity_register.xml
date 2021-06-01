@@ -43,7 +43,7 @@
                     android:layout_height="180dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_disaster2" />
+                    android:src="@drawable/ic_earthquake" />
             </RelativeLayout>
 
             <androidx.cardview.widget.CardView

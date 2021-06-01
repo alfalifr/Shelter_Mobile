@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sidev.app.bangkit.capstone.sheltermobile">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Shelter_Mobile">
-        <activity android:name=".intro.SplashActivity"
+        <activity android:name=".ui.PengaturanEditActivity"></activity>
+        <activity
+            android:name=".intro.SplashActivity"
             android:label="SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -25,8 +27,7 @@
         <activity android:name=".ui.LoginActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/fullscreen">
-        </activity>
+            android:theme="@style/fullscreen"></activity>
     </application>
 
 </manifest>

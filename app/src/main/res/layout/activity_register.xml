@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@color/green_lite"
     android:focusableInTouchMode="true"
@@ -32,7 +32,7 @@
 
                 <TextView
                     style="@style/viewParent.headerText.NoMode"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="Mulai \nlangkah\nsiaga anda\ndengan\nShelter! "
@@ -43,7 +43,7 @@
                     android:layout_height="180dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_disaster2" />
+                    android:src="@drawable/ic_earthquake" />
             </RelativeLayout>
 
             <androidx.cardview.widget.CardView

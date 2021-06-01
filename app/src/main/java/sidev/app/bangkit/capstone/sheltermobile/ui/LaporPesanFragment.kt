@@ -6,61 +6,53 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.provider.MediaStore
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
-import sidev.app.bangkit.capstone.sheltermobile.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Form
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.ReportViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
-import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentLaporPesanBinding
-import sidev.lib.android.std.tool.util.`fun`.startAct
+import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivityLaporPesanBinding
+import sidev.lib.android.std.tool.util._BitmapUtil
+import sidev.lib.android.std.tool.util.`fun`.toast
+import java.io.File
 
 
 @Suppress("DEPRECATION")
-class LaporPesanFragment : Fragment() {
+class LaporPesanFragment : AppCompatActivity() {
 
     companion object {
         private const val CAMERA_PERMISSION_CODE = 1
         private const val CAMERA_REQUEST_CODE = 2
     }
 
-    private lateinit var binding: FragmentLaporPesanBinding
+    private lateinit var binding: ActivityLaporPesanBinding
     private lateinit var model: ReportViewModel
-    private lateinit var data : Report
+    private lateinit var filePhoto: File
 
     private var titleLaporan: String = ""
     private var isiLaporan: String = ""
     private var isTitleLaporanNotBlank = false
     private var isIsiLaporanNotBlank = false
 
+
     private val isAllValid: Boolean get() = isTitleLaporanNotBlank && isIsiLaporanNotBlank
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentLaporPesanBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
 
         //call the function
         cameraFuction()
         laporPesan()
     }
+
 
     private fun laporPesan() {
 
@@ -79,9 +71,9 @@ class LaporPesanFragment : Fragment() {
                 }
             }
             textInputLapor.addTextChangedListener {
-                if (it != null){
+                if (it != null) {
                     isIsiLaporanNotBlank = Util.validateFormDesc(it.toString())
-                    if (isIsiLaporanNotBlank){
+                    if (isIsiLaporanNotBlank) {
                         textInputLapor.error = null
                     } else {
                         textInputLapor.error = "Isi laporan tidak boleh kosong"
@@ -91,8 +83,14 @@ class LaporPesanFragment : Fragment() {
         }
 
         model = ViewModelDi.getReportViewModel(this)
-        model.sendReport(data)
-
+        model.onSend.observe(this) {
+            if (it != null) {
+                if (it) {
+                    finish()
+                    toast("Laporan anda sudah terkirim, akan kami proses")
+                }
+            }
+        }
 
     }
 
@@ -102,15 +100,17 @@ class LaporPesanFragment : Fragment() {
         titleLaporan = binding.textInputJudulLapor.text.toString()
         isiLaporan = binding.textInputLapor.text.toString()
 
-        val form = Form(Util.getTimestampStr(),)
+        val form = Form(Util.getTimestampStr(), titleLaporan, isiLaporan, listOf(filePhoto.absolutePath))
         val location = model.getCurrentLocation()
-        val data = Report(Util.getTimestampStr(),Const.METHOD_FORM, location, )
+        val data = Report(Util.getTimestampStr(), Const.METHOD_FORM, location, form)
+
+        model.sendReport(data)
     }
 
     private fun cameraFuction() {
         binding.attachPhoto.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
-                    requireContext(),
+                    this,
                     Manifest.permission.CAMERA
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
@@ -119,7 +119,7 @@ class LaporPesanFragment : Fragment() {
             } else {
                 ActivityCompat.requestPermissions(
                     (
-                            requireActivity()),
+                            this),
                     arrayOf(Manifest.permission.CAMERA),
                     CAMERA_PERMISSION_CODE
                 )
@@ -140,7 +140,7 @@ class LaporPesanFragment : Fragment() {
                 startActivityForResult(intent, CAMERA_REQUEST_CODE)
             } else {
                 Toast.makeText(
-                    context,
+                    this,
                     "Ups anda menolak Shelter menggunakan kamera anda",
                     Toast.LENGTH_LONG
                 ).show()
@@ -155,6 +155,8 @@ class LaporPesanFragment : Fragment() {
                 val thumbNail: Bitmap =
                     data?.extras?.get("data") as Bitmap //data can be from any type but we convert it to Bitmap hehe :p
                 binding.ivImage.setImageBitmap(thumbNail)
+                filePhoto = Util.getExternalFile(this, "foto_lapor.png")!!
+                _BitmapUtil.savePict(thumbNail, filePhoto.parentFile!!.absolutePath, filePhoto.name)
             }
         }
     }

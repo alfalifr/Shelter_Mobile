@@ -34,6 +34,9 @@ class ReportViewModel(app: Application?, private val useCase: ReportUseCase): As
     val reportHistory: LiveData<List<Report>> get()= mReportHistory
     private val mReportHistory = MutableLiveData<List<Report>>()
 
+    val onSend: LiveData<Boolean> get()= mOnSend
+    private val mOnSend = MutableLiveData<Boolean>()
+
     fun getCurrentLocation(): Location = runBlocking {
         when(val res = useCase.getCurrentLocation()) {
             is Success -> res.data
@@ -58,6 +61,7 @@ class ReportViewModel(app: Application?, private val useCase: ReportUseCase): As
         doOnPreAsyncTask()
         job = GlobalScope.launch(Dispatchers.IO) {
             //useCase. TODO ALIF: 31 Mei 2021
+
         }
     }
 }

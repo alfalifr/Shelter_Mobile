@@ -21,9 +21,9 @@
         android:title="@string/emergency"
         app:cnb_iconColor="@color/white"/>
     <item
-        android:id="@+id/setting"
-        android:icon="@drawable/ic_setting"
-        android:title="@string/pengaturan"
+        android:id="@+id/profil"
+        android:icon="@drawable/ic_user"
+        android:title="@string/profile"
         app:cnb_iconColor="@color/white"/>
 
 

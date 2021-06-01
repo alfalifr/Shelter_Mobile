@@ -12,6 +12,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.DashboardUseCase
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.DisasterGroup
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.lib.`val`.SuppressLiteral
@@ -47,9 +48,7 @@ class DashboardViewModel(app: Application?, val useCase: DashboardUseCase): Asyn
 
     fun getCurrentLocation(forceLoad: Boolean = false){
         if(currentLocation.value != null && !forceLoad) return
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_CURRENT_LOC) {
             when(val result = useCase.getCurrentLocation()){
                 is Success -> mCurrentLocation.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
@@ -59,9 +58,7 @@ class DashboardViewModel(app: Application?, val useCase: DashboardUseCase): Asyn
 
     fun getWeatherForecast(forceLoad: Boolean = false){
         if(weatherForecast.value != null && !forceLoad) return
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_WEATHER_FORECAST) {
             val timestamp = Util.getTimestampStr()
             when(val result = useCase.getWeatherForecast(timestamp)){
                 is Success -> mWeatherForecast.postValue(result.data)
@@ -72,9 +69,7 @@ class DashboardViewModel(app: Application?, val useCase: DashboardUseCase): Asyn
 
     fun getHighlightedWarningStatus(forceLoad: Boolean = false){
         if(higlightedWarningStatus.value != null && !forceLoad) return
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_WARNING_HIGHLIGHT) {
             val timestamp = Util.getTimestampStr()
             when(val result = useCase.getHighlightedWarningStatus(timestamp)){
                 is Success -> mhiglightedWarningStatus.postValue(result.data)
@@ -85,9 +80,7 @@ class DashboardViewModel(app: Application?, val useCase: DashboardUseCase): Asyn
 
     fun getDisasterGroupList(forceLoad: Boolean = false){
         if(disasterStatusList.value != null && !forceLoad) return
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_DISASTER_GROUP_LIST) {
             val timestamp = Util.getTimestampStr()
             when(val result = useCase.getDisasterGroupList(timestamp)){
                 is Success -> {

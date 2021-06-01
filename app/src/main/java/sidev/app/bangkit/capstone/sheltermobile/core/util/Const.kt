@@ -22,6 +22,20 @@ object Const {
     const val KEY_IS_SINGLE = "is_single"
     const val SHARED_PREF_NAME = "_shared_pref_"
 
+    const val KEY_CURRENT_LOC = "current_location"
+    const val KEY_WEATHER_FORECAST = "getWeatherForecast"
+    const val KEY_WARNING_HIGHLIGHT = "getHighlightedWarningStatus"
+    const val KEY_DISASTER_GROUP_LIST = "getDisasterGroupList"
+    const val KEY_SIGNUP = "signup"
+    const val KEY_LOGIN = "login"
+    const val KEY_ARTICLE_LIST = "getArticleList"
+    const val KEY_NEWS_LIST = "getNewsList"
+    const val KEY_CURRENT_USER = "getCurrentUser"
+    const val KEY_CHANGE_PSWD = "changePassword"
+    const val KEY_REPORT_LIST = "getReportList"
+    const val KEY_SEND_REPORT = "sendReport"
+    const val KEY_SEARCH_NEWS = "search"
+
     const val CODE_USER_NOT_FOUND = 101
     const val CODE_BAD_PARAMETER = 102
     const val CODE_USER_ALREADY_REGISTERED = 103

@@ -11,6 +11,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.NewsUseCase
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.UserUseCase
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.lib.`val`.SuppressLiteral
 
 class ProfileViewModel(app: Application?, private val useCase: UserUseCase): AsyncVm(app) {
@@ -42,9 +43,7 @@ class ProfileViewModel(app: Application?, private val useCase: UserUseCase): Asy
 
     fun getCurrentUser(forceLoad: Boolean = false){
         if(mCurrentUser.value != null && !forceLoad) return
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_CURRENT_USER) {
             when(val result = useCase.getCurrentUser()){
                 is Success -> mCurrentUser.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
@@ -54,9 +53,7 @@ class ProfileViewModel(app: Application?, private val useCase: UserUseCase): Asy
 
     fun getCurrentLocation(forceLoad: Boolean = false) {
         if (mCurrentLocation.value != null && !forceLoad) return
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_CURRENT_LOC) {
             when(val result = useCase.getCurrentLocation()){
                 is Success -> mCurrentLocation.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
@@ -65,9 +62,7 @@ class ProfileViewModel(app: Application?, private val useCase: UserUseCase): Asy
     }
 
     fun changePassword(newPswd: String) {
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_CHANGE_PSWD) {
             when(val oldPswdResult = useCase.getPassword()){
                 is Success -> {
                     val old = oldPswdResult.data

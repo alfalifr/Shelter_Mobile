@@ -5,14 +5,14 @@ import java.sql.Timestamp
 
 @Entity(tableName = "warning", primaryKeys = ["timestamp", "locationId", "disasterId"])
 data class WarningEntity(
-    val timestamp: Timestamp,
+    val timestamp: String,
     val locationId: Int,
     val disasterId: Int,
     val emergencyId: Int,
     val title: String,
     val desc: String,
     val imgLink: String,
-    val relatedNewsTimestamp: Timestamp,
+    val relatedNewsTimestamp: String,
 )
 
 

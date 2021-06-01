@@ -9,6 +9,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.News
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.NewsUseCase
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.lib.`val`.SuppressLiteral
 
@@ -38,9 +39,7 @@ class NewsViewModel(app: Application?, private val useCase: NewsUseCase): AsyncV
 
     fun getArticleList(page: Int = 1, forceLoad: Boolean = false){
         if(articleList.value != null && !forceLoad) return
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_ARTICLE_LIST) {
             val timestamp = Util.getTimestampStr()
             when(val result = useCase.getArticleList(timestamp)){
                 is Success -> mArticleList.postValue(result.data)
@@ -50,9 +49,7 @@ class NewsViewModel(app: Application?, private val useCase: NewsUseCase): AsyncV
     }
     fun getNewsList(page: Int = 1, forceLoad: Boolean = false){
         if(newsList.value != null && !forceLoad) return
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_NEWS_LIST) {
             val timestamp = Util.getTimestampStr()
             when(val result = useCase.getArticleList(timestamp)){
                 is Success -> mNewsList.postValue(result.data)

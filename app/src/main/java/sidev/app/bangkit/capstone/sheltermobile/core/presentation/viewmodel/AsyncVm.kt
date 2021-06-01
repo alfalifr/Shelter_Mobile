@@ -6,10 +6,7 @@ import android.content.Context
 import androidx.annotation.CallSuper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.jetbrains.anko.runOnUiThread
 
 
@@ -22,17 +19,20 @@ open class AsyncVm(app: Application?): ViewModel() {
     protected var ctx: Context? = app
         private set
 
-    private var isJobJoin = false
+    //private var isJobJoin = false
+    protected var jobs: MutableMap<String, Job> = mutableMapOf()
+/*
     protected var job: Job?= null
         set(v){
             if(!isJobJoin)
                 field = v
         }
+ */
 
     /**
      * Executed before any async task in `this` runs.
      */
-    protected var onPreAsyncTask: (() -> Unit)?= null
+    protected var onPreAsyncTask: ((key: String) -> Unit)?= null
     private var onCallNotSuccess: ((code: Int, e: Throwable?) -> Unit)?= null
 
     /**
@@ -47,22 +47,34 @@ open class AsyncVm(app: Application?): ViewModel() {
         ctx = null //So there won't be a memory leak.
     }
 
-    protected fun cancelJob(){
-        job?.cancel()
+    protected fun startJob(
+        key: String,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        jobs[key]?.cancel()
+        doOnPreAsyncTask(key)
+        GlobalScope.launch(dispatcher, start, block)
     }
-    fun onPreAsyncTask(f: (() -> Unit)?){
+
+    protected fun cancelJob(key: String){
+        jobs[key]?.cancel()
+    }
+
+    fun onPreAsyncTask(f: ((key: String) -> Unit)?){
         onPreAsyncTask= f
     }
     fun onCallNotSuccess(f: ((code: Int, e: Throwable?) -> Unit)?){
         onCallNotSuccess= f
     }
-    protected fun doOnPreAsyncTask(){
-        onPreAsyncTask?.also { ctx?.runOnUiThread { it() } }
+    protected fun doOnPreAsyncTask(key: String){
+        onPreAsyncTask?.also { ctx?.runOnUiThread { it(key) } }
     }
     protected fun doCallNotSuccess(code: Int, e: Throwable?){
         onCallNotSuccess?.also { ctx?.runOnUiThread { it(code, e) } }
     }
-
+/*
     fun multipleJob(lazyBlock: () -> List<Job?>) {
         cancelJob()
         isJobJoin = false
@@ -84,4 +96,5 @@ open class AsyncVm(app: Application?): ViewModel() {
             isJobJoin = false
         }
     }
+ */
 }

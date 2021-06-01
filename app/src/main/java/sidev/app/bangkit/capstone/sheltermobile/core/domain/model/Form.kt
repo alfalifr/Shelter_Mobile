@@ -4,7 +4,7 @@ import java.sql.Timestamp
 
 data class Form(
     //val id: Int,
-    val timestamp: Timestamp,
+    val timestamp: String,
     val title: String,
     val desc: String,
     val photoLinkList: List<String>,

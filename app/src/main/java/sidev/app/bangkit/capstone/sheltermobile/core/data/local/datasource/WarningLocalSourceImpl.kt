@@ -10,7 +10,6 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toEntity
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModelDetail
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
-import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.timestampToString
 
 class WarningLocalSourceImpl(
     private val dao: WarningDao,
@@ -60,7 +59,7 @@ class WarningLocalSourceImpl(
                 is Success -> res.data
                 else -> return Util.noEntityFailResult()
             }
-            val news = when(val res = newsLocalSrc.getNews(it.timestamp.timestampToString())){
+            val news = when(val res = newsLocalSrc.getNews(it.timestamp)){
                 is Success -> res.data
                 else -> return Util.noEntityFailResult()
             }

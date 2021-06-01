@@ -5,19 +5,24 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Emergency
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
+import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.TimeString
 import sidev.lib.`val`.SuppressLiteral
-import java.sql.Timestamp
+import sidev.lib.android.std.tool.util._FileUtil
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 object Util {
     private const val DEFAULT_ASYNC_TIMEOUT = 10000L
+    //private val viewSdf: SimpleDateFormat by lazy { SimpleDateFormat(Const.VIEW_DATE_PATTERN, Locale.ROOT) }
+    //private val dbSdf: SimpleDateFormat by lazy { SimpleDateFormat(Const.DB_TIME_PATTERN, Locale.ROOT) }
 
     fun <T> LiveData<T>.waitForValue(
         timeout: Long = DEFAULT_ASYNC_TIMEOUT,
@@ -60,13 +65,37 @@ object Util {
 
     fun getSharedPref(c: Context): SharedPreferences = c.getSharedPreferences(Const.SHARED_PREF_NAME, Context.MODE_PRIVATE)
 
-    fun getTimestampStr(): String = getTimestamp(null).toString()
-    fun getTimestamp(timeStr: String? = null): Timestamp = Timestamp.valueOf(timeStr)
+    fun getTime(): Long = Calendar.getInstance().time.time
+    fun getFormattedTimeStr(outPattern: String, timeStr: TimeString?= null): String {
+        val sdf = SimpleDateFormat(outPattern, Locale.ROOT)
+        val date = Date(timeStr?.timeLong ?: getTime())
+        return sdf.format(date)
+    }
 
-    fun Timestamp.timestampToString(pattern: String = "dd-mm-yyyy"): String = toString() //TODO 29 Mei 2021: pattern blum kepake
+    fun getDayName(timeStr: TimeString): String = getFormattedTimeStr(Const.DAY_PATTERN, timeStr)
+    fun getTimestampStr(/*forView: Boolean = false, */timeStr: TimeString? = null): String = getFormattedTimeStr(Const.DB_TIME_PATTERN, timeStr)
+    fun getDateStr(timeStr: TimeString): String = getFormattedTimeStr(Const.VIEW_DATE_PATTERN, timeStr)
+    fun getDateWithDayStr(timeStr: TimeString): String = getFormattedTimeStr(Const.VIEW_DATE_PATTERN_WITH_DAY, timeStr)
 
     fun getFormattedStr(value: Float, unit: String? = null): String = "%.2f".format(value) + (if(unit != null) " $unit" else "")
     fun getFormattedStr(warning: WarningStatus): String = "Zona ${warning.emergency.name} ${warning.disaster.name}"
+
+    fun getExternalFile(c: Context, fileName: String): File? {
+        var file = _FileUtil.getExternalFile(c, fileName) ?: return null
+        if(file.exists()){
+            val lastIndexOfDot = fileName.indexOfLast { it == '.' }
+            val prefixFileName = fileName.substring(0, lastIndexOfDot)
+            val extension = fileName.substring(lastIndexOfDot)
+
+            var count = 2
+            do {
+                file = _FileUtil.getExternalFile(c, "${prefixFileName}_$count$extension")
+                    ?: return null
+                count++
+            } while(file.exists())
+        }
+        return file
+    }
 
     fun getInsertResult(count: Int, totalCount: Int): Result<Int> = when(count) {
         totalCount -> Success(count, 0)

@@ -31,7 +31,7 @@ class ReportLocalSourceImpl(
                         is Fail -> return res
                     }
                 }
-            when(val res = formLocalSrc.getForm(loc.formId)){
+            when(val res = formLocalSrc.getForm(loc.timestamp)){
                 is Success -> loc.toModel(location, res.data)
                 is Fail -> return res
             }
@@ -53,7 +53,7 @@ class ReportLocalSourceImpl(
                         is Fail -> return res
                     }
                 }
-            when(val res = formLocalSrc.getForm(loc.formId)){
+            when(val res = formLocalSrc.getForm(loc.timestamp)){
                 is Success -> loc.toModelDetail(location, res.data)
                 is Fail -> return res
             }
@@ -68,7 +68,7 @@ class ReportLocalSourceImpl(
         if(locRes !is Success)
             return locRes as Fail
 
-        val formRes = formLocalSrc.getForm(entity.formId)
+        val formRes = formLocalSrc.getForm(entity.timestamp)
         if(formRes !is Success)
             return formRes as Fail
 

@@ -11,6 +11,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.ReportUseCase
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.lib.`val`.SuppressLiteral
 import java.lang.IllegalStateException
 
@@ -46,9 +47,7 @@ class ReportViewModel(app: Application?, private val useCase: ReportUseCase): As
 
     fun getReportList(top: Int = 5, forceLoad: Boolean = false) {
         if (reportHistory.value != null && !forceLoad) return
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_REPORT_LIST) {
             when(val result = useCase.getReportList()){
                 is Success -> mReportHistory.postValue(if(top <= 0) result.data else result.data.subList(0, top))
                 is Fail -> doCallNotSuccess(result.code, result.error)
@@ -57,11 +56,8 @@ class ReportViewModel(app: Application?, private val useCase: ReportUseCase): As
     }
 
     fun sendReport(data: Report){
-        cancelJob()
-        doOnPreAsyncTask()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        startJob(Const.KEY_SEND_REPORT) {
             //useCase. TODO ALIF: 31 Mei 2021
-
         }
     }
 }

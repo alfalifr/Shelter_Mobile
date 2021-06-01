@@ -5,7 +5,7 @@ import java.sql.Timestamp
 
 @Entity(tableName = "weather", primaryKeys = ["timestamp", "locationId"])
 data class WeatherEntity(
-    val timestamp: Timestamp,
+    val timestamp: String,
     val locationId: Int,
     val temperature: Float,
     val humidity: Float,

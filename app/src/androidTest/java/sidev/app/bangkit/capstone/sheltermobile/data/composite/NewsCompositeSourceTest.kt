@@ -76,7 +76,6 @@ class NewsCompositeSourceTest {
             }
 
             dataList = list
-            loge("dataList= $dataList")
 
             val fromComposite = compositeSrc.getArticleList(timestamp)
             assert(fromComposite is Success)
@@ -92,8 +91,6 @@ class NewsCompositeSourceTest {
 
     @Test
     fun _2_getEmergency(){
-        prin("_2_getEmergency AWAL +===================")
-        loge("_2_getEmergency AWAL +===================")
         runBlocking {
             val randomItem = dataList.random()
 

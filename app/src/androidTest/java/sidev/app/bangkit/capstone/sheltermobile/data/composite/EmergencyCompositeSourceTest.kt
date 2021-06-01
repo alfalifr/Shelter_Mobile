@@ -70,8 +70,6 @@ class EmergencyCompositeSourceTest {
 
     @Test
     fun _2_getEmergency(){
-        prin("_2_getEmergency AWAL +===================")
-        loge("_2_getEmergency AWAL +===================")
         runBlocking {
             val fromComposite = compositeSrc.getEmergency(dummyItem.id)
             assert(fromComposite is Success)

@@ -6,17 +6,15 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.User
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.AuthData
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.UserRepo
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.*
 
 class UserUseCaseImpl(
     private val repo: UserRepo,
     private val userLocalSrc: UserLocalSource,
     private val userRemoteSrc: UserRemoteSource,
     private val locationLocalSrc: LocationLocalSource,
-): UserUseCase, UserRepo by repo {
+    private val locationRepo: LocationRepo,
+): UserUseCase, UserRepo by repo, LocationRepo by locationRepo {
     override suspend fun getCurrentLocation(): Result<Location> = locationLocalSrc.getCurrentLocation()
     override suspend fun getCurrentUser(): Result<User> = userLocalSrc.getCurrentUser()
 
@@ -24,10 +22,11 @@ class UserUseCaseImpl(
         is Success -> {
             val isPswdResSuccess = userLocalSrc.savePassword(authData.password) is Success
             val isEmailResSuccess = userLocalSrc.saveEmail(authData.email) is Success
+            val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
 
             when {
-                isPswdResSuccess && isEmailResSuccess -> Success(true, 0)
-                !isPswdResSuccess && !isEmailResSuccess -> Fail("Can't save both email and password to local", -1, null)
+                isPswdResSuccess && isEmailResSuccess && isSetDefaultLocSuccess-> Success(true, 0)
+                !isPswdResSuccess && !isEmailResSuccess && !isSetDefaultLocSuccess -> Fail("Can't save both email, password, and default location to local", -1, null)
                 else -> Success(true, 1)
             }
         }
@@ -39,16 +38,26 @@ class UserUseCaseImpl(
             is Success -> {
                 val isPswdResSuccess = userLocalSrc.savePassword(authData.password) is Success
                 val isEmailResSuccess = userLocalSrc.saveEmail(authData.email) is Success
+                val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
 
                 when {
-                    isPswdResSuccess && isEmailResSuccess -> Success(true, 0)
-                    !isPswdResSuccess && !isEmailResSuccess -> Fail("Can't save both email and password to local", -1, null)
+                    isPswdResSuccess && isEmailResSuccess && isSetDefaultLocSuccess-> Success(true, 0)
+                    !isPswdResSuccess && !isEmailResSuccess && !isSetDefaultLocSuccess-> Fail("Can't save both email, password, and default location to local", -1, null)
                     else -> Success(true, 1)
                 }
             }
             is Fail -> localRes
         }
         is Fail -> remoteRes
+    }
+
+    override suspend fun saveCurrentLocation(data: Location): Result<Boolean> = locationLocalSrc.saveCurrentLocation(data)
+    override suspend fun setDefaultCurrentLocation(): Result<Boolean> = when(val locRes = locationRepo.getAllLocation()) {
+        is Success -> {
+            val firstData = locRes.data.first()
+            saveCurrentLocation(firstData)
+        }
+        is Fail -> locRes
     }
 
     override suspend fun changePassword(oldPassword: String, newPassword: String): Result<Boolean> =

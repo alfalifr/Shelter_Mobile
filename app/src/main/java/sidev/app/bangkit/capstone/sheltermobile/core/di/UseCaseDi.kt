@@ -14,6 +14,7 @@ object UseCaseDi {
         RepoDi.Local.getUserSrc(),
         RepoDi.Remote.getUserSrc(),
         RepoDi.Local.getLocationSrc(),
+        RepoDi.getLocationRepo(),
     )
     fun getWarningUseCase(): WarningUseCase = WarningUseCaseImpl(RepoDi.getWarningRepo())
     fun getWeatherUseCase(): WeatherUseCase = WeatherUseCaseImpl(RepoDi.getWeatherRepo())

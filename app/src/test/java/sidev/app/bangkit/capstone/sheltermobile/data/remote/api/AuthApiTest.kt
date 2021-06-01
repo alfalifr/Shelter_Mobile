@@ -2,17 +2,19 @@ package sidev.app.bangkit.capstone.sheltermobile.data.remote.api
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.FixMethodOrder
 import org.junit.Test
+import org.junit.runners.MethodSorters
 import sidev.app.bangkit.capstone.sheltermobile.DummyTest
 import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.AppRetrofit
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.AuthApi
 import sidev.lib.console.prine
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class AuthApiTest {
     companion object {
         val api: AuthApi by lazy { AppRetrofit.authApi }
-
     }
 
     @Test

@@ -11,6 +11,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.DisasterGroup
+import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toTimeString
 import java.lang.IllegalArgumentException
 
 object DataMapper {
@@ -32,16 +33,18 @@ object DataMapper {
         }
     }
 
+    private fun String.toTimeString(pattern: String = Const.DB_TIME_PATTERN): TimeString = TimeString(this, pattern)
+
     fun DisasterEntity.toModel(): Disaster = Disaster(id, name)
     fun EmergencyEntity.toModel(): Emergency = Emergency(id, name, color, severity)
     fun LocationEntity.toModel(): Location = Location(id, name, Coordinate(latitude, longitude))
-    fun NewsEntity.toModel(): News = News(timestamp, title, briefDesc, linkImage, link, type)
-    fun ReportEntity.toModel(location: Location, form: Form): Report = Report(timestamp, method, location, form)
+    fun NewsEntity.toModel(): News = News(timestamp.toTimeString(), title, briefDesc, linkImage, link, type)
+    fun ReportEntity.toModel(location: Location, form: Form): Report = Report(timestamp.toTimeString(), method, location, form)
     fun ReportEntity.toModelDetail(location: Location, form: Form): ReportDetail = ReportDetail(toModel(location, form), response)
-    fun FormEntity.toModel(): Form = Form(timestamp, title, desc, photoLinkList.split(Const.CHAR_LINK_SEPARATOR))
+    fun FormEntity.toModel(): Form = Form(timestamp.toTimeString(), title, desc, photoLinkList.split(Const.CHAR_LINK_SEPARATOR))
     fun UserEntity.toModel(): User = User(email, name, gender)
     fun WarningEntity.toModel(disaster: Disaster, emergency: Emergency, location: Location): WarningStatus = WarningStatus(
-        disaster, emergency, title, timestamp, location, imgLink
+        disaster, emergency, title, timestamp.toTimeString(), location, imgLink
     )
     fun WarningEntity.toModelDetail(disaster: Disaster, emergency: Emergency, location: Location, relatedNews: News): WarningDetail = WarningDetail(
         status = toModel(disaster, emergency, location),
@@ -49,28 +52,28 @@ object DataMapper {
         relatedNews = relatedNews,
     )
     fun WeatherEntity.toModel(): WeatherForecast = WeatherForecast(
-        temperature, humidity, rainfall, windSpeed, ultraviolet, timestamp
+        temperature, humidity, rainfall, windSpeed, ultraviolet, timestamp.toTimeString()
     )
 
     fun Disaster.toEntity(): DisasterEntity = DisasterEntity(id, name)
     fun Emergency.toEntity(): EmergencyEntity = EmergencyEntity(id, name, color, severity)
     fun Location.toEntity(parentId: Int): LocationEntity = LocationEntity(id, name, coordinate.latitude, coordinate.longitude, parentId)
-    fun News.toEntity(): NewsEntity = NewsEntity(timestamp, title, briefDesc, linkImage, link, type)
-    fun ReportDetail.toEntity(): ReportEntity = ReportEntity(report.timestamp, report.method, response, report.location.id)
-    fun Form.toEntity(): FormEntity = FormEntity(timestamp, title, desc, photoLinkList.joinToString(Const.CHAR_LINK_SEPARATOR.toString()))
+    fun News.toEntity(): NewsEntity = NewsEntity(timestamp.time, title, briefDesc, linkImage, link, type)
+    fun ReportDetail.toEntity(): ReportEntity = ReportEntity(report.timestamp.time, report.method, response, report.location.id)
+    fun Form.toEntity(): FormEntity = FormEntity(timestamp.time, title, desc, photoLinkList.joinToString(Const.CHAR_LINK_SEPARATOR.toString()))
     fun User.toEntity(): UserEntity = UserEntity(email, name, gender)
     fun WarningDetail.toEntity(): WarningEntity = WarningEntity(
-        timestamp = status.timestamp,
+        timestamp = status.timestamp.time,
         locationId = status.location.id,
         disasterId = status.disaster.id,
         emergencyId = status.emergency.id,
         title = status.title,
         desc = desc,
         imgLink = status.imgLink,
-        relatedNewsTimestamp = relatedNews.timestamp
+        relatedNewsTimestamp = relatedNews.timestamp.time
     )
     fun WeatherForecast.toEntity(locationId: Int): WeatherEntity = WeatherEntity(
-        timestamp = timestamp,
+        timestamp = timestamp.time,
         locationId = locationId,
         temperature = temperature,
         humidity = humidity,
@@ -81,7 +84,7 @@ object DataMapper {
 
 
     fun NewsResponse.toModel(type: Int): News = News(
-        timestamp = timestamp,
+        timestamp = timestamp.toTimeString(),
         title = title,
         briefDesc = desc,
         linkImage = imgLink,

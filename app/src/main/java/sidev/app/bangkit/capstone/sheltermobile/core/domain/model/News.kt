@@ -1,9 +1,7 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.domain.model
 
-import java.sql.Timestamp
-
 data class News(
-    val timestamp: String,
+    val timestamp: TimeString,
     val title: String,
     val briefDesc: String,
     val linkImage: String,

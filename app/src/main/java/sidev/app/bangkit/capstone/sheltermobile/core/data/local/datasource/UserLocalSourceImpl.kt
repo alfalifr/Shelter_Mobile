@@ -19,7 +19,7 @@ class UserLocalSourceImpl(private val dao: UserDao, private val ctx: Context): U
     override suspend fun saveUser(data: User): Result<Boolean> {
         val entity = data.toEntity()
         val insertedCount = dao.saveUser(entity)
-        return if(insertedCount == 1) Success(true, 0)
+        return if(insertedCount >= 0L) Success(true, 0)
         else Util.cantInsertFailResult()
     }
 

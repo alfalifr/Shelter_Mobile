@@ -12,5 +12,14 @@ interface WarningDao {
     fun getWarningStatusBatch(disasterId: Int, locationId: Int, startTimestamp: String): List<WarningEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveWarningList(list: List<WarningEntity>): Int
+    fun saveWarning(data: WarningEntity): Long
+
+    fun saveWarningList(list: List<WarningEntity>): Int {
+        var inserted = 0
+        for(e in list) {
+            if(saveWarning(e) >= 0)
+                inserted++
+        }
+        return inserted
+    }
 }

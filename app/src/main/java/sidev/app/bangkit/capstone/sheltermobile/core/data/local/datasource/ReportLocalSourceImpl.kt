@@ -81,7 +81,8 @@ class ReportLocalSourceImpl(
 
     override suspend fun saveReportDetail(data: ReportDetail): Result<Int> {
         val entity = data.toEntity() //ReportDetail(data, "").toEntity()
-        val insertedCount = dao.saveReport(entity)
+        val rowId = dao.saveReport(entity)
+        val insertedCount = if(rowId >= 0) 1 else 0
         return Util.getInsertResult(insertedCount, 1)
     }
 

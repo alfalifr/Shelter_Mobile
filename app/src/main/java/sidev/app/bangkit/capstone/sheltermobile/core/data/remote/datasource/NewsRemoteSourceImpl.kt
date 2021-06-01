@@ -18,6 +18,8 @@ class NewsRemoteSourceImpl(private val api: NewsApi): NewsRemoteSource {
     override suspend fun getArticleList(startTimestamp: String): Result<List<News>> = getDataList(startTimestamp, Const.TYPE_ARTICLE)
 
     private suspend fun getDataList(startTimestamp: String, type: Int): Result<List<News>> {
+        if(type != Const.TYPE_ARTICLE && type != Const.TYPE_NEWS)
+            throw IllegalArgumentException("No such type ($type)")
         val body = NewsBody(type)
         val call = api.getNews(body)
         return call.toListResult {
@@ -32,7 +34,7 @@ class NewsRemoteSourceImpl(private val api: NewsApi): NewsRemoteSource {
     private suspend fun getData(timestamp: String, type: Int): Result<News> = when(val res = getDataList(timestamp, type)) {
         is Success -> {
             //val time = Util.getTimestampStr(timestamp)
-            val news = res.data.find { it.timestamp == timestamp }
+            val news = res.data.find { it.timestamp.time == timestamp }
             if(news != null) Success(news, 0)
             else Util.noEntityFailResult()
         }

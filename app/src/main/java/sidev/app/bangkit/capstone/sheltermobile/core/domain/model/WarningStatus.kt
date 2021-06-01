@@ -9,7 +9,7 @@ data class WarningStatus(
     val disaster: Disaster,
     val emergency: Emergency,
     val title: String,
-    val timestamp: String,
+    val timestamp: TimeString,
     val location: Location,
     val imgLink: String,
 ): Parcelable

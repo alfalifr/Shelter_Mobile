@@ -21,5 +21,14 @@ interface LocationDao {
     fun getLocation(coordinate: Coordinate): LocationEntity? = getLocation(coordinate.latitude, coordinate.longitude)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveLocationList(list: List<LocationEntity>): Int
+    fun saveLocation(data: LocationEntity): Long
+
+    fun saveLocationList(list: List<LocationEntity>): Int {
+        var inserted = 0
+        for(e in list){
+            if(saveLocation(e) >= 0)
+                inserted++
+        }
+        return inserted
+    }
 }

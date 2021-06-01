@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.DisasterWarningAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.DashboardViewModel
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentHomeBinding
 import sidev.lib.android.std.tool.util.`fun`.bgColorTint
@@ -50,9 +51,28 @@ class HomeFragment : Fragment() {
         }
 
         vm.apply {
+            onPreAsyncTask {
+                when(it) {
+                    Const.KEY_CURRENT_LOC -> {
+                        binding.apply {
+                            pbLocation.visibility = View.VISIBLE
+                            ivLocation.text = ""
+                        }
+                    }
+                    Const.KEY_DISASTER_GROUP_LIST -> showLoading(binding.pbWarningDisaster, binding.rvCard)
+                    Const.KEY_WEATHER_FORECAST -> {
+                        showLoading(binding.pbWeather, binding.vgWeather)
+                        showLoading(binding.pbWeatherDetail, binding.vgWeatherDetail)
+                    }
+                    Const.KEY_WARNING_HIGHLIGHT -> showLoading(binding.pbWarningHighlight, binding.vgWarningHighlight)
+                }
+            }
             currentLocation.observe(viewLifecycleOwner){
                 if(it != null) {
-                    binding.ivLocation.text = it.name
+                    binding.apply {
+                        pbLocation.visibility = View.GONE
+                        ivLocation.text = it.name
+                    }
                 }
             }
             weatherForecast.observe(viewLifecycleOwner){
@@ -63,6 +83,8 @@ class HomeFragment : Fragment() {
                         tvRainfallSrc.text = Util.getFormattedStr(it.rainfall, "%")
                         tvDurationSrc.text = Util.getFormattedStr(it.ultraviolet)
                     }
+                    showLoading(binding.pbWeather, binding.vgWeather, false)
+                    showLoading(binding.pbWeatherDetail, binding.vgWeatherDetail, false)
                 }
             }
             higlightedWarningStatus.observe(viewLifecycleOwner){
@@ -72,19 +94,20 @@ class HomeFragment : Fragment() {
                         tvNotif.text = Util.getFormattedStr(it)
                         cardNotifications.bgColorTint = Color.parseColor(it.emergency.color)
                     }
+                    showLoading(binding.pbWarningHighlight, binding.vgWarningHighlight, false)
                 }
             }
             disasterStatusList.observe(viewLifecycleOwner){
                 if(it != null) {
                     disasterAdp.dataList = it
+                    showLoading(binding.pbWarningDisaster, binding.rvCard, false)
                 }
             }
+            getCurrentLocation()
+            getDisasterGroupList()
+            getWeatherForecast()
+            getHighlightedWarningStatus()
         }
-
-        vm.getCurrentLocation()
-        vm.getDisasterGroupList()
-        vm.getWeatherForecast()
-        vm.getHighlightedWarningStatus()
     }
 
     private fun showLoading(pb: ProgressBar, loadedView: View, show: Boolean = true) {

@@ -1,20 +1,21 @@
 package sidev.app.bangkit.capstone.sheltermobile
 
 import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.NewsBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.GeneralResponse
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.LoginDataResponse
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.LoginResponse
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.AuthData
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 
 object DummyTest {
     const val MSG_SUCCESS = "success"
     const val MSG_FAILED = "failed"
 
-
     //Login
     //{"response":"success","data":{"id":"2","email":"test111@mail.com","full_name":"test sata","gender":"M"}}
     //{"response":"failed","response_code":101}
-    val userIndex = 0
+    val userIndex = 1
     val loginBody = Dummy.getLoginBody(userIndex)
     val userData = Dummy.userList[userIndex]
 
@@ -24,6 +25,8 @@ object DummyTest {
     val loginResponse_success = LoginResponse(MSG_SUCCESS, loginDataResponse_success)
     val loginResponse_fail = GeneralResponse(MSG_FAILED, Const.CODE_USER_NOT_FOUND)
 
+    val userAuthData = AuthData(userData.email, Dummy.userPswd[userIndex])
+
 
     //Signup
     //{"response":"success","response_code":104}
@@ -31,4 +34,8 @@ object DummyTest {
     val signupBody = Dummy.getSignupBody(userIndex)
     val signupResponse_success = GeneralResponse(MSG_SUCCESS, Const.CODE_REGIS_SUCCESS)
     val signupResponse_fail = GeneralResponse(MSG_FAILED, Const.CODE_REGIS_FAIL)
+
+
+    val newsBody = NewsBody(Const.TYPE_NEWS)
+    val articleBody = NewsBody(Const.TYPE_ARTICLE)
 }

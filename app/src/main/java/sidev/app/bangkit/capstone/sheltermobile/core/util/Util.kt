@@ -5,14 +5,19 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.viewpager.widget.ViewPager
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
-import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.TimeString
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.lib.`val`.SuppressLiteral
 import sidev.lib.android.std.tool.util._FileUtil
+import sidev.lib.android.std.tool.util.`fun`.asResNameOrNullBy
 import java.io.File
+import java.lang.IllegalStateException
+import java.lang.IndexOutOfBoundsException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.CountDownLatch
@@ -80,6 +85,8 @@ object Util {
     fun getFormattedStr(value: Float, unit: String? = null): String = "%.2f".format(value) + (if(unit != null) " $unit" else "")
     fun getFormattedStr(warning: WarningStatus): String = "Zona ${warning.emergency.name} ${warning.disaster.name}"
 
+    fun getTimeString(time: String?= null, pattern: String = Const.DB_TIME_PATTERN): TimeString = TimeString(time ?: getTimestampStr(), pattern)
+
     fun getExternalFile(c: Context, fileName: String): File? {
         var file = _FileUtil.getExternalFile(c, fileName) ?: return null
         if(file.exists()){
@@ -95,6 +102,46 @@ object Util {
             } while(file.exists())
         }
         return file
+    }
+
+    /**
+     * [idMap] contains itemId. [idMap] order does matter.
+     */
+    fun ViewPager.setWithBnv(bnv: ChipNavigationBar, vararg idMap: Int) {
+        var isPageChanging = false
+        addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                if (!isPageChanging) {
+                    isPageChanging = true
+                    val itemId = try {
+                        idMap[position]
+                    } catch (e: IndexOutOfBoundsException) {
+                        throw IllegalStateException("No such page index ($position) in `idMap`")
+                    }
+                    bnv.setItemSelected(itemId)
+                    isPageChanging = false
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {}
+        })
+        bnv.setOnItemSelectedListener { itemId ->
+            if(!isPageChanging) {
+                isPageChanging = true
+                val page = idMap.indexOf(itemId)
+                if(page < 0)
+                    throw IllegalStateException("No such id (${itemId.asResNameOrNullBy(context)}) in `idMap`")
+                setCurrentItem(page, true)
+                isPageChanging = false
+            }
+        }
     }
 
     fun getInsertResult(count: Int, totalCount: Int): Result<Int> = when(count) {

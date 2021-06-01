@@ -15,5 +15,5 @@ interface UserDao {
     fun getUsers(): List<UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveUser(data: UserEntity): Int
+    fun saveUser(data: UserEntity): Long
 }

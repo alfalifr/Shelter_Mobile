@@ -25,5 +25,14 @@ interface NewsDao {
     fun searchNews(keyword: String, startTimestamp: String): List<NewsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveNewsList(list: List<NewsEntity>): Int
+    fun saveNews(data: NewsEntity): Long
+
+    fun saveNewsList(list: List<NewsEntity>): Int {
+        var inserted = 0
+        for(e in list) {
+            if(saveNews(e) >= 0)
+                inserted++
+        }
+        return inserted
+    }
 }

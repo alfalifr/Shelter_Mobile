@@ -1,5 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile
 
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 

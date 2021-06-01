@@ -18,8 +18,14 @@ interface ReportDao {
     fun getReport(timestamp: String): ReportEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveReport(data: ReportEntity): Int
+    fun saveReport(data: ReportEntity): Long
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveReportList(list: List<ReportEntity>): Int
+    fun saveReportList(list: List<ReportEntity>): Int {
+        var inserted = 0
+        for(e in list){
+            if(saveReport(e) >= 0)
+                inserted++
+        }
+        return inserted
+    }
 }

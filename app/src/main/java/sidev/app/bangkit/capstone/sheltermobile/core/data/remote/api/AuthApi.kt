@@ -9,9 +9,9 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.G
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.LoginResponse
 
 interface AuthApi {
-    @POST
+    @POST("shelter_api.php")
     fun login(@Body data: LoginBody): Call<LoginResponse>
 
-    @POST
+    @POST("shelter_api.php")
     fun signup(@Body data: SignupBody): Call<GeneralResponse>
 }

@@ -1,6 +1,7 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -15,11 +16,11 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.lib.`val`.SuppressLiteral
 import java.lang.IllegalStateException
 
-class ReportViewModel(app: Application?, private val useCase: ReportUseCase): AsyncVm(app) {
+class ReportViewModel(app: Context?, private val useCase: ReportUseCase): AsyncVm(app) {
     companion object {
         fun getInstance(
             owner: ViewModelStoreOwner,
-            app: Application?,
+            app: Context?,
             useCase: ReportUseCase,
         ): ReportViewModel = ViewModelProvider(
             owner,

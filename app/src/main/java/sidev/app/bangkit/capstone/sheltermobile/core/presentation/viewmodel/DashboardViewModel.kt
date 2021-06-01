@@ -1,6 +1,7 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -17,11 +18,11 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.lib.`val`.SuppressLiteral
 
-class DashboardViewModel(app: Application?, val useCase: DashboardUseCase): AsyncVm(app) {
+class DashboardViewModel(app: Context?, val useCase: DashboardUseCase): AsyncVm(app) {
     companion object {
         fun getInstance(
             owner: ViewModelStoreOwner,
-            app: Application?,
+            app: Context?,
             useCase: DashboardUseCase,
         ): DashboardViewModel = ViewModelProvider(
             owner,

@@ -7,6 +7,6 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.Ne
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.NewsResponse
 
 interface NewsApi {
-    @POST
+    @POST("shelter_api.php")
     fun getNews(@Body data: NewsBody): Call<List<NewsResponse>>
 }

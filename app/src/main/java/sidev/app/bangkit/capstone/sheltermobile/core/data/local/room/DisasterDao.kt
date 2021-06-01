@@ -15,5 +15,15 @@ interface DisasterDao {
     fun getDisaster(id: Int): DisasterEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveDisasterList(list: List<DisasterEntity>): Int
+    fun saveDisaster(data: DisasterEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveDisasterList(list: List<DisasterEntity>): Int {
+        var insertedCount = 0
+        for(data in list) {
+            if(saveDisaster(data) >= 0)
+                insertedCount++
+        }
+        return insertedCount
+    }
 }

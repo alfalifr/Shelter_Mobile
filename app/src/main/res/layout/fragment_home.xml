@@ -60,18 +60,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="15dp">
 
                 <TextView
                     android:id="@+id/iv_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:drawablePadding="10dp"
                     android:textSize="15sp"
                     android:fontFamily="@font/nunitosans_light"
                     app:drawableStartCompat="@drawable/ic_placeholder"
                     tools:text="Sidikalang, Sumatera Utara " />
+                <ProgressBar
+                    android:id="@+id/pb_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"/>
             </LinearLayout>
         </soup.neumorphism.NeumorphCardView>
 

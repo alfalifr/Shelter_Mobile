@@ -100,9 +100,9 @@ class LaporPesanFragment : AppCompatActivity() {
         titleLaporan = binding.textInputJudulLapor.text.toString()
         isiLaporan = binding.textInputLapor.text.toString()
 
-        val form = Form(Util.getTimestampStr(), titleLaporan, isiLaporan, listOf(filePhoto.absolutePath))
+        val form = Form(Util.getTimeString(), titleLaporan, isiLaporan, listOf(filePhoto.absolutePath))
         val location = model.getCurrentLocation()
-        val data = Report(Util.getTimestampStr(), Const.METHOD_FORM, location, form)
+        val data = Report(Util.getTimeString(), Const.METHOD_FORM, location, form)
 
         model.sendReport(data)
     }

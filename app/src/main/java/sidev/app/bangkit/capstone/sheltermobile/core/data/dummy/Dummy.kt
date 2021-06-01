@@ -8,14 +8,14 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
 object Dummy {
-    val timestampList = listOf<String>(
-        "2021-05-29 21:31:51",
-        "2021-05-30 21:31:51",
-        "2021-05-31 21:31:51",
+    val timestampList = listOf<TimeString>(
+        Util.getTimeString("2021-05-29 21:31:51"),
+        Util.getTimeString("2021-05-30 21:31:51"),
+        Util.getTimeString("2021-05-31 21:31:51"),
     )
     val userList = listOf<User>(
         User("b@b.b", "bayu", 'M'),
-        User("a@a.a", "ayu", 'M'),
+        User("a3@a.a", "ayu", 'M'),
     )
 
     val userPswd = listOf<String>(
@@ -80,8 +80,8 @@ object Dummy {
     val warningListAll = warningList1 + warningList2 + warningList3
 
     val weatherList = listOf<WeatherForecast>(
-        WeatherForecast(10f, 11f, 25f, 180f, 10f, Util.getTimestampStr()),
-        WeatherForecast(14f, 12f, 256f, 110f, 3012f, Util.getTimestampStr()),
+        WeatherForecast(10f, 11f, 25f, 180f, 10f, Util.getTimeString()),
+        WeatherForecast(14f, 12f, 256f, 110f, 3012f, Util.getTimeString()),
     )
 
     val formList = listOf<Form>(

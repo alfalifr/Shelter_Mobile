@@ -15,7 +15,7 @@ import org.jetbrains.anko.runOnUiThread
  * This class mimics [AndroidViewModel] but with optional [app] parameter for convinience in unit testing.
  */
 @SuppressLint("StaticFieldLeak")
-open class AsyncVm(app: Application?): ViewModel() {
+open class AsyncVm(app: Context?): ViewModel() {
     protected var ctx: Context? = app
         private set
 

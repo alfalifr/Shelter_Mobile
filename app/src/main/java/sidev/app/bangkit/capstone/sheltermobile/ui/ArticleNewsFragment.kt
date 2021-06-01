@@ -1,11 +1,84 @@
 package sidev.app.bangkit.capstone.sheltermobile.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
+import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
+import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.ArticleNewsAdapter
+import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.NewsViewModel
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
+import sidev.app.bangkit.capstone.sheltermobile.databinding.ArticleNewsListBinding
+import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentArticleNewsBinding
+
+
+class ArticleNewsFragment:  Fragment() {
+    private lateinit var binding: FragmentArticleNewsBinding
+    private lateinit var vm: NewsViewModel
+    private lateinit var newsAdp: ArticleNewsAdapter
+    private lateinit var articleAdp: ArticleNewsAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentArticleNewsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        vm = ViewModelDi.getNewsViewModel(this)
+        newsAdp = ArticleNewsAdapter()
+        articleAdp = ArticleNewsAdapter()
+
+        vm.apply {
+            onPreAsyncTask {
+                binding.apply {
+                    when(it) {
+                        Const.KEY_ARTICLE_LIST -> showLoading(pbArticle, rvArticle)
+                        Const.KEY_NEWS_LIST -> showLoading(pbNews, rvNews)
+                    }
+                }
+            }
+            newsList.observe(viewLifecycleOwner) {
+                newsAdp.dataList = it
+                showLoading(binding.pbNews, binding.rvNews, it?.isNotEmpty() == true)
+            }
+            articleList.observe(viewLifecycleOwner) {
+                articleAdp.dataList = it
+                showLoading(binding.pbArticle, binding.rvArticle, it?.isNotEmpty() == true)
+            }
+            getArticleList()
+            getNewsList()
+        }
+    }
+
+
+    private fun showLoading(pb: ProgressBar, loadedView: View, show: Boolean = true) {
+        if(show){
+            pb.visibility = View.VISIBLE
+            loadedView.visibility = View.GONE
+        } else {
+            pb.visibility = View.GONE
+            loadedView.visibility = View.VISIBLE
+        }
+    }
+}
+
+
+/*
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import sidev.app.bangkit.capstone.sheltermobile.R
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,3 +131,5 @@ class ArticleNewsFragment : Fragment() {
             }
     }
 }
+
+ */

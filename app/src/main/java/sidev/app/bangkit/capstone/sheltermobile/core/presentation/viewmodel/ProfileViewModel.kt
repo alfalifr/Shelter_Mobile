@@ -1,6 +1,7 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -14,11 +15,11 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.UserUseCase
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.lib.`val`.SuppressLiteral
 
-class ProfileViewModel(app: Application?, private val useCase: UserUseCase): AsyncVm(app) {
+class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm(app) {
     companion object {
         fun getInstance(
             owner: ViewModelStoreOwner,
-            app: Application?,
+            app: Context?,
             useCase: UserUseCase,
         ): ProfileViewModel = ViewModelProvider(
             owner,

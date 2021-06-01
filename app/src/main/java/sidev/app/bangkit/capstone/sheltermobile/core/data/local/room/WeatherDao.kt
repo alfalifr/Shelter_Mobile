@@ -15,5 +15,14 @@ interface WeatherDao {
     fun getWeatherForecastBatch(startTimestamp: String, locationId: Int): List<WeatherEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveWeatherForecastList(list: List<WeatherEntity>): Int
+    fun saveWeatherForecast(data: WeatherEntity): Long
+
+    fun saveWeatherForecastList(list: List<WeatherEntity>): Int {
+        var inserted = 0
+        for(e in list){
+            if(saveWeatherForecast(e) >= 0)
+                inserted++
+        }
+        return inserted
+    }
 }

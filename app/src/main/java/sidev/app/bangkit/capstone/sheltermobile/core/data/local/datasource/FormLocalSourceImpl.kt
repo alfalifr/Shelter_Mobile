@@ -15,7 +15,7 @@ class FormLocalSourceImpl(private val dao: FormDao): FormLocalSource {
     }
 
     override suspend fun saveForm(data: Form): Result<Boolean> {
-        val isSuccess = dao.saveForm(data.toEntity()) == 1
+        val isSuccess = dao.saveForm(data.toEntity()) >= 0L
         return if(isSuccess) Success(true, 0)
         else Util.cantInsertFailResult()
     }

@@ -32,4 +32,11 @@
     <string name="akun_nonvalid">Maaf, akun yang anda masukkan tidak valid</string>
     <string name="daftar">Daftar Sekarang</string>
     <string name="error_account">Maaf, akun sudah terdaftar</string>
+    <string name="profil_anda">Profil Anda</string>
+    <string name="nama">Nama</string>
+    <string name="jenis_kelamin">Jenis Kelamin</string>
+    <string name="email">Email</string>
+    <string name="lokasi">Lokasi</string>
+    <string name="keluar">Keluar</string>
+    <string name="edit_profil">Edit Profil</string>
 </resources>

@@ -49,7 +49,7 @@ object DataMapper {
         relatedNews = relatedNews,
     )
     fun WeatherEntity.toModel(): WeatherForecast = WeatherForecast(
-        temperature, humidity, rainfall, windSpeed, timestamp
+        temperature, humidity, rainfall, windSpeed, ultraviolet, timestamp
     )
 
     fun Disaster.toEntity(): DisasterEntity = DisasterEntity(id, name)
@@ -76,6 +76,7 @@ object DataMapper {
         humidity = humidity,
         rainfall = rainfall,
         windSpeed = windSpeed,
+        ultraviolet = ultraviolet
     )
 
 

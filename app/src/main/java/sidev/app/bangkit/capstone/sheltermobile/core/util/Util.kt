@@ -5,12 +5,12 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Emergency
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.lib.`val`.SuppressLiteral
-import sidev.lib.android.std.tool.util._FileUtil
-import java.io.File
 import java.sql.Timestamp
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -65,22 +65,8 @@ object Util {
 
     fun Timestamp.timestampToString(pattern: String = "dd-mm-yyyy"): String = toString() //TODO 29 Mei 2021: pattern blum kepake
 
-    fun getExternalFile(c: Context, fileName: String): File? {
-        var file = _FileUtil.getExternalFile(c, fileName) ?: return null
-        if(file.exists()){
-            val lastIndexOfDot = fileName.indexOfLast { it == '.' }
-            val prefixFileName = fileName.substring(0, lastIndexOfDot)
-            val extension = fileName.substring(lastIndexOfDot)
-
-            var count = 2
-            do {
-              file = _FileUtil.getExternalFile(c, "${prefixFileName}_$count$extension")
-                  ?: return null
-              count++
-            } while(file.exists())
-        }
-        return file
-    }
+    fun getFormattedStr(value: Float, unit: String? = null): String = "%.2f".format(value) + (if(unit != null) " $unit" else "")
+    fun getFormattedStr(warning: WarningStatus): String = "Zona ${warning.emergency.name} ${warning.disaster.name}"
 
     fun getInsertResult(count: Int, totalCount: Int): Result<Int> = when(count) {
         totalCount -> Success(count, 0)

@@ -39,4 +39,7 @@
     <string name="lokasi">Lokasi</string>
     <string name="keluar">Keluar</string>
     <string name="edit_profil">Edit Profil</string>
+    <string name="shelter_terkini">Shelter Terkini</string>
+    <string name="literatur_shelter">Literatur Shelter</string>
+    <string name="literatur">Literatur</string>
 </resources>

@@ -10,17 +10,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:text="@string/literatur_shelter"
+            android:textColor="@color/font1"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/nunitosans_bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/Search"
             android:layout_width="220dp"
             android:layout_height="30dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="30dp"
             android:elevation="10dp"
             android:background="@drawable/ic_background_search"
             android:queryBackground="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
             app:queryHint="search them!" />
 
         <TextView

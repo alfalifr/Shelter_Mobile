@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Shelter_Mobile">
-        <activity android:name=".ui.PengaturanEditActivity"></activity>
+        <activity android:name=".ui.SearchActivity"></activity>
+        <activity android:name=".ui.PengaturanEditActivity" />
         <activity
             android:name=".intro.SplashActivity"
             android:label="SplashScreen"
@@ -27,7 +28,7 @@
         <activity android:name=".ui.LoginActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/fullscreen"></activity>
+            android:theme="@style/fullscreen" />
     </application>
 
 </manifest>

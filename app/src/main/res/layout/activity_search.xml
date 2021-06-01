@@ -39,48 +39,15 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
             app:queryHint="search them!" />
 
-        <TextView
-            android:id="@+id/tv_title_news"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="30dp"
-            android:text="@string/berita_terkini"
-            android:textColor="@color/font1"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Search" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_news"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_news"
-            tools:listitem="@layout/article_news_list" />
-
-        <TextView
-            android:id="@+id/tv_title_article"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="30dp"
-            android:text="@string/artikel_terpercaya"
-            android:textColor="@color/font1"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_news" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_article"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_article"
+            app:layout_constraintTop_toBottomOf="@id/Search"
             tools:listitem="@layout/article_news_list" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,9 +10,9 @@
         app:cnb_iconColor="@color/white" />
 
     <item
-        android:id="@+id/news"
+        android:id="@+id/literatur"
         android:icon="@drawable/ic_news"
-        android:title="@string/news"
+        android:title="@string/literatur"
         app:cnb_iconColor="@color/white" />
 
     <item

@@ -8,6 +8,8 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toEntity
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import sidev.lib.android.std.tool.util.`fun`.loge
+import sidev.lib.console.prine
 
 class EmergencyLocalSourceImpl(private val dao: EmergencyDao): EmergencyLocalSource {
     override suspend fun getAllEmergencies(): Result<List<Emergency>> {

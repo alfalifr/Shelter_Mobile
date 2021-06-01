@@ -8,7 +8,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.*
 
 object RepoDi {
     object Local {
-        fun getDb(): RoomDb = RoomDb.getInstance(AppDi.getContext())
+        fun getDb(): RoomDb = if(!ConfigDi.isTest) RoomDb.getInstance(AppDi.getContext()) else RoomDb.getInstanceForTest(AppDi.getContext())
         fun getDisasterSrc(): DisasterLocalSource = DisasterLocalSourceImpl(getDb().getDisasterDao())
         fun getEmergencySrc(): EmergencyLocalSource = EmergencyLocalSourceImpl(getDb().getEmergencyDao())
         fun getLocationSrc(): LocationLocalSource = LocationLocalSourceImpl(getDb().getLocationDao(), AppDi.getContext())

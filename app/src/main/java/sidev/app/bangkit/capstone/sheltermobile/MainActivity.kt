@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             vp.setWithBnv(
                 bottomNavigation,
                 R.id.home,
-                R.id.news,
+                R.id.literatur,
                 R.id.emergency,
                 R.id.profil,
             )

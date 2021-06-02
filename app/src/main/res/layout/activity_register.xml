@@ -162,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/nunitosans_regular"
-                        android:textColor="@color/red"
+                        android:textColor="@color/red_velvet"
                         android:padding="10dp"
                         android:text="@string/error_account" />
 

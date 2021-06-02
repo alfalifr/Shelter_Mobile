@@ -7,6 +7,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toEntity
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
 class DisasterLocalSourceImpl(private val dao: DisasterDao): DisasterLocalSource {
     override suspend fun getDisasterList(): Result<List<Disaster>> {
@@ -14,9 +15,9 @@ class DisasterLocalSourceImpl(private val dao: DisasterDao): DisasterLocalSource
         return Success(list, 0)
     }
 
-    override suspend fun getDisaster(id: Int): Result<Disaster> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getDisaster(id: Int): Result<Disaster> = dao.getDisaster(id)?.let {
+        Success(it.toModel(), 0)
+    } ?: Util.noEntityFailResult()
 
     /**
      * Returns saved count.

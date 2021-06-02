@@ -6,6 +6,7 @@ import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
@@ -107,16 +108,9 @@ object Util {
     /**
      * [idMap] contains itemId. [idMap] order does matter.
      */
-    fun ViewPager.setWithBnv(bnv: ChipNavigationBar, vararg idMap: Int) {
+    fun ViewPager2.setWithBnv(bnv: ChipNavigationBar, vararg idMap: Int) {
         var isPageChanging = false
-        addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 if (!isPageChanging) {
                     isPageChanging = true
@@ -129,8 +123,6 @@ object Util {
                     isPageChanging = false
                 }
             }
-
-            override fun onPageScrollStateChanged(state: Int) {}
         })
         bnv.setOnItemSelectedListener { itemId ->
             if(!isPageChanging) {

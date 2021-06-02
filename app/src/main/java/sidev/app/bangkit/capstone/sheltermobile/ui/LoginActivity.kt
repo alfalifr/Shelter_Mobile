@@ -65,27 +65,29 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-        model = ViewModelDi.getAuthViewModel(this)
-        model.onAuth.observe(this) {
-            if (it != null) {
-                if (it) {
-                    binding.tvErrorAccount.visibility = View.GONE
+        model = ViewModelDi.getAuthViewModel(this).apply {
+            onAuth.observe(this@LoginActivity) {
+                if (it != null) {
+                    if (it) {
+                        binding.tvErrorAccount.visibility = View.GONE
 /*
                     Util.editSharedPref(this) {
                         putString(Const.KEY_USER_EMAIL, email)
                         putString(Const.KEY_PASSWORD, pswd)
                     }
  */
-                    //val email = Util.getSharedPref(this).getString(Const.KEY_USER_EMAIL, null)
-                    startAct<MainActivity>()
-                } else {
-                    binding.tvErrorAccount.visibility = View.VISIBLE
+                        //val email = Util.getSharedPref(this).getString(Const.KEY_USER_EMAIL, null)
+                        startAct<MainActivity>()
+                        finish()
+                    } else {
+                        binding.tvErrorAccount.visibility = View.VISIBLE
+                    }
                 }
             }
+            checkLoginStatus()
         }
 
     }
-
 
     private fun login() {
         if (!isAllValid) return

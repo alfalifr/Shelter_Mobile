@@ -28,6 +28,7 @@ object Const {
     const val KEY_DISASTER_GROUP_LIST = "getDisasterGroupList"
     const val KEY_SIGNUP = "signup"
     const val KEY_LOGIN = "login"
+    const val KEY_LOGIN_STATUS = "login_status"
     const val KEY_ARTICLE_LIST = "getArticleList"
     const val KEY_NEWS_LIST = "getNewsList"
     const val KEY_CURRENT_USER = "getCurrentUser"

@@ -6,7 +6,6 @@ import android.widget.ImageView
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.ismaeldivita.chipnavigation.ChipNavigationBar

@@ -69,10 +69,12 @@ class ArticleNewsFragment:  Fragment() {
             newsList.observe(viewLifecycleOwner) {
                 newsAdp.dataList = it
                 showLoading(binding.pbNews, binding.rvNews, it == null)
+                showNoData(binding.tvNoDataNews, binding.rvNews, it?.isNotEmpty() == false)
             }
             articleList.observe(viewLifecycleOwner) {
                 articleAdp.dataList = it
                 showLoading(binding.pbArticle, binding.rvArticle, it == null)
+                showNoData(binding.tvNoDataArticle, binding.rvArticle, it?.isNotEmpty() == false)
             }
             getArticleList()
             getNewsList()
@@ -82,7 +84,11 @@ class ArticleNewsFragment:  Fragment() {
 
     private fun showNoData(tvNoData: TextView, rv: RecyclerView, show: Boolean = true) {
         if(show){
-
+            tvNoData.visibility = View.VISIBLE
+            rv.visibility = View.GONE
+        } else {
+            tvNoData.visibility = View.GONE
+            rv.visibility = View.VISIBLE
         }
     }
     private fun showLoading(pb: ProgressBar, loadedView: View, show: Boolean = true) {

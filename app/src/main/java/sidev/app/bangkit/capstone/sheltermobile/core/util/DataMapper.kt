@@ -11,7 +11,6 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.DisasterGroup
-import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toTimeString
 import java.lang.IllegalArgumentException
 
 object DataMapper {
@@ -34,6 +33,9 @@ object DataMapper {
     }
 
     private fun String.toTimeString(pattern: String = Const.DB_TIME_PATTERN): TimeString = TimeString(this, pattern)
+    private fun String.remoteToDbTimeFormat(): TimeString {
+
+    }
 
     fun DisasterEntity.toModel(): Disaster = Disaster(id, name, imgLink)
     fun EmergencyEntity.toModel(): Emergency = Emergency(id, name, color, severity)

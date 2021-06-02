@@ -57,5 +57,6 @@
     <string name="note_pusat">Note Pusat</string>
     <string name="hari_tanggal">Hari tanggal</string>
     <string name="isi_laporan">Isi Laporan</string>
+    <string name="zone_fill">Zona %s</string>
 
 </resources>

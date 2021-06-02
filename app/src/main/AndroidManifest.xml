@@ -18,6 +18,7 @@
         <activity android:name=".ui.RiwayatLaporDetilActivity"/>
         <activity android:name=".ui.SearchActivity" />
         <activity android:name=".ui.PengaturanEditActivity" />
+        <activity android:name=".ui.LaporPesanActivity"/>
         <activity
             android:name=".intro.SplashActivity"
             android:label="SplashScreen"

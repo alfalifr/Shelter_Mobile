@@ -50,7 +50,7 @@ class ReportViewModel(app: Context?, private val useCase: ReportUseCase): AsyncV
         if (reportHistory.value != null && !forceLoad) return
         startJob(Const.KEY_REPORT_LIST) {
             when(val result = useCase.getReportList()){
-                is Success -> mReportHistory.postValue(if(top <= 0) result.data else result.data.subList(0, top))
+                is Success -> mReportHistory.postValue(if(top <= 0 || result.data.size < top) result.data else result.data.subList(0, top))
                 is Fail -> doCallNotSuccess(result.code, result.error)
             }
         }

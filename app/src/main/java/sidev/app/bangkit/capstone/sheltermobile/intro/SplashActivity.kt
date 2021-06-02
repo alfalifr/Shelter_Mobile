@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import sidev.app.bangkit.capstone.sheltermobile.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivitySplashBinding
+import sidev.app.bangkit.capstone.sheltermobile.ui.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -26,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
 
         val splashScreenTimeOut = 3500
 
-        val homeIntent = Intent(this, MainActivity::class.java)
+        val homeIntent = Intent(this, LoginActivity::class.java) //MainActivity::class.java)
 
         Handler().postDelayed({
             startActivity(homeIntent)

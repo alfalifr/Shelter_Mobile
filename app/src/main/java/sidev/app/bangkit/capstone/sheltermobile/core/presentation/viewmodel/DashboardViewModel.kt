@@ -17,6 +17,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.lib.`val`.SuppressLiteral
+import sidev.lib.android.std.tool.util.`fun`.loge
 
 class DashboardViewModel(app: Context?, val useCase: DashboardUseCase): AsyncVm(app) {
     companion object {
@@ -61,7 +62,7 @@ class DashboardViewModel(app: Context?, val useCase: DashboardUseCase): AsyncVm(
         if(weatherForecast.value != null && !forceLoad) return
         startJob(Const.KEY_WEATHER_FORECAST) {
             val timestamp = Util.getTimestampStr()
-            when(val result = useCase.getWeatherForecast(timestamp)){
+            when(val result = useCase.getWeatherForecast(timestamp).also { loge("DashboardVm.getWeatherForecast() res= $it") }){
                 is Success -> mWeatherForecast.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
             }

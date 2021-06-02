@@ -9,6 +9,8 @@ object Const {
 
     const val CHAR_LINK_SEPARATOR = '|'
 
+    const val TIME_OFFSET: Long = 30L * 24L * 3600 * 1000
+    const val PREFIX_DRAWABLE = "R.drawable."
     const val KEY_PASSWORD = "password"
     const val KEY_LOCATION_ID = "location_id"
     const val KEY_USER_EMAIL = "user_email"
@@ -28,6 +30,7 @@ object Const {
     const val KEY_DISASTER_GROUP_LIST = "getDisasterGroupList"
     const val KEY_SIGNUP = "signup"
     const val KEY_LOGIN = "login"
+    const val KEY_LOGIN_STATUS = "login_status"
     const val KEY_ARTICLE_LIST = "getArticleList"
     const val KEY_NEWS_LIST = "getNewsList"
     const val KEY_CURRENT_USER = "getCurrentUser"

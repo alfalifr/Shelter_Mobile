@@ -13,6 +13,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.Auth
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivityLoginBinding
+import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.startAct
 
 class LoginActivity : AppCompatActivity() {
@@ -65,27 +66,30 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-        model = ViewModelDi.getAuthViewModel(this)
-        model.onAuth.observe(this) {
-            if (it != null) {
-                if (it) {
-                    binding.tvErrorAccount.visibility = View.GONE
+        model = ViewModelDi.getAuthViewModel(this).apply {
+            onAuth.observe(this@LoginActivity) {
+                loge("LoginAct onAuth.observe() it= $it")
+                if (it != null) {
+                    if (it) {
+                        binding.tvErrorAccount.visibility = View.GONE
 /*
                     Util.editSharedPref(this) {
                         putString(Const.KEY_USER_EMAIL, email)
                         putString(Const.KEY_PASSWORD, pswd)
                     }
  */
-                    //val email = Util.getSharedPref(this).getString(Const.KEY_USER_EMAIL, null)
-                    startAct<MainActivity>()
-                } else {
-                    binding.tvErrorAccount.visibility = View.VISIBLE
+                        //val email = Util.getSharedPref(this).getString(Const.KEY_USER_EMAIL, null)
+                        startAct<MainActivity>()
+                        finish()
+                    } else {
+                        binding.tvErrorAccount.visibility = View.VISIBLE
+                    }
                 }
             }
+            checkLoginStatus()
         }
 
     }
-
 
     private fun login() {
         if (!isAllValid) return

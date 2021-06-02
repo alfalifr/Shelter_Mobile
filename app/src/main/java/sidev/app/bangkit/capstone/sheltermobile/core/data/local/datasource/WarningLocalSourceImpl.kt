@@ -10,6 +10,8 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toEntity
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModelDetail
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import sidev.lib.android.std.tool.util.`fun`.loge
+import sidev.lib.collection.asList
 
 class WarningLocalSourceImpl(
     private val dao: WarningDao,
@@ -23,16 +25,16 @@ class WarningLocalSourceImpl(
         locationId: Int,
         startTimestamp: String
     ): Result<List<WarningStatus>> {
-        val disaster = when(val res = disasterLocalSrc.getDisaster(disasterId)){
+        val disaster = when(val res = disasterLocalSrc.getDisaster(disasterId).also { loge("WarningLocal.getWarningStatusBatch() disasterRes= $it") }){
             is Success -> res.data
             else -> return Util.noEntityFailResult()
         }
-        val location = when(val res = locationLocalSrc.getLocationById(locationId)){
+        val location = when(val res = locationLocalSrc.getLocationById(locationId).also { loge("WarningLocal.getWarningStatusBatch() locRes= $it") }){
             is Success -> res.data
             else -> return Util.noEntityFailResult()
         }
         val list = dao.getWarningStatusBatch(disasterId, locationId, startTimestamp).map {
-            val emergency = when(val res = emergencyLocalSrc.getEmergency(it.emergencyId)){
+            val emergency = when(val res = emergencyLocalSrc.getEmergency(it.emergencyId).also { loge("WarningLocal.getWarningStatusBatch() emergencyRes= $it") }){
                 is Success -> res.data
                 else -> return Util.noEntityFailResult()
             }
@@ -46,20 +48,21 @@ class WarningLocalSourceImpl(
         locationId: Int,
         startTimestamp: String
     ): Result<List<WarningDetail>> {
-        val disaster = when(val res = disasterLocalSrc.getDisaster(disasterId)){
+        loge("WarningLocal.getWarningDetailBatch()")
+        val disaster = when(val res = disasterLocalSrc.getDisaster(disasterId).also { loge("WarningLocal.getWarningDetailBatch() disasterRes= $it") }){
             is Success -> res.data
             else -> return Util.noEntityFailResult()
         }
-        val location = when(val res = locationLocalSrc.getLocationById(locationId)){
+        val location = when(val res = locationLocalSrc.getLocationById(locationId).also { loge("WarningLocal.getWarningDetailBatch() locRes= $it") }){
             is Success -> res.data
             else -> return Util.noEntityFailResult()
         }
         val list = dao.getWarningStatusBatch(disasterId, locationId, startTimestamp).map {
-            val emergency = when(val res = emergencyLocalSrc.getEmergency(it.emergencyId)){
+            val emergency = when(val res = emergencyLocalSrc.getEmergency(it.emergencyId).also { loge("WarningLocal.getWarningDetailBatch() emergRes= $it") }){
                 is Success -> res.data
                 else -> return Util.noEntityFailResult()
             }
-            val news = when(val res = newsLocalSrc.getNews(it.timestamp)){
+            val news = when(val res = newsLocalSrc.getNews(it.timestamp).also { loge("WarningLocal.getWarningDetailBatch() newsRes= $it") }){
                 is Success -> res.data
                 else -> return Util.noEntityFailResult()
             }
@@ -71,6 +74,10 @@ class WarningLocalSourceImpl(
     override suspend fun saveWarningDetailList(list: List<WarningDetail>): Result<Int> {
         val entityList = list.map { it.toEntity() }
         val insertedCount = dao.saveWarningList(entityList)
+        val emergencyList = list.map { it.status.emergency }.toSet().asList()
+        emergencyLocalSrc.saveEmergencyList(emergencyList)
+        val newsList = list.map { it.relatedNews }.toSet().asList()
+        newsLocalSrc.saveNewsList(newsList)
         return Util.getInsertResult(insertedCount, entityList.size)
     }
 }

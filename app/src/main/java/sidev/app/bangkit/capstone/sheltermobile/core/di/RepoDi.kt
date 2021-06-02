@@ -33,8 +33,8 @@ object RepoDi {
         fun getFormSrc(): FormRemoteSource = FormRemoteSourceDummy
         fun getWarningSrc(): WarningRemoteSource = WarningRemoteSourceDummy
         fun getWeatherSrc(): WeatherRemoteSource = WeatherRemoteSourceDummy
-        fun getNewsSrc(): NewsRemoteSource = NewsRemoteSourceImpl(AppRetrofit.newsApi)
-        fun getUserSrc(): UserRemoteSource = UserRemoteSourceImpl(AppRetrofit.authApi)
+        fun getNewsSrc(): NewsRemoteSource = NewsRemoteSourceDummy //NewsRemoteSourceImpl(AppRetrofit.newsApi)
+        fun getUserSrc(): UserRemoteSource = UserRemoteSourceDummy //UserRemoteSourceImpl(AppRetrofit.authApi)
     }
 
 

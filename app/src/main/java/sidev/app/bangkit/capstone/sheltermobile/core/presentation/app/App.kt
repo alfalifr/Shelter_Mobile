@@ -43,8 +43,8 @@ class App: Application() {
      * order matters.
      */
     override fun onCreate() {
-        super.onCreate()
         mContext = this
+        super.onCreate()
     }
 
     /**

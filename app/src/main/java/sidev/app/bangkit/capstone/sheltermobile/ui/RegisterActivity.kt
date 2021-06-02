@@ -101,6 +101,7 @@ class RegisterActivity : AppCompatActivity() {
                     model.saveUser(user)
  */
                     startAct<MainActivity>()
+                    finish()
                 } else {
                     binding.tvErrorAccount.visibility = View.VISIBLE //TODO Mella: ganti pake text error dari server contoh : akun yg dimasukkan tidak valid
                 }

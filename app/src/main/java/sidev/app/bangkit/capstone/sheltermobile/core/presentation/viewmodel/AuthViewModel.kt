@@ -51,4 +51,12 @@ class AuthViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm(ap
             }
         }
     }
+
+    fun checkLoginStatus(){
+        startJob(Const.KEY_LOGIN_STATUS) {
+            if(useCase.getCurrentUser() is Success){
+                mOnAuth.postValue(true)
+            }
+        }
+    }
 }

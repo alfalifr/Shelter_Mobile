@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class DisasterEntity(
     @PrimaryKey
     val id: Int,
-    val name: String
+    val name: String,
+    val imgLink: String
 )

@@ -20,13 +20,16 @@ class MainActivity : AppCompatActivity() {
         vpAdp = MainViewPagerAdapter(this)
 
         binding.apply {
-            vp.setWithBnv(
-                bottomNavigation,
-                R.id.home,
-                R.id.literatur,
-                R.id.emergency,
-                R.id.profil,
-            )
+            vp.apply {
+                setWithBnv(
+                    bottomNavigation,
+                    R.id.home,
+                    R.id.literatur,
+                    R.id.emergency,
+                    R.id.profil,
+                )
+                adapter = vpAdp
+            }
         }
     }
 }

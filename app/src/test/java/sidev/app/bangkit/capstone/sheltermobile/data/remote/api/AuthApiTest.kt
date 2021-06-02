@@ -24,6 +24,8 @@ class AuthApiTest {
         val call = api.signup(body)
         val resp = call.execute()
 
+        prine("SIGNUP resp = $resp")
+
         assert(resp.isSuccessful)
 
         val respData = resp.body()
@@ -40,6 +42,7 @@ class AuthApiTest {
         val body = DummyTest.loginBody
         val call = api.login(body)
         val resp = call.execute()
+        prine("LOGIN resp = $resp")
 
         assert(resp.isSuccessful)
 

@@ -9,4 +9,5 @@ import android.content.Context
 @SuppressLint("StaticFieldLeak")
 object ConfigDi {
     var defaultCtx: Context? = null
+    var isTest: Boolean = false
 }

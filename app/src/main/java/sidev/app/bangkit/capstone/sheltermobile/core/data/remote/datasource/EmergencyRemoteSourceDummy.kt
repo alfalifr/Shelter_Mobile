@@ -5,6 +5,8 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Emergency
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import sidev.lib.android.std.tool.util.`fun`.loge
+import sidev.lib.console.prine
 
 object EmergencyRemoteSourceDummy: EmergencyRemoteSource {
     override suspend fun getAllEmergencies(): Result<List<Emergency>> = Success(Dummy.emergencyList, 0)

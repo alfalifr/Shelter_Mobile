@@ -34,6 +34,13 @@ class LocationLocalSourceImpl(private val dao: LocationDao, private val ctx: Con
         return Success(data, 0)
     }
 
+    override suspend fun saveCurrentLocation(data: Location): Result<Boolean> {
+        Util.editSharedPref(ctx, true) {
+            putInt(Const.KEY_LOCATION_ID, data.id)
+        }
+        return Success(true, 0)
+    }
+
     override suspend fun saveLocationList(list: List<Location>): Result<Int> {
         val entityList = list.map { it.toEntity(-1) }
         val insertedCount = dao.saveLocationList(entityList)

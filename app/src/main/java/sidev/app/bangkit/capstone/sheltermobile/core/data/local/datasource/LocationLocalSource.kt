@@ -6,4 +6,5 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 
 interface LocationLocalSource: LocationRepo {
     suspend fun getCurrentLocation(): Result<Location>
+    suspend fun saveCurrentLocation(data: Location): Result<Boolean>
 }

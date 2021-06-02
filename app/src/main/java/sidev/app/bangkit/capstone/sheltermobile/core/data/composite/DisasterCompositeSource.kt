@@ -20,7 +20,7 @@ class DisasterCompositeSource(
     override suspend fun getRemoteDataList(args: Map<String, Any?>): Result<List<Disaster>> = getDataList(remoteSrc, args)
 
     private suspend fun getDataList(repo: DisasterRepo, args: Map<String, Any?>): Result<List<Disaster>> {
-        val id = args[Const.KEY_LOCATION_ID]
+        val id = args[Const.KEY_ID]
         return if(id != null) repo.getDisaster(id as Int).toListResult()
         else repo.getDisasterList()
     }

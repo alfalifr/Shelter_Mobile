@@ -33,6 +33,7 @@ abstract class RoomDb: RoomDatabase() {
 
     companion object {
         private var instance: RoomDb?= null
+        private var testInstance: RoomDb?= null
         const val DB_NAME = "dbv1"
 
         fun getInstance(c: Context): RoomDb {
@@ -41,6 +42,14 @@ abstract class RoomDb: RoomDatabase() {
                     instance = Room.databaseBuilder(c, RoomDb::class.java, DB_NAME).build()
                 }
             return instance!!
+        }
+
+        fun getInstanceForTest(c: Context): RoomDb {
+            if(testInstance == null)
+                synchronized(RoomDb::class) {
+                    testInstance = Room.inMemoryDatabaseBuilder(c, RoomDb::class.java).build()
+                }
+            return testInstance!!
         }
     }
 }

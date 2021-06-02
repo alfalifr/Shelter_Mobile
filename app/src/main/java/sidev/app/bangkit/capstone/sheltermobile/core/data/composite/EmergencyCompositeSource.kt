@@ -9,6 +9,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.*
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toListResult
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toSingleResult
+import sidev.lib.android.std.tool.util.`fun`.loge
 
 class EmergencyCompositeSource(
     private val localSrc: EmergencyLocalSource,
@@ -19,7 +20,7 @@ class EmergencyCompositeSource(
     override suspend fun getRemoteDataList(args: Map<String, Any?>): Result<List<Emergency>> = getDataList(remoteSrc, args)
 
     private suspend fun getDataList(repo: EmergencyRepo, args: Map<String, Any?>): Result<List<Emergency>> {
-        val id = args[Const.KEY_LOCATION_ID]
+        val id = args[Const.KEY_ID]
         return if(id != null) repo.getEmergency(id as Int).toListResult()
         else repo.getAllEmergencies()
     }

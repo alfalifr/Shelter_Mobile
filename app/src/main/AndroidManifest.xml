@@ -11,9 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Shelter_Mobile">
-        <activity android:name=".ui.SearchActivity"></activity>
+        android:theme="@style/Theme.Shelter_Mobile"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.RiwayatLaporDetilActivity"></activity>
+        <activity android:name=".ui.SearchActivity" />
         <activity android:name=".ui.PengaturanEditActivity" />
         <activity
             android:name=".intro.SplashActivity"

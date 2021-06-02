@@ -5,8 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.News
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ArticleNewsListBinding
+import sidev.app.bangkit.capstone.sheltermobile.ui.WebViewPage
+import sidev.lib.android.std.tool.util.`fun`.startAct
 import java.util.zip.Inflater
 
 class ArticleNewsAdapter: RecyclerView.Adapter<ArticleNewsAdapter.ViewHolder>() {
@@ -19,6 +22,9 @@ class ArticleNewsAdapter: RecyclerView.Adapter<ArticleNewsAdapter.ViewHolder>() 
                 Glide.with(root.context)
                     .load(data.linkImage)
                     .into(image)
+                root.setOnClickListener {
+                    it.context.startAct<WebViewPage>(Const.KEY_URL to data.link)
+                }
             }
         }
     }

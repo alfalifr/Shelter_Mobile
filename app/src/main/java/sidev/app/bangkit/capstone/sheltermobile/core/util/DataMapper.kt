@@ -119,6 +119,12 @@ object DataMapper {
         _gender = gender,
     )
 
+    fun getGenderName(char: Char): String = when(char) {
+        Const.GENDER_MALE -> "Pria"
+        Const.GENDER_FEMALE -> "Wanita"
+        else -> throw IllegalArgumentException("No such gender ($char)")
+    }
+
     //fun convertRemoteTimestampToLocalFormat(remoteTimestamp: String): String = remoteTimestamp.split(" ")[0]
 
 

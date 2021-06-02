@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
@@ -112,6 +113,11 @@ object Util {
             val id = _ResUtil.getResId(context, linkList[1], linkList[2])
             imgRes = id
         }
+    }
+    fun ImageView.setGenderImg(gender: Char) = when(gender){
+        Const.GENDER_MALE -> imgRes = R.drawable.user_man
+        Const.GENDER_FEMALE -> imgRes = R.drawable.user_woman
+        else -> throw IllegalArgumentException("No such gender ($gender)")
     }
 
     fun getExternalFile(c: Context, fileName: String): File? {

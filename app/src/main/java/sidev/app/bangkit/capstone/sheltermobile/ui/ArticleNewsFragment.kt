@@ -4,17 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.jetbrains.anko.editText
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.ArticleNewsAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.NewsViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ArticleNewsListBinding
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentArticleNewsBinding
+import sidev.lib.android.std.tool.util.`fun`.findViewByType
 import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.startAct
 
@@ -51,7 +56,18 @@ class ArticleNewsFragment:  Fragment() {
                 layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             }
             Search.apply {
-                isEnabled = false
+                findViewByType<EditText>()!!.apply {
+                    isFocusable = false
+                    isClickable = true
+                    setOnClickListener {
+                        startAct<SearchActivity>()
+                    }
+                }
+                findViewByType<ImageView>()!!.apply {
+                    setOnClickListener {
+                        startAct<SearchActivity>()
+                    }
+                }
                 setOnClickListener {
                     startAct<SearchActivity>()
                 }

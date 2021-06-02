@@ -35,7 +35,7 @@
     <string name="profil_anda">Profil Anda</string>
     <string name="nama">Nama</string>
     <string name="jenis_kelamin">Jenis Kelamin</string>
-<!--    <string name="email">Email</string> -->
+    <!--    <string name="email">Email</string> -->
     <string name="lokasi">Lokasi</string>
     <string name="keluar">Keluar</string>
     <string name="edit_profil">Edit Profil</string>
@@ -43,4 +43,13 @@
     <string name="literatur_shelter">Literatur Shelter</string>
     <string name="literatur">Literatur</string>
     <string name="no_data">Tidak ada data</string>
+    <string name="edit_profil_anda">Edit Profil Anda</string>
+    <string name="simpan_perubahan">Simpan Perubahan</string>
+    <string name="ubah_lokasi">Ubah Lokasi</string>
+    <string name="rician_riwayat_lapor">Rician Riwayat Lapor</string>
+    <string name="nama_pelapor">Nama Pelapor</string>
+    <string name="akses_laporan">Akses Laporan</string>
+    <string name="rician_laporan">Rician Laporan</string>
+    <string name="note_pusat">Note Pusat</string>
+    <string name="hari_tanggal">Hari tanggal</string>
 </resources>

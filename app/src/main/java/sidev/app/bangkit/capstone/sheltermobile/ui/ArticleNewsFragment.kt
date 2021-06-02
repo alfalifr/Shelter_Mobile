@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.ArticleNewsAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.NewsViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ArticleNewsListBinding
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentArticleNewsBinding
+import sidev.lib.android.std.tool.util.`fun`.startAct
 
 
 class ArticleNewsFragment:  Fragment() {
@@ -36,6 +39,23 @@ class ArticleNewsFragment:  Fragment() {
         newsAdp = ArticleNewsAdapter()
         articleAdp = ArticleNewsAdapter()
 
+        binding.apply {
+            rvArticle.apply {
+                adapter = articleAdp
+                layoutManager = LinearLayoutManager(requireContext())
+            }
+            rvNews.apply {
+                adapter = newsAdp
+                layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            }
+            Search.apply {
+                isEnabled = false
+                setOnClickListener {
+                    startAct<SearchActivity>()
+                }
+            }
+        }
+
         vm.apply {
             onPreAsyncTask {
                 binding.apply {
@@ -47,11 +67,11 @@ class ArticleNewsFragment:  Fragment() {
             }
             newsList.observe(viewLifecycleOwner) {
                 newsAdp.dataList = it
-                showLoading(binding.pbNews, binding.rvNews, it?.isNotEmpty() == true)
+                showLoading(binding.pbNews, binding.rvNews, it == null)
             }
             articleList.observe(viewLifecycleOwner) {
                 articleAdp.dataList = it
-                showLoading(binding.pbArticle, binding.rvArticle, it?.isNotEmpty() == true)
+                showLoading(binding.pbArticle, binding.rvArticle, it == null)
             }
             getArticleList()
             getNewsList()
@@ -59,6 +79,7 @@ class ArticleNewsFragment:  Fragment() {
     }
 
 
+    private fun showNoData(pb: ProgressBar, loadedView: View, show: Boolean = true) {}
     private fun showLoading(pb: ProgressBar, loadedView: View, show: Boolean = true) {
         if(show){
             pb.visibility = View.VISIBLE

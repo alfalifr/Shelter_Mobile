@@ -38,11 +38,12 @@ class UserUseCaseImpl(
             is Success -> {
                 val isPswdResSuccess = userLocalSrc.savePassword(authData.password) is Success
                 val isEmailResSuccess = userLocalSrc.saveEmail(authData.email) is Success
+                val isUserResSuccess = userLocalSrc.saveUser(user) is Success
                 val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
 
                 when {
-                    isPswdResSuccess && isEmailResSuccess && isSetDefaultLocSuccess-> Success(true, 0)
-                    !isPswdResSuccess && !isEmailResSuccess && !isSetDefaultLocSuccess-> Fail("Can't save both email, password, and default location to local", -1, null)
+                    isPswdResSuccess && isEmailResSuccess && isSetDefaultLocSuccess && isUserResSuccess-> Success(true, 0)
+                    !isPswdResSuccess && !isEmailResSuccess && !isSetDefaultLocSuccess && !isUserResSuccess -> Fail("Can't save both email, password, and default location to local", -1, null)
                     else -> Success(true, 1)
                 }
             }

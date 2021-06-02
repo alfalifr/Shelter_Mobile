@@ -64,6 +64,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:listitem="@layout/article_news_list" />
+            <TextView
+                android:id="@+id/tv_no_data_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_data"/>
             <ProgressBar
                 android:id="@+id/pb_news"
                 android:layout_centerInParent="true"
@@ -97,6 +102,11 @@
                 android:layout_height="match_parent"
                 android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/article_news_list" />
+            <TextView
+                android:id="@+id/tv_no_data_article"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_data"/>
             <ProgressBar
                 android:id="@+id/pb_article"
                 android:layout_centerInParent="true"

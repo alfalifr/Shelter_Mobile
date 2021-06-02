@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shelter_Mobile"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.RiwayatLaporDetilActivity"></activity>
+        <activity android:name=".ui.RiwayatLaporDetilActivity"/>
         <activity android:name=".ui.SearchActivity" />
         <activity android:name=".ui.PengaturanEditActivity" />
         <activity

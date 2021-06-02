@@ -57,6 +57,7 @@ class LaporFragment : Fragment() {
         binding.rvCard.layoutManager =
             LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
 
+        adapter = RiwayatLaporAdapter {  } //TODO Alif 2 Juni 2021
         binding.rvCard.adapter = adapter
     }
 

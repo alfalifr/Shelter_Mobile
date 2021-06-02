@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.recyclerview.widget.LinearLayoutManager
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.DisasterWarningAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.DashboardViewModel
@@ -47,7 +48,10 @@ class HomeFragment : Fragment() {
         disasterAdp = DisasterWarningAdapter(emptyList())
 
         binding.apply {
-            rvCard.adapter = disasterAdp
+            rvCard.apply {
+                adapter = disasterAdp
+                layoutManager = LinearLayoutManager(requireContext())
+            }
         }
 
         vm.apply {

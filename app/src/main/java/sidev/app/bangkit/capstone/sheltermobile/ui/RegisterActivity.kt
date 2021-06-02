@@ -46,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
             cirRegisterButton.setOnClickListener {
                 signup()
             }
-            textInputEmail.visibility = View.GONE
+            tvErrorAccount.visibility = View.GONE
             editTextEmail.addTextChangedListener {
                 if (it != null) {
                     isEmailValid = Util.validateEmail(it.toString())
@@ -80,7 +80,6 @@ class RegisterActivity : AppCompatActivity() {
 
                 }
             }
-
             groupGender.setOnCheckedChangeListener { group, checkedId ->
                 when(checkedId){
                     R.id.radio_pria -> gender= Const.GENDER_MALE
@@ -94,23 +93,22 @@ class RegisterActivity : AppCompatActivity() {
             if (it != null) {
                 if (it) {
                     binding.textInputEmail.visibility = View.GONE
+/*
                     Util.editSharedPref(this) {
                         putString(Const.KEY_USER_EMAIL, email)
                         putString(Const.KEY_PASSWORD, pass)
                     }
                     model.saveUser(user)
-                    //TODO ALIF: Pertimbangkan lagi mas alif :)
+ */
                     startAct<MainActivity>()
                 } else {
-                    binding.textInputEmail.visibility =
-                        View.VISIBLE //TODO Mella: ganti pake text error dari server contoh : akun yg dimasukkan tidak valid
+                    binding.tvErrorAccount.visibility = View.VISIBLE //TODO Mella: ganti pake text error dari server contoh : akun yg dimasukkan tidak valid
                 }
             }
         }
     }
 
     private fun signup() {
-
         if (!isAllValid) return
 
         name = binding.editTextName.text.toString()

@@ -39,16 +39,25 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
             app:queryHint="search them!" />
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_news"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Search"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/article_news_list" />
+
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Search"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

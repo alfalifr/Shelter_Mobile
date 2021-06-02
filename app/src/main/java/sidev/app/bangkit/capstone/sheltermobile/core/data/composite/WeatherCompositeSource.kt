@@ -10,23 +10,31 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.WeatherRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toListResult
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toSingleResult
+import sidev.lib.android.std.tool.util.`fun`.loge
 import java.lang.IllegalArgumentException
 
 class WeatherCompositeSource(
     private val localSrc: WeatherLocalSource,
     private val remoteSrc: WeatherRemoteSource,
 ): CompositeDataSource<WeatherForecast>(), WeatherRepo {
-    override suspend fun getLocalDataList(args: Map<String, Any?>): Result<List<WeatherForecast>> = getDataList(localSrc, args)
+    override suspend fun getLocalDataList(args: Map<String, Any?>): Result<List<WeatherForecast>> = getDataList(localSrc, args.also { loge("WeatherCompositeSrc.getLocalDataList() args = $args") })
 
-    override suspend fun getRemoteDataList(args: Map<String, Any?>): Result<List<WeatherForecast>> = getDataList(remoteSrc, args)
+    override suspend fun getRemoteDataList(args: Map<String, Any?>): Result<List<WeatherForecast>> = getDataList(remoteSrc, args.also { loge("WeatherCompositeSrc.getRemoteDataList() args = $args") })
 
     private suspend fun getDataList(repo: WeatherRepo, args: Map<String, Any?>): Result<List<WeatherForecast>> {
         val timestamp = args[Const.KEY_TIMESTAMP] as? String ?: throw IllegalArgumentException("args[Const.KEY_TIMESTAMP] == null")
         val locationId = args[Const.KEY_LOCATION_ID] as? Int ?: throw IllegalArgumentException("args[Const.KEY_LOCATION_ID] == null")
         val isSingle = args[Const.KEY_IS_SINGLE] as? Boolean ?: false
 
+        loge("WeatherCompositeSrc.getDataList() timestamp= $timestamp locationId= $locationId isSingle= $isSingle")
+
+        val batchRes = repo.getWeatherForecastBatch(timestamp, locationId)
+        return if(!isSingle) batchRes
+        else batchRes.toSingleResult().toListResult() //Because weather forecast will always ahead of the `timestamp`.
+/*
         return if(!isSingle) repo.getWeatherForecastBatch(timestamp, locationId)
         else repo.getWeatherForecast(timestamp, locationId).toListResult()
+ */
     }
 
     override fun shouldFetch(

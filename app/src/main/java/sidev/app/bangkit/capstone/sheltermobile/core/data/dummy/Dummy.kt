@@ -1,5 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.dummy
 
+import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LoginBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
@@ -9,9 +10,12 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
 object Dummy {
     val timestampList = listOf<TimeString>(
-        Util.getTimeString("2021-05-29 21:31:51"),
-        Util.getTimeString("2021-05-30 21:31:51"),
-        Util.getTimeString("2021-05-31 21:31:51"),
+        //Util.getTimeString("2021-05-29 21:31:51"),
+        //Util.getTimeString("2021-05-30 21:31:51"),
+        //Util.getTimeString("2021-05-31 21:31:51"),
+        Util.getTimeString(millisOffset = Const.TIME_OFFSET),
+        Util.getTimeString(millisOffset = Const.TIME_OFFSET),
+        Util.getTimeString(millisOffset = Const.TIME_OFFSET),
     )
     val userList = listOf<User>(
         User("b@b.b", "bayu", 'M'),
@@ -27,10 +31,10 @@ object Dummy {
     fun getSignupBody(i: Int): SignupBody = userList[i].let { SignupBody(it.email, userPswd[i], it.name, it.gender) }
 
     val disasterList = listOf<Disaster>(
-        Disaster(1, "Kebakaran Hutan"),
-        Disaster(2, "Banjir"),
-        Disaster(3, "Longsor"),
-        Disaster(4, "Gunung Meletus"),
+        Disaster(1, "Kebakaran Hutan", "R.drawable.ic_disaster_forest_fire"),
+        Disaster(2, "Banjir", "R.drawable.ic_disaster_flood"),
+        Disaster(3, "Longsor", "R.drawable.ic_disaster_landslide"),
+        Disaster(4, "Gunung Meletus", "R.drawable.ic_disaster_landslide"),
     )
 
     val emergencyList = listOf<Emergency>(
@@ -84,8 +88,8 @@ object Dummy {
     val warningListAll = warningList1 + warningList2 + warningList3
 
     val weatherList = listOf<WeatherForecast>(
-        WeatherForecast(10f, 11f, 25f, 180f, 10f, Util.getTimeString()),
-        WeatherForecast(14f, 12f, 256f, 110f, 3012f, Util.getTimeString()),
+        WeatherForecast(10f, 11f, 25f, 180f, 10f, Util.getTimeString(millisOffset = Const.TIME_OFFSET)),
+        WeatherForecast(14f, 12f, 256f, 110f, 3012f, Util.getTimeString(millisOffset = Const.TIME_OFFSET)),
     )
 
     val formList = listOf<Form>(

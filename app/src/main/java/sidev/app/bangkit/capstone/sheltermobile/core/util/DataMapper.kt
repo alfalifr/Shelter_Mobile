@@ -35,7 +35,7 @@ object DataMapper {
 
     private fun String.toTimeString(pattern: String = Const.DB_TIME_PATTERN): TimeString = TimeString(this, pattern)
 
-    fun DisasterEntity.toModel(): Disaster = Disaster(id, name)
+    fun DisasterEntity.toModel(): Disaster = Disaster(id, name, imgLink)
     fun EmergencyEntity.toModel(): Emergency = Emergency(id, name, color, severity)
     fun LocationEntity.toModel(): Location = Location(id, name, Coordinate(latitude, longitude))
     fun NewsEntity.toModel(): News = News(timestamp.toTimeString(), title, briefDesc, linkImage, link, type)
@@ -55,7 +55,7 @@ object DataMapper {
         temperature, humidity, rainfall, windSpeed, ultraviolet, timestamp.toTimeString()
     )
 
-    fun Disaster.toEntity(): DisasterEntity = DisasterEntity(id, name)
+    fun Disaster.toEntity(): DisasterEntity = DisasterEntity(id, name, imgLink)
     fun Emergency.toEntity(): EmergencyEntity = EmergencyEntity(id, name, color, severity)
     fun Location.toEntity(parentId: Int): LocationEntity = LocationEntity(id, name, coordinate.latitude, coordinate.longitude, parentId)
     fun News.toEntity(): NewsEntity = NewsEntity(timestamp.time, title, briefDesc, linkImage, link, type)
@@ -118,7 +118,7 @@ object DataMapper {
         is Fail -> this
     }
     fun <T> Result<List<T>>.toSingleResult(): Result<T> = when(this){
-        is Success -> Success(data.first(), 0)
+        is Success -> data.firstOrNull()?.let { Success(it, 0) } ?: Util.noEntityFailResult()
         is Fail -> this
     }
 

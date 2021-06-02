@@ -7,6 +7,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.AuthData
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.*
+import sidev.lib.android.std.tool.util.`fun`.loge
 
 class UserUseCaseImpl(
     private val repo: UserRepo,
@@ -18,15 +19,18 @@ class UserUseCaseImpl(
     override suspend fun getCurrentLocation(): Result<Location> = locationLocalSrc.getCurrentLocation()
     override suspend fun getCurrentUser(): Result<User> = userLocalSrc.getCurrentUser()
 
-    override suspend fun login(authData: AuthData): Result<Boolean> = when(val res = userRemoteSrc.searchUser(authData)){
+    override suspend fun login(authData: AuthData): Result<Boolean> = when(val res = userRemoteSrc.searchUser(authData).also { loge("UserUseCaseImpl login() authData= $authData res = $it") }){
         is Success -> {
             val isPswdResSuccess = userLocalSrc.savePassword(authData.password) is Success
             val isEmailResSuccess = userLocalSrc.saveEmail(authData.email) is Success
+            val isUserResSuccess = userLocalSrc.saveUser(res.data) is Success
             val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
 
+            loge("isPswdResSuccess= $isPswdResSuccess isEmailResSuccess= $isEmailResSuccess isUserResSuccess= $isUserResSuccess isSetDefaultLocSuccess= $isSetDefaultLocSuccess")
+
             when {
-                isPswdResSuccess && isEmailResSuccess && isSetDefaultLocSuccess-> Success(true, 0)
-                !isPswdResSuccess && !isEmailResSuccess && !isSetDefaultLocSuccess -> Fail("Can't save both email, password, and default location to local", -1, null)
+                isPswdResSuccess && isEmailResSuccess && isSetDefaultLocSuccess && isUserResSuccess -> Success(true, 0)
+                !isPswdResSuccess && !isEmailResSuccess && !isSetDefaultLocSuccess && !isUserResSuccess -> Fail("Can't save both email, password, and default location to local", -1, null)
                 else -> Success(true, 1)
             }
         }

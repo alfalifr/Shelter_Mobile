@@ -56,7 +56,7 @@ class EmergencyCompositeSourceTest {
             assert(fromRemote is Success)
             assertEquals(dummyList, (fromRemote as Success).data)
 
-            prin("fromRemote= $fromRemote")
+            loge("fromRemote= $fromRemote")
 
             val fromComposite = compositeSrc.getAllEmergencies()
             assert(fromComposite is Success)
@@ -65,6 +65,8 @@ class EmergencyCompositeSourceTest {
             val fromLocal2 = localSrc.getAllEmergencies()
             assert(fromLocal2 is Success)
             assertEquals((fromComposite as Success).data, (fromLocal2 as Success).data)
+
+            loge("fromLocal2= $fromLocal2")
         }
     }
 
@@ -75,9 +77,13 @@ class EmergencyCompositeSourceTest {
             assert(fromComposite is Success)
             assertEquals(dummyItem, (fromComposite as Success).data)
 
+            loge("fromComposite= $fromComposite")
+
             val fromLocal = localSrc.getEmergency(dummyItem.id)
             assert(fromLocal is Success)
             assertEquals(dummyItem, (fromLocal as Success).data)
+
+            loge("fromLocal= $fromLocal")
         }
     }
 }

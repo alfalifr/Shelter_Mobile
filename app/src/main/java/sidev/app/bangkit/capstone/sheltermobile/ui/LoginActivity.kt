@@ -13,6 +13,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.Auth
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivityLoginBinding
+import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.startAct
 
 class LoginActivity : AppCompatActivity() {
@@ -67,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
 
         model = ViewModelDi.getAuthViewModel(this).apply {
             onAuth.observe(this@LoginActivity) {
+                loge("LoginAct onAuth.observe() it= $it")
                 if (it != null) {
                     if (it) {
                         binding.tvErrorAccount.visibility = View.GONE

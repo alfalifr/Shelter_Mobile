@@ -18,7 +18,10 @@ class EmergencyLocalSourceImpl(private val dao: EmergencyDao): EmergencyLocalSou
     }
 
     override suspend fun getEmergency(id: Int): Result<Emergency> {
-        val data = dao.getEmergency(id)?.toModel() ?: return Util.noEntityFailResult()
+        loge("EmergencyLocalSrc.getEmergency() id= $id")
+        val data = dao.getEmergency(id)?.toModel().also {
+            loge("EmergencyLocalSrc.getEmergency() model= $it")
+        } ?: return Util.noEntityFailResult()
         return Success(data, 0)
     }
 
@@ -28,6 +31,8 @@ class EmergencyLocalSourceImpl(private val dao: EmergencyDao): EmergencyLocalSou
     override suspend fun saveEmergencyList(list: List<Emergency>): Result<Int> {
         val entityList = list.map { it.toEntity() }
         val insertedCount = dao.saveEmergencyList(entityList)
-        return Util.getInsertResult(insertedCount, entityList.size)
+        return Util.getInsertResult(insertedCount, entityList.size). also {
+            loge("EmergencyLocalSrc.saveEmergencyList() list= $list insertedCount= $insertedCount entityList.size= ${entityList.size} res= $it")
+        }
     }
 }

@@ -13,6 +13,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.Disast
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.DashboardViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.setImg
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentHomeBinding
 import sidev.lib.android.std.tool.util.`fun`.bgColorTint
 
@@ -94,16 +95,26 @@ class HomeFragment : Fragment() {
             higlightedWarningStatus.observe(viewLifecycleOwner){
                 if(it != null) {
                     binding.apply {
+                        ivNotification.setImg(it.imgLink)
                         tvTitleNotif.text = it.title
                         tvNotif.text = Util.getFormattedStr(it)
-                        cardNotifications.bgColorTint = Color.parseColor(it.emergency.color)
+
+                        cardNotifications.apply {
+                            val color = Color.parseColor(it.emergency.color)
+                            setBackgroundColor(color)
+                            setShadowColorLight(color)
+                            setShadowColorDark(color)
+                        }
+                        //cardNotifications.bgColorTint = Color.parseColor()
                     }
                     showLoading(binding.pbWarningHighlight, binding.vgWarningHighlight, false)
                 }
             }
             disasterStatusList.observe(viewLifecycleOwner){
                 if(it != null) {
-                    disasterAdp.dataList = it
+                    //disasterAdp.dataList = it
+                    disasterAdp = DisasterWarningAdapter(it)
+                    binding.rvCard.adapter= disasterAdp
                     showLoading(binding.pbWarningDisaster, binding.rvCard, false)
                 }
             }

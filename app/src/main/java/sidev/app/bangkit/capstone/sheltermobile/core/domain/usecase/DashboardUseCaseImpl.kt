@@ -74,6 +74,7 @@ class DashboardUseCaseImpl(
             val disasterGroupList = disasterList.mapIndexed { i, disaster ->
                 disaster to warningStatusLists[i]
             }
+            disasterWarningList = disasterGroupList
             return Success(disasterGroupList, 0)
         }
 

@@ -21,12 +21,13 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivityLaporPesanBinding
 import sidev.lib.android.std.tool.util._BitmapUtil
+import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.toast
 import java.io.File
 
 
 @Suppress("DEPRECATION")
-class LaporPesanFragment : AppCompatActivity() {
+class LaporPesanActivity : AppCompatActivity() {
 
     companion object {
         private const val CAMERA_PERMISSION_CODE = 1
@@ -45,10 +46,13 @@ class LaporPesanFragment : AppCompatActivity() {
 
     private val isAllValid: Boolean get() = isTitleLaporanNotBlank && isIsiLaporanNotBlank
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = ActivityLaporPesanBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loge("LaporPesanActivity.onCreate() binding.root= ${binding.root}")
 
         //call the function
         cameraFuction()

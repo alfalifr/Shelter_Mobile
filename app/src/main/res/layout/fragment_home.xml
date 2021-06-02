@@ -236,7 +236,7 @@
                         android:layout_alignParentRight="true"
                         android:paddingTop="20dp"
                         android:paddingEnd="70dp"
-                        android:src="@drawable/ic_weather_lightrain" />
+                        android:src="@drawable/ic_weather_hujan" />
 
                 </RelativeLayout>
             </RelativeLayout>

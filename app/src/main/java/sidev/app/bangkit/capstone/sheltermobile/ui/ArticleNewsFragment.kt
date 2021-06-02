@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -79,7 +80,11 @@ class ArticleNewsFragment:  Fragment() {
     }
 
 
-    private fun showNoData(pb: ProgressBar, loadedView: View, show: Boolean = true) {}
+    private fun showNoData(tvNoData: TextView, rv: RecyclerView, show: Boolean = true) {
+        if(show){
+
+        }
+    }
     private fun showLoading(pb: ProgressBar, loadedView: View, show: Boolean = true) {
         if(show){
             pb.visibility = View.VISIBLE

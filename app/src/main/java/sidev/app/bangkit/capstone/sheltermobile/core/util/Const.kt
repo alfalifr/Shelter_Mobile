@@ -21,6 +21,7 @@ object Const {
     const val KEY_TIMESTAMP = "timestamp"
     const val KEY_TOP = "top"
     const val KEY_DISASTER_ID = "disaster_id"
+    const val KEY_NO_NEWS = "no_news"
     const val KEY_IS_SINGLE = "is_single"
     const val SHARED_PREF_NAME = "_shared_pref_"
 
@@ -52,7 +53,7 @@ object Const {
     const val DAY_PATTERN = "EEEE"
     const val VIEW_DATE_PATTERN = "dd MMMM yyyy"
     const val VIEW_DATE_PATTERN_WITH_DAY = "$DAY_PATTERN, $VIEW_DATE_PATTERN"
-    const val DB_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS"
+    const val DB_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
     const val REMOTE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
 
     //const val LEN_FORM_TITLE = 30

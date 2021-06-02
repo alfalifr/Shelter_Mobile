@@ -1,6 +1,7 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.util
 
 import retrofit2.Call
+import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.*
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LoginBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
@@ -12,6 +13,8 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.DisasterGroup
 import java.lang.IllegalArgumentException
+import java.text.SimpleDateFormat
+import java.util.*
 
 object DataMapper {
     fun toDisasterGroupList(
@@ -34,7 +37,11 @@ object DataMapper {
 
     private fun String.toTimeString(pattern: String = Const.DB_TIME_PATTERN): TimeString = TimeString(this, pattern)
     private fun String.remoteToDbTimeFormat(): TimeString {
-
+        val remSdf = SimpleDateFormat(Const.REMOTE_TIME_PATTERN, Locale.ROOT)
+        val dbSdf = SimpleDateFormat(Const.DB_TIME_PATTERN, Locale.ROOT)
+        val time = remSdf.parse(this)!!
+        val timeStr = dbSdf.format(time)
+        return TimeString(timeStr, Const.DB_TIME_PATTERN)
     }
 
     fun DisasterEntity.toModel(): Disaster = Disaster(id, name, imgLink)
@@ -86,7 +93,7 @@ object DataMapper {
 
 
     fun NewsResponse.toModel(type: Int): News = News(
-        timestamp = timestamp.toTimeString(),
+        timestamp = timestamp.remoteToDbTimeFormat(),
         title = title,
         briefDesc = desc,
         linkImage = imgLink,
@@ -126,6 +133,10 @@ object DataMapper {
 
     fun Result<List<WarningDetail>>.toWarningStatusListResult(): Result<List<WarningStatus>> = when(this){
         is Success -> Success(data.map { it.status }, 0)
+        is Fail -> this
+    }
+    fun Result<List<WarningStatus>>.toWarningDetailListResult(): Result<List<WarningDetail>> = when(this){
+        is Success -> Success(data.map { WarningDetail(it, "", Dummy.emptyNews) }, 0)
         is Fail -> this
     }
     fun Result<List<ReportDetail>>.toReportListResult(): Result<List<Report>> = when(this){

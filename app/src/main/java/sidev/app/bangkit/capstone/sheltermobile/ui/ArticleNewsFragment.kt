@@ -15,6 +15,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.News
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ArticleNewsListBinding
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentArticleNewsBinding
+import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.startAct
 
 
@@ -61,17 +62,27 @@ class ArticleNewsFragment:  Fragment() {
             onPreAsyncTask {
                 binding.apply {
                     when(it) {
-                        Const.KEY_ARTICLE_LIST -> showLoading(pbArticle, rvArticle)
-                        Const.KEY_NEWS_LIST -> showLoading(pbNews, rvNews)
+                        Const.KEY_ARTICLE_LIST -> {
+                            tvNoDataArticle.visibility = View.GONE
+                            showLoading(pbArticle, rvArticle)
+                        }
+                        Const.KEY_NEWS_LIST -> {
+                            tvNoDataNews.visibility = View.GONE
+                            showLoading(pbNews, rvNews)
+                        }
                     }
                 }
             }
             newsList.observe(viewLifecycleOwner) {
+                loge("ArticleNewsFrag newsAdp.dataList= $it")
+                loge("ArticleNewsFrag newsAdp.dataList.size= ${it.size}")
                 newsAdp.dataList = it
                 showLoading(binding.pbNews, binding.rvNews, it == null)
                 showNoData(binding.tvNoDataNews, binding.rvNews, it?.isNotEmpty() == false)
             }
             articleList.observe(viewLifecycleOwner) {
+                loge("ArticleNewsFrag articleAdp.dataList= $it")
+                loge("ArticleNewsFrag articleAdp.dataList.size= ${it.size}")
                 articleAdp.dataList = it
                 showLoading(binding.pbArticle, binding.rvArticle, it == null)
                 showNoData(binding.tvNoDataArticle, binding.rvArticle, it?.isNotEmpty() == false)

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.profil,
                 )
                 adapter = vpAdp
+                isUserInputEnabled = false
             }
         }
     }

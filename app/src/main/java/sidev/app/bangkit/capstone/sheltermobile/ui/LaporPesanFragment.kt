@@ -47,6 +47,8 @@ class LaporPesanFragment : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+        binding = ActivityLaporPesanBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //call the function
         cameraFuction()

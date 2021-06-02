@@ -70,15 +70,16 @@ class LoginActivity : AppCompatActivity() {
             if (it != null) {
                 if (it) {
                     binding.tvErrorAccount.visibility = View.GONE
+/*
                     Util.editSharedPref(this) {
                         putString(Const.KEY_USER_EMAIL, email)
                         putString(Const.KEY_PASSWORD, pswd)
                     }
+ */
                     //val email = Util.getSharedPref(this).getString(Const.KEY_USER_EMAIL, null)
                     startAct<MainActivity>()
                 } else {
-                    binding.tvErrorAccount.visibility =
-                        View.VISIBLE
+                    binding.tvErrorAccount.visibility = View.VISIBLE
                 }
             }
         }

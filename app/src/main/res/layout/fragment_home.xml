@@ -90,8 +90,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_location"
-            app:neumorph_backgroundColor="@color/yellowpop"
-            app:neumorph_shadowColorDark="@color/dark_shadow_2"
+            app:neumorph_backgroundColor="@color/emergency_yellow"
             app:neumorph_shadowColorLight="@color/light_shadow"
             app:neumorph_shadowElevation="1dp"
             app:neumorph_shapeAppearance="@style/NeumorphsimCard"
@@ -122,15 +121,16 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="15dp"
-                        android:textColor="@color/font1"
+                        android:textColor="@color/white"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        tools:text="Tetap Tenang dan Waspada" />
+                        android:text="@string/emergency_yellow" />
 
                     <TextView
                         android:id="@+id/tv_note_notif"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="15dp"
                         android:text="@string/note_notif" />
@@ -140,6 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
                         android:padding="15dp"
                         tools:text="Zona Kuning Banjir" />
 

@@ -4,8 +4,13 @@
     <string name="news">Berita</string>
     <string name="emergency">Darurat</string>
     <string name="profile">Profil</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Classification for Notification -->
+    <string name="emergency_yellow">Tetap Tenang dan Waspada</string>
+    <string name="emergency_red">Mari Bersiap Untuk Evakuasi</string>
+    <string name="emergency_green">Bersyukurlah, Anda di Tempat Aman</string>
+
+
     <string name="selamat_datang">Selamat Datang,</string>
     <string name="note_notif">Anda berada di wilayah</string>
     <string name="siaga_bencana">Siaga Bencana</string>
@@ -35,7 +40,6 @@
     <string name="profil_anda">Profil Anda</string>
     <string name="nama">Nama</string>
     <string name="jenis_kelamin">Jenis Kelamin</string>
-    <!--    <string name="email">Email</string> -->
     <string name="lokasi">Lokasi</string>
     <string name="keluar">Keluar</string>
     <string name="edit_profil">Edit Profil</string>
@@ -54,5 +58,4 @@
     <string name="hari_tanggal">Hari tanggal</string>
     <string name="isi_laporan">Isi Laporan</string>
 
-    <string name="zone_fill">Zona %s</string>
 </resources>

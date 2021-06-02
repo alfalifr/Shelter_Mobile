@@ -17,10 +17,15 @@
     <color name="background_3">#E0E9FF</color>
     <color name="background_4">#EDF1F8</color>
     <color name="background_5">#D1E89E</color>
-    <color name="yellowpop">#F2CB05</color>
     <color name="dark_shadow">#CDD5EA</color>
     <color name="light_shadow">#F8F9FE</color>
     <color name="dark_icon">#212121</color>
+
+
+    <!-- Custom for Notifications -->
+    <color name="emergency_yellow">#F2CB05</color>
+    <color name="emergency_red">#D92332</color>
+    <color name="emergency_green">#32BA7C</color>
 
 
     <!-- Custom 2 -->

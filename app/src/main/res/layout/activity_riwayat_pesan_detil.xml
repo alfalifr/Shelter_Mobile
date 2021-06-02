@@ -47,9 +47,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginTop="30dp"
                         android:layout_marginEnd="10dp"
-                        android:textAlignment="textEnd"
                         android:fontFamily="@font/nunitosans_black"
-                        android:text="Rician Riwayat Lapor \nTelepon"
+                        android:text="Rician Riwayat Lapor \nPesan"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/greenbow" />
                 </RelativeLayout>
 
@@ -57,8 +57,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:elevation="5dp"
                     android:layout_marginBottom="30dp"
+                    android:elevation="5dp"
                     app:cardBackgroundColor="@color/whiteTextColor"
                     app:cardCornerRadius="10dp">
 
@@ -105,6 +105,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_date"
                             tools:text="Senin, 12 Februari 2021" />
+
                         <View
                             android:id="@+id/divider_line_0"
                             android:layout_width="300dp"
@@ -140,6 +141,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_name_field"
                             tools:text="Adi Sibutar" />
+
                         <View
                             android:id="@+id/divider_line"
                             android:layout_width="300dp"
@@ -185,40 +187,6 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_jenis_akses_laporan" />
 
-                        <TextView
-                            android:id="@+id/tv_detil_laporan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="15dp"
-                            android:fontFamily="@font/nunitosans_light"
-                            android:text="@string/rician_laporan"
-                            android:textSize="15sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/divider_line_1" />
-
-                        <TextView
-                            android:id="@+id/tv_isi_detil_laporan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="15dp"
-                            android:fontFamily="@font/nunitosans_regular"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_detil_laporan"
-                            tools:text="00:05:31" />
-
-                        <View
-                            android:id="@+id/divider_line_2"
-                            android:layout_width="300dp"
-                            android:layout_height="0.2dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@color/font1"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
                         <TextView
                             android:id="@+id/tv_note_admin"
@@ -243,7 +211,7 @@
                             android:textSize="20sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_note_admin"
-                            tools:text="Laporan Selesai" />
+                            tools:text="Silahkan pergi ke pos 12 di Jalan\nBangau No.12" />
 
                         <View
                             android:id="@+id/divider_line_3"
@@ -254,9 +222,85 @@
                             android:background="@color/font1"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_isi_detil_note" />
-                        
 
                     </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:elevation="5dp"
+                    app:cardBackgroundColor="@color/whiteTextColor"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_rician"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/nunitosans_regular"
+                            android:text="@string/rician_laporan"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_location_set" />
+
+                        <TextView
+                            android:id="@+id/tv_judul"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/nunitosans_light"
+                            android:text="@string/judul_laporan"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tv_isi_judul"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/nunitosans_regular"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            tools:text="Ada kebakaran hutan" />
+
+                        <TextView
+                            android:id="@+id/tv_detil_laporan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/nunitosans_light"
+                            android:text="@string/isi_laporan"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tv_isi_detil_laporan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="20dp"
+                            android:fontFamily="@font/nunitosans_regular"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            tools:text="Ada kebakaran hutan di sebelah \nWarung, gede banget." />
+
+                    </LinearLayout>
+
+
                 </androidx.cardview.widget.CardView>
 
 

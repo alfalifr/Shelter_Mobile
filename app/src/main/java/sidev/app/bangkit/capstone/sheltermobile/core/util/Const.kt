@@ -9,6 +9,8 @@ object Const {
 
     const val CODE_WAIT_FOR_ACT_RES = 1
     const val CHAR_LINK_SEPARATOR = '|'
+    const val REGEX_EMAIL_STR = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+$" //"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$"
+    val REGEX_EMAIL = REGEX_EMAIL_STR.toRegex()
 
     const val TIME_OFFSET: Long = 30L * 24L * 3600 * 1000
     const val PREFIX_DRAWABLE = "R.drawable."
@@ -16,6 +18,7 @@ object Const {
     const val KEY_PASSWORD = "password"
     const val KEY_LOCATION_ID = "location_id"
     const val KEY_USER_EMAIL = "user_email"
+    const val KEY_USER_ID = "user_id"
     const val KEY_EMAIL = "email"
     const val KEY_ID = "id"
     const val KEY_COORDINATE = "coordinate"
@@ -29,6 +32,9 @@ object Const {
     const val SHARED_PREF_NAME = "_shared_pref_"
 
     const val KEY_CURRENT_LOC = "current_location"
+    const val KEY_LOCATION_LIST = "location_list"
+    const val KEY_SAVE_CURRENT_LOC = "save_current_loc"
+    const val KEY_SAVE_CURRENT_USER = "save_current_user"
     const val KEY_WEATHER_FORECAST = "getWeatherForecast"
     const val KEY_WARNING_HIGHLIGHT = "getHighlightedWarningStatus"
     const val KEY_DISASTER_GROUP_LIST = "getDisasterGroupList"

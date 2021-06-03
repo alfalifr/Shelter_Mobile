@@ -128,6 +128,17 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * This is generally
+     * tied to [Activity.onResume] of the containing
+     * Activity's lifecycle.
+     */
+    override fun onResume() {
+        super.onResume()
+        vm.getCurrentLocation(true)
+    }
+
     private fun showLoading(pb: ProgressBar, loadedView: View, show: Boolean = true) {
         if(show){
             pb.visibility = View.VISIBLE

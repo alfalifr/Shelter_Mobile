@@ -9,4 +9,5 @@ interface UserRemoteSource: UserRepo {
     suspend fun searchUser(authData: AuthData): Result<User>
     suspend fun registerUser(user: User, authData: AuthData): Result<Boolean>
     suspend fun changePassword(email: String, oldPswd: String, newPswd: String): Result<Boolean>
+    //suspend fun updateUser(user: User): Result<Boolean>
 }

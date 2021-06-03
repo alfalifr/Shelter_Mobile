@@ -49,4 +49,6 @@ class UserRemoteSourceImpl(private val api: AuthApi): UserRemoteSource {
         oldPswd: String,
         newPswd: String
     ): Result<Boolean> = Util.operationNotAvailableFailResult()
+
+    override suspend fun updateUser(oldEmail: String, newData: User): Result<Boolean> = Util.operationNotAvailableFailResult()
 }

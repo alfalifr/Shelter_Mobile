@@ -62,7 +62,8 @@ object Util {
         return data as T
     }
 
-    fun validateEmail(email: String): Boolean = email.isNotBlank() //TODO Alif: 29 Mei 2021
+    fun validateName(name: String): Boolean = name.isNotBlank()
+    fun validateEmail(email: String): Boolean = Const.REGEX_EMAIL.matches(email)
     fun validatePassword(pswd: String): Boolean = pswd.isNotBlank()
 
     fun validateFormTitle(title: String): Boolean = title.isNotBlank()
@@ -82,7 +83,7 @@ object Util {
         val time = timeStr?.timeLong ?: getTime()
         val date = Date(time + millisOffset)
         return sdf.format(date).also {
-            loge("Util.getFormattedTimeStr() date= $date str= $it millisOffset= $millisOffset time= $time time + millisOffset= ${time + millisOffset}")
+            //loge("Util.getFormattedTimeStr() date= $date str= $it millisOffset= $millisOffset time= $time time + millisOffset= ${time + millisOffset}")
         }
     }
 
@@ -95,7 +96,7 @@ object Util {
     fun getFormattedStr(warning: WarningStatus): String = "Zona ${warning.emergency.name} ${warning.disaster.name}"
 
     fun getTimeString(time: String?= null, pattern: String = Const.DB_TIME_PATTERN, millisOffset: Long = 0): TimeString {
-        loge("Util.getTimeString() time= $time pattern= $pattern millisOffset= $millisOffset")
+        //loge("Util.getTimeString() time= $time pattern= $pattern millisOffset= $millisOffset")
         return TimeString(time ?: getTimestampStr(millisOffset = millisOffset), pattern)
     }
 
@@ -177,6 +178,7 @@ object Util {
     fun noEntityFailResult(): Fail = failResult("No entity")
     fun noValueFailResult(): Fail = failResult("No value")
     fun cantInsertFailResult(): Fail = failResult("Can't insert")
+    fun cantUpdateFailResult(): Fail = failResult("Can't update")
     fun cantGetFailResult(): Fail = failResult("Can't get")
     fun unknownFailResult(): Fail = failResult("Unknown failure")
     fun operationNotAvailableFailResult(): Fail = failResult("Operation is not available")

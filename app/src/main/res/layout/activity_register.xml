@@ -103,19 +103,16 @@
                         <RadioButton android:id="@+id/radio_wanita"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-                            android:text="Wanita"
+                            android:text="@string/female"
                             android:layout_marginStart="10dp"
-                            style="@style/modifiedEditText"
-                            android:onClick="onRadioButtonClicked"/>
+                            style="@style/modifiedEditText"/>
 
                         <RadioButton android:id="@+id/radio_pria"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             style="@style/modifiedEditText"
-                            android:text="Pria"
-                            android:onClick="onRadioButtonClicked"/>
+                            android:text="@string/male"/>
 
                     </RadioGroup>
 

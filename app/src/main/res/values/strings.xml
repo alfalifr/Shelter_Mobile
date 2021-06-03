@@ -70,5 +70,10 @@
     <string name="choose_your_current_location">Choose your current location</string>
     <string name="pilih">Pilih</string>
 
+    <string name="name_cant_be_blank">Nama gak boleh kosong</string>
+    <string name="fill_a_valid_email">Masukan email yang benar</string>
+    <string name="female">Wanita</string>
+    <string name="male">Pria</string>
+
 
 </resources>

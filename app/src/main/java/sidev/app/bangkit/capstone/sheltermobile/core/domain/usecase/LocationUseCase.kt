@@ -1,5 +1,9 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase
 
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.LocationRepo
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 
-interface LocationUseCase: LocationRepo
+interface LocationUseCase: LocationRepo {
+    suspend fun saveCurrentLocation(data: Location): Result<Boolean>
+}

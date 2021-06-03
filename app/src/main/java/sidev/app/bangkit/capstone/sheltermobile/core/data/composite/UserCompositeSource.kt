@@ -50,4 +50,11 @@ class UserCompositeSource(
     override suspend fun deleteCurrentUser(): Result<Boolean> = localSrc.deleteCurrentUser()
 
     override suspend fun saveEmail(email: String): Result<Boolean> = localSrc.saveEmail(email)
+
+    override suspend fun getUserById(id: Int): Result<User> = localSrc.getUserById(id)
+
+    override suspend fun updateUser(oldEmail: String, newData: User): Result<Boolean> = when(val remRes = remoteSrc.updateUser(oldEmail, newData)) {
+        is Success -> localSrc.updateUser(oldEmail, newData)
+        is Fail -> remRes
+    }
 }

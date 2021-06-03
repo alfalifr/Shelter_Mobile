@@ -16,6 +16,7 @@ interface UserUseCase : UserRepo, LocationRepo {
     suspend fun getCurrentUser(): Result<User>
     suspend fun getPassword(): Result<String>
     suspend fun saveCurrentLocation(data: Location): Result<Boolean>
+    suspend fun saveCurrentProfile(user: User, password: String?): Result<Boolean>
     suspend fun setDefaultCurrentLocation(): Result<Boolean>
     suspend fun changePassword(oldPassword: String, newPassword: String): Result<Boolean>
 }

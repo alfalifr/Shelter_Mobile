@@ -67,6 +67,31 @@ class UserUseCaseImpl(
         is Fail -> locRes
     }
 
+    override suspend fun saveCurrentProfile(user: User, password: String?): Result<Boolean> {
+        val userRes = userLocalSrc.getCurrentUser()
+        if(userRes !is Success)
+            return userRes as Fail
+
+        val oldUser = userRes.data
+
+        if(password != null) {
+            val pswdRes = userLocalSrc.getPassword()
+            if(pswdRes !is Success)
+                return pswdRes as Fail
+
+            val oldPswd = pswdRes.data
+
+            when(val res = userRemoteSrc.changePassword(oldUser.email, oldPswd, password)) {
+                is Fail -> return res
+            }
+        }
+
+        return when(val remRes = userRemoteSrc.updateUser(oldUser.email, user)) {
+            is Success -> userLocalSrc.updateUser(oldUser.email, user)
+            is Fail -> remRes
+        }
+    }
+
     override suspend fun changePassword(oldPassword: String, newPassword: String): Result<Boolean> =
         when(val localRes = userLocalSrc.getCurrentUser()){
             is Success -> {

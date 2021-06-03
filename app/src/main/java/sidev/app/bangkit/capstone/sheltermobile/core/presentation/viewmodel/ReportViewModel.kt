@@ -46,7 +46,8 @@ class ReportViewModel(app: Context?, private val useCase: ReportUseCase): AsyncV
     val currentLocation: LiveData<Location> get()= mCurrentLocation
     private val mCurrentLocation = MutableLiveData<Location>()
 
-    fun getCurrentLocation() {
+    fun getCurrentLocation(forceLoad: Boolean = false) {
+        if(currentLocation.value != null && !forceLoad) return
         startJob(Const.KEY_CURRENT_LOC) {
             when(val res = useCase.getCurrentLocation()) {
                 is Success -> mCurrentLocation.postValue(res.data)

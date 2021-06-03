@@ -70,7 +70,7 @@ object DataMapper {
     fun News.toEntity(): NewsEntity = NewsEntity(timestamp.time, title, briefDesc, linkImage, link, type)
     fun ReportDetail.toEntity(): ReportEntity = ReportEntity(report.timestamp.time, report.method, response, report.location.id)
     fun Form.toEntity(): FormEntity = FormEntity(timestamp.time, title, desc, photoLinkList.joinToString(Const.CHAR_LINK_SEPARATOR.toString()))
-    fun User.toEntity(): UserEntity = UserEntity(email, name, gender)
+    fun User.toEntity(id: Int = 0): UserEntity = UserEntity(id, email, name, gender)
     fun WarningDetail.toEntity(): WarningEntity = WarningEntity(
         timestamp = status.timestamp.time,
         locationId = status.location.id,

@@ -17,6 +17,9 @@ object ViewModelDi {
     fun getProfileViewModel(owner: ViewModelStoreOwner): ProfileViewModel = ProfileViewModel.getInstance(
         owner, AppDi.getContext(), UseCaseDi.getUserUseCase()
     )
+    fun getLocationViewModel(owner: ViewModelStoreOwner): LocationViewModel = LocationViewModel.getInstance(
+        owner, AppDi.getContext(), UseCaseDi.getLocationUseCase()
+    )
     fun getReportViewModel(owner: ViewModelStoreOwner): ReportViewModel = ReportViewModel.getInstance(
         owner, AppDi.getContext(), UseCaseDi.getReportUseCase()
     )

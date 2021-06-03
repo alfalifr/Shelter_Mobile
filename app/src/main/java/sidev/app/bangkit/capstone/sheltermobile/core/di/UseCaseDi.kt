@@ -6,7 +6,7 @@ object UseCaseDi {
     fun getDashbosrdUseCase(): DashboardUseCase = DashboardUseCaseImpl(
         getWarningUseCase(), RepoDi.getDisasterRepo(), getWeatherUseCase(), getUserUseCase()
     )
-    fun getLocationUseCase(): LocationUseCase = LocationUseCaseImpl(RepoDi.getLocationRepo())
+    fun getLocationUseCase(): LocationUseCase = LocationUseCaseImpl(RepoDi.getLocationRepo(), RepoDi.Local.getLocationSrc())
     fun getNewsUseCase(): NewsUseCase = NewsUseCaseImpl(RepoDi.getNewsRepo())
     fun getReportUseCase(): ReportUseCase = ReportUseCaseImpl(
         repo = RepoDi.getReportRepo(),

@@ -42,6 +42,7 @@ class LaporFragment : Fragment() {
     private lateinit var adapter: RiwayatLaporAdapter
     private lateinit var viewModel : ReportViewModel
     private lateinit var reportActResLauncher: ActivityResultLauncher<Intent>
+    private lateinit var permissionActResLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var currentLocation: Location
 
     private var reportHistoryCount = 0
@@ -69,6 +70,18 @@ class LaporFragment : Fragment() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        permissionActResLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            if(it[Manifest.permission.CALL_PHONE] == true) {
+                    //val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    //startActivityForResult(intent, LaporPesanFragment.CAMERA_REQUEST_CODE)
+                val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${Const.numberTextSatgas}"))
+                    //startActivity(intent)
+                reportActResLauncher.launch(intent)
+            } else {
+                toast("Ups anda menolak Shelter menggunakan kamera anda")
+            }
+        }
 
         reportActResLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             viewModel.getReportList(Const.INT_TOP_REPORT_LIMIT, true)
@@ -135,9 +148,29 @@ class LaporFragment : Fragment() {
                     this@LaporFragment.reportHistoryCount = it
                 }
             }
+            onSend.observe(viewLifecycleOwner) {
+                if(it != null) {
+                    if(it){
+                        getReportList(Const.INT_TOP_REPORT_LIMIT, true)
+                    } else {
+                        toast("Terjadi kesalahan saat mengirim pengaduan")
+                    }
+                }
+            }
             getCurrentLocation()
             getReportList(Const.INT_TOP_REPORT_LIMIT)
         }
+    }
+
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * This is generally
+     * tied to [Activity.onResume] of the containing
+     * Activity's lifecycle.
+     */
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCurrentLocation(true)
     }
 
     private fun riwayatLaporRV() {
@@ -178,11 +211,14 @@ class LaporFragment : Fragment() {
                         Manifest.permission.CALL_PHONE
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
+/*
                     ActivityCompat.requestPermissions(
                         requireActivity(),
                         arrayOf(Manifest.permission.CALL_PHONE),
                         REQ_CALL
                     )
+ */
+                    permissionActResLauncher.launch(arrayOf(Manifest.permission.CALL_PHONE))
                 } else {
                     //val PERMISSIONS_STORAGE = arrayOf<String>(Manifest.permission.CALL_PHONE)
                     //ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS_STORAGE, 9)
@@ -194,7 +230,7 @@ class LaporFragment : Fragment() {
             }
         }
     }
-
+/*
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -206,12 +242,14 @@ class LaporFragment : Fragment() {
                 //val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 //startActivityForResult(intent, LaporPesanFragment.CAMERA_REQUEST_CODE)
                 val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${Const.numberTextSatgas}"))
-                startActivity(intent)
+                //startActivity(intent)
+                reportActResLauncher.launch(intent)
             } else {
                 toast("Ups anda menolak Shelter menggunakan kamera anda")
             }
         }
     }
+ */
 /*
     /**
      * Receive the result from a previous call to

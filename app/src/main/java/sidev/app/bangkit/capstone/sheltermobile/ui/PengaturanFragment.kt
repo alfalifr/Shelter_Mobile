@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.ProfileViewModel
@@ -22,6 +24,17 @@ class PengaturanFragment : Fragment() {
     private lateinit var binding: FragmentProfilBinding
     private lateinit var vm: ProfileViewModel
     private var isFromEdit = false
+/*
+    private lateinit var editActResLauncher: ActivityResultLauncher<Intent>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        editActResLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            isFromEdit = true
+            startAct<PengaturanEditActivity>()
+        }
+    }
+ */
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +50,7 @@ class PengaturanFragment : Fragment() {
 
         binding.apply {
             cardEditProfile.setOnClickListener {
+                isFromEdit = true
                 startAct<PengaturanEditActivity>()
             }
             cardLogout.setOnClickListener {

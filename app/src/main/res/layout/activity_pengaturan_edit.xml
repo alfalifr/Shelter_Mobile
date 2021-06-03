@@ -73,6 +73,7 @@
                                 android:id="@+id/tv_location_set"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_toLeftOf="@id/tv_change_location"
                                 android:layout_alignParentStart="true"
                                 android:layout_marginStart="5dp"
                                 android:layout_marginTop="20dp"
@@ -137,10 +138,8 @@
                                 android:id="@+id/radio_wanita"
                                 style="@style/modifiedEditText"
                                 android:layout_width="wrap_content"
-
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:onClick="onRadioButtonClicked"
                                 android:text="Wanita" />
 
                             <RadioButton
@@ -149,7 +148,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
-                                android:onClick="onRadioButtonClicked"
                                 android:text="Pria" />
 
                         </RadioGroup>

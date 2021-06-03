@@ -23,4 +23,6 @@ object UserRemoteSourceDummy: UserRemoteSource {
 
     override suspend fun getUser(email: String): Result<User> = Dummy.userList.find { it.email == email }
         ?.let { Success(it, 0) } ?: Util.noValueFailResult()
+
+    override suspend fun updateUser(oldEmail: String, newData: User): Result<Boolean> = Success(true, 0)
 }

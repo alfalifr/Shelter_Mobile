@@ -44,6 +44,9 @@ class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm
     val onLogout: LiveData<Boolean> get()= mOnLogout
     private val mOnLogout = MutableLiveData<Boolean>()
 
+    val onSaveProfile: LiveData<Boolean> get()= mOnSaveProfile
+    private val mOnSaveProfile = MutableLiveData<Boolean>()
+
 
     fun getCurrentUser(forceLoad: Boolean = false){
         if(mCurrentUser.value != null && !forceLoad) return
@@ -51,6 +54,18 @@ class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm
             when(val result = useCase.getCurrentUser()){
                 is Success -> mCurrentUser.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
+            }
+        }
+    }
+
+    fun saveCurrentUser(user: User, pswd: String?= null){
+        startJob(Const.KEY_SAVE_CURRENT_USER) {
+            when(useCase.saveCurrentProfile(user, pswd)) {
+                is Success -> {
+                    mCurrentUser.postValue(user)
+                    mOnSaveProfile.postValue(true)
+                }
+                is Fail -> mOnSaveProfile.postValue(false)
             }
         }
     }

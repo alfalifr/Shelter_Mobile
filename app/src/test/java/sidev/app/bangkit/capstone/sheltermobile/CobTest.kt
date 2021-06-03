@@ -3,6 +3,7 @@ package sidev.app.bangkit.capstone.sheltermobile
 import org.junit.Test
 import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.DisasterGroup
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.lib.console.prin
 
 class CobTest {
@@ -18,5 +19,14 @@ class CobTest {
         val index = list.indexOf(g1)
 
         prin("list = $list \nindex= $index")
+    }
+
+    @Test
+    fun emailRegexTest(){
+        val email = Dummy.userList.first().email
+        prin("email = $email")
+        val matches = Util.validateEmail(email)
+
+        assert(matches)
     }
 }

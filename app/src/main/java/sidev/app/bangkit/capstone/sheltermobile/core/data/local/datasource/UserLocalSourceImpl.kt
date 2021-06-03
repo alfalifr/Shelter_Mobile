@@ -3,6 +3,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource
 import android.content.Context
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.room.UserDao
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
@@ -16,10 +17,25 @@ class UserLocalSourceImpl(private val dao: UserDao, private val ctx: Context): U
         return Success(data, 0)
     }
 
+    override suspend fun getUserById(id: Int): Result<User> {
+        val data = dao.getUserById(id)?.toModel() ?: return Util.noEntityFailResult()
+        return Success(data, 0)
+    }
+
+    override suspend fun updateUser(oldEmail: String, newData: User): Result<Boolean> {
+        val userEntity = dao.getUser(oldEmail) ?: return Util.noEntityFailResult()
+        val userId = userEntity.id
+        val newEntity = newData.toEntity(userId)
+        return if(dao.updateUser(newEntity) > 0) {
+            saveEmail(newData.email)
+            Success(true, 0)
+        } else Util.cantUpdateFailResult()
+    }
+
     override suspend fun saveUser(data: User): Result<Boolean> {
         val entity = data.toEntity()
-        val insertedCount = dao.saveUser(entity)
-        return if(insertedCount >= 0L) Success(true, 0)
+        val insertedRowId = dao.saveUser(entity)
+        return if(insertedRowId >= 0L) Success(true, 0)
         else Util.cantInsertFailResult()
     }
 

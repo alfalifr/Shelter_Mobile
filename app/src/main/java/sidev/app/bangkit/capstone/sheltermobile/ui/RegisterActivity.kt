@@ -1,5 +1,7 @@
 package sidev.app.bangkit.capstone.sheltermobile.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -14,7 +16,9 @@ import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.Auth
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivityRegisterBinding
+import sidev.lib.android.std.tool.util.`fun`.asResNameOrNullBy
 import sidev.lib.android.std.tool.util.`fun`.startAct
+import java.lang.IllegalStateException
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -27,11 +31,12 @@ class RegisterActivity : AppCompatActivity() {
     private var pass: String = ""
     private var gender: Char = '_'
     private var confirm_pass: String = ""
+    private var isNameValid = false
     private var isEmailValid = false
     private var isPswdValid = false
     private var isRePswdValid = false
     private val isGenderValid: Boolean get()= gender == Const.GENDER_MALE || gender == Const.GENDER_FEMALE
-    private val isAllValid: Boolean get() = isEmailValid && isPswdValid && isRePswdValid && isGenderValid
+    private val isAllValid: Boolean get() = isNameValid && isEmailValid && isPswdValid && isRePswdValid && isGenderValid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +52,16 @@ class RegisterActivity : AppCompatActivity() {
                 signup()
             }
             tvErrorAccount.visibility = View.GONE
+            editTextName.addTextChangedListener {
+                if (it != null) {
+                    isNameValid = Util.validateName(it.toString())
+                    if (isNameValid) {
+                        editTextName.error = null
+                    } else {
+                        editTextName.error = getString(R.string.name_cant_be_blank)
+                    }
+                }
+            }
             editTextEmail.addTextChangedListener {
                 if (it != null) {
                     isEmailValid = Util.validateEmail(it.toString())
@@ -59,6 +74,7 @@ class RegisterActivity : AppCompatActivity() {
             }
             editTextPassword.addTextChangedListener {
                 if (it != null) {
+                    pass = it.toString()
                     isPswdValid = Util.validatePassword(it.toString())
                     if (isPswdValid) {
                         editTextPassword.error = null
@@ -84,8 +100,10 @@ class RegisterActivity : AppCompatActivity() {
                 when(checkedId){
                     R.id.radio_pria -> gender= Const.GENDER_MALE
                     R.id.radio_wanita -> gender= Const.GENDER_FEMALE
+                    else -> throw IllegalStateException("No such view id for gender (${checkedId asResNameOrNullBy this@RegisterActivity})")
                 }
             }
+            onLoginPlus.setOnClickListener { finish() }
         }
 
         model = ViewModelDi.getAuthViewModel(this)
@@ -100,7 +118,9 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     model.saveUser(user)
  */
-                    startAct<MainActivity>()
+                    startAct<MainActivity> {
+                        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    }
                     finish()
                 } else {
                     binding.tvErrorAccount.visibility = View.VISIBLE //TODO Mella: ganti pake text error dari server contoh : akun yg dimasukkan tidak valid

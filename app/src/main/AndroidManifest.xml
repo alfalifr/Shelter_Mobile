@@ -34,6 +34,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/fullscreen" />
+        <activity android:name=".ui.WebViewPage" />
     </application>
 
 </manifest>

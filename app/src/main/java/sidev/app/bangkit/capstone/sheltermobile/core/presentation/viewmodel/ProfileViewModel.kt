@@ -41,6 +41,9 @@ class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm
     val changePasswordStatus: LiveData<Boolean> get()= mChangePasswordStatus
     private val mChangePasswordStatus = MutableLiveData<Boolean>()
 
+    val onLogout: LiveData<Boolean> get()= mOnLogout
+    private val mOnLogout = MutableLiveData<Boolean>()
+
 
     fun getCurrentUser(forceLoad: Boolean = false){
         if(mCurrentUser.value != null && !forceLoad) return
@@ -74,6 +77,12 @@ class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm
                 }
                 is Fail -> doCallNotSuccess(oldPswdResult.code, oldPswdResult.error)
             }
+        }
+    }
+
+    fun logout() {
+        startJob(Const.KEY_LOGOUT) {
+            mOnLogout.postValue(useCase.logout() is Success)
         }
     }
 }

@@ -52,7 +52,7 @@ class NewsViewModel(app: Context?, private val useCase: NewsUseCase): AsyncVm(ap
         if(newsList.value != null && !forceLoad) return
         startJob(Const.KEY_NEWS_LIST) {
             val timestamp = Util.getTimestampStr()
-            when(val result = useCase.getArticleList(timestamp)){
+            when(val result = useCase.getNewsList(timestamp)){
                 is Success -> mNewsList.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
             }

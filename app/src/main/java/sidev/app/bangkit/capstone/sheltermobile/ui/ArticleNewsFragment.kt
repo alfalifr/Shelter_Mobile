@@ -4,17 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.jetbrains.anko.editText
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.ArticleNewsAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.NewsViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ArticleNewsListBinding
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentArticleNewsBinding
+import sidev.lib.android.std.tool.util.`fun`.findViewByType
+import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.startAct
 
 
@@ -50,7 +56,18 @@ class ArticleNewsFragment:  Fragment() {
                 layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             }
             Search.apply {
-                isEnabled = false
+                findViewByType<EditText>()!!.apply {
+                    isFocusable = false
+                    isClickable = true
+                    setOnClickListener {
+                        startAct<SearchActivity>()
+                    }
+                }
+                findViewByType<ImageView>()!!.apply {
+                    setOnClickListener {
+                        startAct<SearchActivity>()
+                    }
+                }
                 setOnClickListener {
                     startAct<SearchActivity>()
                 }
@@ -61,18 +78,30 @@ class ArticleNewsFragment:  Fragment() {
             onPreAsyncTask {
                 binding.apply {
                     when(it) {
-                        Const.KEY_ARTICLE_LIST -> showLoading(pbArticle, rvArticle)
-                        Const.KEY_NEWS_LIST -> showLoading(pbNews, rvNews)
+                        Const.KEY_ARTICLE_LIST -> {
+                            tvNoDataArticle.visibility = View.GONE
+                            showLoading(pbArticle, rvArticle)
+                        }
+                        Const.KEY_NEWS_LIST -> {
+                            tvNoDataNews.visibility = View.GONE
+                            showLoading(pbNews, rvNews)
+                        }
                     }
                 }
             }
             newsList.observe(viewLifecycleOwner) {
+                loge("ArticleNewsFrag newsAdp.dataList= $it")
+                loge("ArticleNewsFrag newsAdp.dataList.size= ${it.size}")
                 newsAdp.dataList = it
                 showLoading(binding.pbNews, binding.rvNews, it == null)
+                showNoData(binding.tvNoDataNews, binding.rvNews, it?.isNotEmpty() == false)
             }
             articleList.observe(viewLifecycleOwner) {
+                loge("ArticleNewsFrag articleAdp.dataList= $it")
+                loge("ArticleNewsFrag articleAdp.dataList.size= ${it.size}")
                 articleAdp.dataList = it
                 showLoading(binding.pbArticle, binding.rvArticle, it == null)
+                showNoData(binding.tvNoDataArticle, binding.rvArticle, it?.isNotEmpty() == false)
             }
             getArticleList()
             getNewsList()
@@ -82,7 +111,11 @@ class ArticleNewsFragment:  Fragment() {
 
     private fun showNoData(tvNoData: TextView, rv: RecyclerView, show: Boolean = true) {
         if(show){
-
+            tvNoData.visibility = View.VISIBLE
+            rv.visibility = View.GONE
+        } else {
+            tvNoData.visibility = View.GONE
+            rv.visibility = View.VISIBLE
         }
     }
     private fun showLoading(pb: ProgressBar, loadedView: View, show: Boolean = true) {

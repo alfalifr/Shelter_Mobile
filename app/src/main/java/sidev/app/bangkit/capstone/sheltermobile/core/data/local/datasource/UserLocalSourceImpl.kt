@@ -29,6 +29,14 @@ class UserLocalSourceImpl(private val dao: UserDao, private val ctx: Context): U
         return getUser(email)
     }
 
+    override suspend fun deleteCurrentUser(): Result<Boolean> {
+        Util.editSharedPref(ctx) {
+            remove(Const.KEY_USER_EMAIL)
+            remove(Const.KEY_PASSWORD)
+        }
+        return Success(true, 0)
+    }
+
     override suspend fun savePassword(password: String): Result<Boolean> {
         Util.editSharedPref(ctx, true) {
             putString(Const.KEY_PASSWORD, password)

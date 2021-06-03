@@ -56,6 +56,8 @@ class UserUseCaseImpl(
         is Fail -> remoteRes
     }
 
+    override suspend fun logout(): Result<Boolean> = userLocalSrc.deleteCurrentUser()
+
     override suspend fun saveCurrentLocation(data: Location): Result<Boolean> = locationLocalSrc.saveCurrentLocation(data)
     override suspend fun setDefaultCurrentLocation(): Result<Boolean> = when(val locRes = locationRepo.getAllLocation()) {
         is Success -> {

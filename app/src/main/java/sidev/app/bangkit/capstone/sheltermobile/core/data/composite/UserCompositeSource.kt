@@ -47,5 +47,7 @@ class UserCompositeSource(
 
     override suspend fun getCurrentUser(): Result<User> = localSrc.getCurrentUser()
 
+    override suspend fun deleteCurrentUser(): Result<Boolean> = localSrc.deleteCurrentUser()
+
     override suspend fun saveEmail(email: String): Result<Boolean> = localSrc.saveEmail(email)
 }

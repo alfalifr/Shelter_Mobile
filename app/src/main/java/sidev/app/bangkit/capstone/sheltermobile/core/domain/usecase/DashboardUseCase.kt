@@ -10,4 +10,5 @@ interface DashboardUseCase: WarningUseCase, DisasterRepo, WeatherUseCase, UserUs
     suspend fun getDisasterGroupList(timestamp: String): Result<List<Pair<Disaster, List<WarningStatus>>>>
     suspend fun getHighlightedWarningStatus(timestamp: String): Result<WarningStatus>
     suspend fun getHighlightedWeatherForecast(startTimestamp: String): Result<WeatherForecast>
+    suspend fun getAllBasicDataList(): Result<Boolean>
 }

@@ -119,7 +119,7 @@ class RegisterActivity : AppCompatActivity() {
                     model.saveUser(user)
  */
                     startAct<MainActivity> {
-                        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
                     finish()
                 } else {

@@ -4,15 +4,14 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Disaster
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WeatherForecast
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.DisasterRepo
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.*
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toSingleResult
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
 class DashboardUseCaseImpl(
     private val warningUseCase: WarningUseCase,
     private val disasterRepo: DisasterRepo,
+    private val emergencyRepo: EmergencyRepo,
     private val weatherUseCase: WeatherUseCase,
     private val userUseCase: UserUseCase
 ): DashboardUseCase,
@@ -30,6 +29,18 @@ class DashboardUseCaseImpl(
         if(result is Success)
             disasterList = result.data
         return result
+    }
+
+    override suspend fun getAllBasicDataList(): Result<Boolean> {
+        if(disasterList == null) {
+            val isDisasterSuccess = getDisasterList() is Success
+            val isEmergencySuccess = emergencyRepo.getAllEmergencies() is Success
+            return when {
+                isDisasterSuccess && isEmergencySuccess -> Success(true, 0)
+                else -> Util.cantGetFailResult()
+            }
+        }
+        return Success(true, 0)
     }
 
     override suspend fun getCurrentLocation(): Result<Location> {
@@ -55,12 +66,19 @@ class DashboardUseCaseImpl(
 
         val location = currentLocation!!
 
+        val basicDataRes = getAllBasicDataList()
+        if(basicDataRes is Fail)
+            return basicDataRes
+        
         val unknownErrorResult = Fail("Unknown error", -1, null)
-        val disasterList = this.disasterList ?: when(val disasterListResult = getDisasterList()) {
+        val disasterList = this.disasterList!!
+/*
+            ?: when(val disasterListResult = getDisasterList()) {
             is Success -> disasterListResult.data
             is Fail -> return disasterListResult
             else -> return unknownErrorResult
         }
+ */
 
         val warningStatusLists = mutableListOf<List<WarningStatus>>()
         for(disaster in disasterList){

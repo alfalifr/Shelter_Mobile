@@ -4,7 +4,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.*
 
 object UseCaseDi {
     fun getDashbosrdUseCase(): DashboardUseCase = DashboardUseCaseImpl(
-        getWarningUseCase(), RepoDi.getDisasterRepo(), getWeatherUseCase(), getUserUseCase()
+        getWarningUseCase(), RepoDi.getDisasterRepo(), RepoDi.getEmergencyRepo(), getWeatherUseCase(), getUserUseCase()
     )
     fun getLocationUseCase(): LocationUseCase = LocationUseCaseImpl(RepoDi.getLocationRepo(), RepoDi.Local.getLocationSrc())
     fun getNewsUseCase(): NewsUseCase = NewsUseCaseImpl(RepoDi.getNewsRepo())

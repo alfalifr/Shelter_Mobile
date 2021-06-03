@@ -63,6 +63,9 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
+            val toSignupPageClickListener = View.OnClickListener { startAct<RegisterActivity>() }
+            onRegisterWord.setOnClickListener(toSignupPageClickListener)
+            onRegisterPlus.setOnClickListener(toSignupPageClickListener)
         }
 
 

@@ -48,8 +48,8 @@ object DataMapper {
     fun EmergencyEntity.toModel(): Emergency = Emergency(id, name, color, severity)
     fun LocationEntity.toModel(): Location = Location(id, name, Coordinate(latitude, longitude))
     fun NewsEntity.toModel(): News = News(timestamp.toTimeString(), title, briefDesc, linkImage, link, type)
-    fun ReportEntity.toModel(location: Location, form: Form): Report = Report(timestamp.toTimeString(), method, location, form)
-    fun ReportEntity.toModelDetail(location: Location, form: Form): ReportDetail = ReportDetail(toModel(location, form), response)
+    fun ReportEntity.toModel(location: Location, form: Form?): Report = Report(timestamp.toTimeString(), method, location, form)
+    fun ReportEntity.toModelDetail(location: Location, form: Form?): ReportDetail = ReportDetail(toModel(location, form), response)
     fun FormEntity.toModel(): Form = Form(timestamp.toTimeString(), title, desc, photoLinkList.split(Const.CHAR_LINK_SEPARATOR))
     fun UserEntity.toModel(): User = User(email, name, gender)
     fun WarningEntity.toModel(disaster: Disaster, emergency: Emergency, location: Location): WarningStatus = WarningStatus(
@@ -123,6 +123,11 @@ object DataMapper {
         Const.GENDER_MALE -> "Pria"
         Const.GENDER_FEMALE -> "Wanita"
         else -> throw IllegalArgumentException("No such gender ($char)")
+    }
+    fun getMethodName(method: Int): String = when(method) {
+        Const.METHOD_CALL -> "Telepon"
+        Const.METHOD_FORM -> "Form"
+        else -> throw IllegalArgumentException("No such method ($method)")
     }
 
     //fun convertRemoteTimestampToLocalFormat(remoteTimestamp: String): String = remoteTimestamp.split(" ")[0]

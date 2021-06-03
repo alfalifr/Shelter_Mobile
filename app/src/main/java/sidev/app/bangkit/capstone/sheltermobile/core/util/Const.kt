@@ -12,6 +12,7 @@ object Const {
 
     const val TIME_OFFSET: Long = 30L * 24L * 3600 * 1000
     const val PREFIX_DRAWABLE = "R.drawable."
+    const val KEY_DATA = "DATA"
     const val KEY_PASSWORD = "password"
     const val KEY_LOCATION_ID = "location_id"
     const val KEY_USER_EMAIL = "user_email"
@@ -40,6 +41,7 @@ object Const {
     const val KEY_CURRENT_USER = "getCurrentUser"
     const val KEY_CHANGE_PSWD = "changePassword"
     const val KEY_REPORT_LIST = "getReportList"
+    const val KEY_REPORT_DETAIL = "getReportDetail"
     const val KEY_SEND_REPORT = "sendReport"
     const val KEY_SEARCH_NEWS = "search"
 
@@ -48,6 +50,10 @@ object Const {
     const val CODE_USER_ALREADY_REGISTERED = 103
     const val CODE_REGIS_SUCCESS = 104
     const val CODE_REGIS_FAIL = 105
+
+    const val REQ_CALL = 2
+
+    const val INT_TOP_REPORT_LIMIT = 5
 
 
     const val GENDER_MALE = 'M'
@@ -63,7 +69,7 @@ object Const {
     //const val LEN_FORM_DESC = 300
 
 
-    const val numberTextSatgas = "0618468469"
+    const val numberTextSatgas = "1231231231231231211" //"0618468469"
 
     const val API_ROOT = "http://35.240.165.229/API/v1/"
 

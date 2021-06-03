@@ -58,5 +58,11 @@
     <string name="hari_tanggal">Hari tanggal</string>
     <string name="isi_laporan">Isi Laporan</string>
     <string name="zone_fill">Zona %s</string>
+    <string name="look_further">Lihat selengkapnya</string>
+    <string name="humadity">Humadity</string>
+    <string name="windspeed">Windspeed</string>
+    <string name="ultraviolet">UV</string>
+    <string name="rainfall">Rainfall</string>
+    <string name="degree">o</string>
 
 </resources>

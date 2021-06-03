@@ -1,5 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.composite
 
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
@@ -27,13 +28,16 @@ abstract class CompositeDataSource<T> {
                                         else -> Success(remote, 1)
                                     }
                                 }
+                                is Fail -> return Fail("CompositeDataSource.getDataList() saveDataList()", -1, null)
                             }
                         }
+                        is Fail -> return Fail("CompositeDataSource.getDataList() from remote", -1, null)
                     }
                 } else {
                     return Success(local, 0)
                 }
             }
+            is Fail -> return Fail("CompositeDataSource.getDataList() from local", -1, null)
         }
         return Util.cantGetFailResult()
     }

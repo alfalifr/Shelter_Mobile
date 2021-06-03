@@ -189,7 +189,6 @@
                             app:layout_constraintTop_toBottomOf="@id/tv_jenis_akses_laporan" />
 
                         <TextView
-                            android:visibility="gone"
                             android:id="@+id/tv_detil_laporan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -202,7 +201,6 @@
                             app:layout_constraintTop_toBottomOf="@id/divider_line_1" />
 
                         <TextView
-                            android:visibility="gone"
                             android:id="@+id/tv_isi_detil_laporan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -216,7 +214,6 @@
                             tools:text="00:05:31" />
 
                         <View
-                            android:visibility="gone"
                             android:id="@+id/divider_line_2"
                             android:layout_width="300dp"
                             android:layout_height="0.2dp"

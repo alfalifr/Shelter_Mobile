@@ -229,15 +229,15 @@
                         android:paddingTop="30dp"
                         android:paddingEnd="20dp"
                         android:textStyle="bold"
-                        tools:text="o" />
+                        android:text="@string/degree" />
 
                     <ImageView
                         android:id="@+id/iv_weather"
+                        android:layout_toLeftOf="@id/tv_temperature"
+                        android:layout_marginRight="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:paddingTop="20dp"
-                        android:paddingEnd="70dp"
                         android:src="@drawable/ic_weather_hujan" />
 
                 </RelativeLayout>
@@ -249,16 +249,16 @@
             android:id="@+id/vg_weather_detail"
             android:layout_width="320dp"
             android:layout_height="120dp"
-            android:padding="10dp"
             android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="@+id/card_temperature"
             app:layout_constraintTop_toBottomOf="@+id/card_temperature">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_detail_temperature"
-                app:cardBackgroundColor="@color/background_4"
+                app:cardBackgroundColor="@color/background_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -281,7 +281,7 @@
                 android:layout_marginTop="10dp"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                tools:text="Humadity"
+                android:text="@string/humadity"
                 app:layout_constraintStart_toStartOf="@+id/card_detail_temperature"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -296,7 +296,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/tv_humidity"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Windspeed" />
+                android:text="@string/windspeed" />
 
             <TextView
                 android:id="@+id/tv_duration"
@@ -309,7 +309,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/tv_windspeed"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="UV" />
+                android:text="@string/ultraviolet" />
 
             <TextView
                 android:id="@+id/tv_rainfall"
@@ -322,7 +322,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/tv_duration"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Rainfall" />
+                android:text="@string/rainfall" />
 
             <ImageView
                 android:id="@+id/iv_humidity"

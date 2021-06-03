@@ -118,6 +118,7 @@
 
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/tv_name_field"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -130,6 +131,7 @@
                             app:layout_constraintTop_toBottomOf="@id/card_edit_profile" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -143,6 +145,7 @@
                             tools:text="Adi Sibutar" />
 
                         <View
+                            android:visibility="gone"
                             android:id="@+id/divider_line"
                             android:layout_width="300dp"
                             android:layout_height="0.2dp"
@@ -175,7 +178,7 @@
                             android:textSize="20sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_akses_laporan"
-                            tools:text="Telepon" />
+                            tools:text="Form" />
 
                         <View
                             android:id="@+id/divider_line_1"

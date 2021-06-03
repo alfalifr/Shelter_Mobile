@@ -8,6 +8,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.DisasterRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
+import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toSingleResult
 
 class DashboardUseCaseImpl(
     private val warningUseCase: WarningUseCase,
@@ -38,13 +39,13 @@ class DashboardUseCaseImpl(
         return result
     }
 
-    override suspend fun getWeatherForecast(timestamp: String): Result<WeatherForecast> {
+    override suspend fun getHighlightedWeatherForecast(startTimestamp: String): Result<WeatherForecast> {
         if(currentLocation == null) {
             val res = getCurrentLocation()
             if(res is Fail)
                 return res
         }
-        return getWeatherForecast(timestamp, currentLocation!!.id)
+        return getWeatherForecastBatch(startTimestamp, currentLocation!!.id).toSingleResult()
     }
 
     override suspend fun getDisasterGroupList(timestamp: String): Result<List<Pair<Disaster, List<WarningStatus>>>> {

@@ -15,10 +15,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Form
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.ReportViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.waitForValue
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivityLaporPesanBinding
 import sidev.lib.android.std.tool.util._BitmapUtil
 import sidev.lib.android.std.tool.util.`fun`.loge
@@ -36,12 +38,13 @@ class LaporPesanActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLaporPesanBinding
     private lateinit var model: ReportViewModel
-    private lateinit var filePhoto: File
+    private var filePhoto: File? = null
 
     private var titleLaporan: String = ""
     private var isiLaporan: String = ""
     private var isTitleLaporanNotBlank = false
     private var isIsiLaporanNotBlank = false
+    private var currentLocation: Location?= null
 
 
     private val isAllValid: Boolean get() = isTitleLaporanNotBlank && isIsiLaporanNotBlank
@@ -61,8 +64,8 @@ class LaporPesanActivity : AppCompatActivity() {
 
 
     private fun laporPesan() {
-
         binding.apply {
+            //includeLocation.ivLocation.te
             cardHubungiTeks.setOnClickListener {
                 send()
             }
@@ -88,14 +91,24 @@ class LaporPesanActivity : AppCompatActivity() {
             }
         }
 
-        model = ViewModelDi.getReportViewModel(this)
-        model.onSend.observe(this) {
-            if (it != null) {
-                if (it) {
-                    finish()
-                    toast("Laporan anda sudah terkirim, akan kami proses")
+        model = ViewModelDi.getReportViewModel(this).apply {
+            onSend.observe(this@LaporPesanActivity) {
+                if (it != null) {
+                    if (it) {
+                        finish()
+                        toast("Laporan anda sudah terkirim, akan kami proses")
+                    } else {
+                        toast("Terjadi kesalahan saat mengirim form.\nHarap kirim ulang.")
+                    }
                 }
             }
+            currentLocation.observe(this@LaporPesanActivity) {
+                if(it != null) {
+                    this@LaporPesanActivity.currentLocation = it
+                    binding.includeLocation.ivLocation.text = it.name
+                }
+            }
+            getCurrentLocation()
         }
 
     }
@@ -106,8 +119,18 @@ class LaporPesanActivity : AppCompatActivity() {
         titleLaporan = binding.textInputJudulLapor.text.toString()
         isiLaporan = binding.textInputLapor.text.toString()
 
-        val form = Form(Util.getTimeString(), titleLaporan, isiLaporan, listOf(filePhoto.absolutePath))
-        val location = model.getCurrentLocation()
+        val imgLinkList = if(filePhoto != null) listOf(filePhoto!!.absolutePath) else emptyList()
+        val form = Form(Util.getTimeString(), titleLaporan, isiLaporan, imgLinkList)
+        val location = currentLocation ?: run {
+            model.getCurrentLocation()
+            try {
+                currentLocation = model.currentLocation.waitForValue()
+                currentLocation!!
+            } catch (e: Exception) {
+                toast("Terjadi kesalahan saat mengambil data lokasi untuk form.\nHarap kirim ulang")
+                return
+            }
+        }
         val data = Report(Util.getTimeString(), Const.METHOD_FORM, location, form)
 
         model.sendReport(data)
@@ -162,7 +185,7 @@ class LaporPesanActivity : AppCompatActivity() {
                     data?.extras?.get("data") as Bitmap //data can be from any type but we convert it to Bitmap hehe :p
                 binding.ivImage.setImageBitmap(thumbNail)
                 filePhoto = Util.getExternalFile(this, "foto_lapor.png")!!
-                _BitmapUtil.savePict(thumbNail, filePhoto.parentFile!!.absolutePath, filePhoto.name)
+                _BitmapUtil.savePict(thumbNail, filePhoto!!.parentFile!!.absolutePath, filePhoto!!.name)
             }
         }
     }

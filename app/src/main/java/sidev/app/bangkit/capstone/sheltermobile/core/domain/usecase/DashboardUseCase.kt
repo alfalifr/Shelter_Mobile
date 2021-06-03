@@ -9,5 +9,5 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 interface DashboardUseCase: WarningUseCase, DisasterRepo, WeatherUseCase, UserUseCase {
     suspend fun getDisasterGroupList(timestamp: String): Result<List<Pair<Disaster, List<WarningStatus>>>>
     suspend fun getHighlightedWarningStatus(timestamp: String): Result<WarningStatus>
-    suspend fun getWeatherForecast(timestamp: String): Result<WeatherForecast>
+    suspend fun getHighlightedWeatherForecast(startTimestamp: String): Result<WeatherForecast>
 }

@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Shelter_Mobile"
         android:name=".core.presentation.app.App"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.RiwayatLaporDetilActivity"/>
+        <activity android:name=".ui.RiwayatLaporTeleponDetilActivity"/>
         <activity android:name=".ui.SearchActivity" />
         <activity android:name=".ui.PengaturanEditActivity" />
         <activity android:name=".ui.LaporPesanActivity"/>
@@ -35,6 +35,8 @@
             android:name=".MainActivity"
             android:theme="@style/fullscreen" />
         <activity android:name=".ui.WebViewPage" />
+        <activity android:name=".ui.ReportHistoryListActivity"/>
+        <activity android:name=".ui.RiwayatLaporFormDetilActivity"/>
     </application>
 
 </manifest>

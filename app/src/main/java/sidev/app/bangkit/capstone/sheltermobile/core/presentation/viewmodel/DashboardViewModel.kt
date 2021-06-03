@@ -1,11 +1,7 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WeatherForecast
@@ -62,7 +58,7 @@ class DashboardViewModel(app: Context?, val useCase: DashboardUseCase): AsyncVm(
         if(weatherForecast.value != null && !forceLoad) return
         startJob(Const.KEY_WEATHER_FORECAST) {
             val timestamp = Util.getTimestampStr()
-            when(val result = useCase.getWeatherForecast(timestamp).also { loge("DashboardVm.getWeatherForecast() res= $it") }){
+            when(val result = useCase.getHighlightedWeatherForecast(timestamp).also { loge("DashboardVm.getWeatherForecast() res= $it") }){
                 is Success -> mWeatherForecast.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
             }

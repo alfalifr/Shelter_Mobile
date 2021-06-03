@@ -87,6 +87,9 @@ class HomeFragment : Fragment() {
                         tvWindspeedSrc.text = Util.getFormattedStr(it.windSpeed, "km/jam")
                         tvRainfallSrc.text = Util.getFormattedStr(it.rainfall, "%")
                         tvDurationSrc.text = Util.getFormattedStr(it.ultraviolet)
+                        tvTemperature.text = Util.getFormattedStr(it.temperature, afterComma = 0)
+                        tvDay.text = Util.getDayName(it.timestamp)
+                        tvDate.text = Util.getDateStr(it.timestamp)
                     }
                     showLoading(binding.pbWeather, binding.vgWeather, false)
                     showLoading(binding.pbWeatherDetail, binding.vgWeatherDetail, false)

@@ -25,11 +25,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-            android:id="@+id/include_location"
-            layout="@layout/location"
-            tools:layout_editor_absoluteX="41dp"
-            tools:layout_editor_absoluteY="106dp" />
+        <RelativeLayout
+            android:id="@+id/vg_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
+            <include
+                android:id="@+id/include_location"
+                layout="@layout/location" />
+            <ProgressBar
+                android:id="@+id/pb_location"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_info_lapor"
@@ -54,7 +65,7 @@
             android:src="@drawable/phone_call_fix"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include_location" />
+            app:layout_constraintTop_toBottomOf="@+id/vg_location" />
 
         <TextView
             android:id="@+id/tv_plusword"
@@ -131,6 +142,20 @@
                     android:textStyle="bold"
                     app:drawableStartCompat="@drawable/ic_clock" />
 
+                <ProgressBar
+                    android:id="@+id/pb_history"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv_no_data"
+                    android:layout_gravity="center"
+                    android:layout_margin="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_data"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_card"
                     android:layout_width="match_parent"
@@ -138,6 +163,15 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/history_lapor_list"/>
 
+                <TextView
+                    android:id="@+id/tv_look_further"
+                    android:layout_gravity="center"
+                    android:layout_margin="30dp"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/look_further"/>
 
             </LinearLayout>
 

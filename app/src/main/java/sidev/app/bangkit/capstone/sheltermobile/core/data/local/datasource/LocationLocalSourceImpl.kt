@@ -34,11 +34,22 @@ class LocationLocalSourceImpl(private val dao: LocationDao, private val ctx: Con
         return Success(data, 0)
     }
 
+    override suspend fun getLocationByName(name: String): Result<Location> {
+        val data = dao.getLocationByName(name)?.toModel() ?: return Util.noEntityFailResult()
+        return Success(data, 0)
+    }
+
     override suspend fun saveCurrentLocation(data: Location): Result<Boolean> {
         Util.editSharedPref(ctx, true) {
             putInt(Const.KEY_LOCATION_ID, data.id)
         }
         return Success(true, 0)
+    }
+
+    override suspend fun saveLocation(data: Location): Result<Boolean> {
+        val rowId = dao.saveLocation(data.toEntity(-1))
+        return if(rowId >= 0L) Success(true, 0)
+        else Util.cantInsertFailResult()
     }
 
     override suspend fun saveLocationList(list: List<Location>): Result<Int> {

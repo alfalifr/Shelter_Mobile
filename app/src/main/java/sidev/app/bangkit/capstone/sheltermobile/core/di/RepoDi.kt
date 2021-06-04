@@ -23,18 +23,22 @@ object RepoDi {
             getLocationSrc(),
             getNewsSrc(),
         )
-        fun getWeatherSrc(): WeatherLocalSource = WeatherLocalSourceImpl(getDb().getWeatherDao(), AppDi.getContext())
+        fun getWeatherForecastSrc(): WeatherForecastLocalSource = WeatherForecastLocalSourceImpl(
+            getDb().getWeatherForecastDao(), getWeatherSrc(), AppDi.getContext()
+        )
+        fun getWeatherSrc(): WeatherLocalSource = WeatherLocalSourceImpl(getDb().getWeatherDao())
     }
     object Remote {
         fun getDisasterSrc(): DisasterRemoteSource = DisasterRemoteSourceDummy
         fun getEmergencySrc(): EmergencyRemoteSource = EmergencyRemoteSourceDummy
-        fun getLocationSrc(): LocationRemoteSource = LocationRemoteSourceDummy
+        fun getLocationSrc(): LocationRemoteSource = LocationRemoteSourceImpl(AppRetrofit.disasterApi) //LocationRemoteSourceDummy
         fun getReportSrc(): ReportRemoteSource = ReportRemoteSourceDummy
         fun getFormSrc(): FormRemoteSource = FormRemoteSourceDummy
-        fun getWarningSrc(): WarningRemoteSource = WarningRemoteSourceDummy
+        fun getWarningSrc(): WarningRemoteSource = WarningRemoteSourceImpl(AppRetrofit.disasterApi, getLocationRepo()) //WarningRemoteSourceDummy
+        fun getWeatherForecastSrc(): WeatherForecastRemoteSource = WeatherForecastRemoteSourceImpl(AppRetrofit.weatherApi) //WeatherForecastRemoteSourceDummy
         fun getWeatherSrc(): WeatherRemoteSource = WeatherRemoteSourceDummy
-        fun getNewsSrc(): NewsRemoteSource = NewsRemoteSourceDummy //NewsRemoteSourceImpl(AppRetrofit.newsApi)
-        fun getUserSrc(): UserRemoteSource = UserRemoteSourceDummy //UserRemoteSourceImpl(AppRetrofit.authApi)
+        fun getNewsSrc(): NewsRemoteSource = NewsRemoteSourceImpl(AppRetrofit.newsApi) //NewsRemoteSourceDummy //
+        fun getUserSrc(): UserRemoteSource = UserRemoteSourceImpl(AppRetrofit.authApi) //UserRemoteSourceDummy //
     }
 
 
@@ -46,5 +50,6 @@ object RepoDi {
     fun getFormRepo(): FormCompositeSource = FormCompositeSource(Local.getFormSrc(), Remote.getFormSrc())
     fun getUserRepo(): UserCompositeSource = UserCompositeSource(Local.getUserSrc(), Remote.getUserSrc())
     fun getWarningRepo(): WarningCompositeSource = WarningCompositeSource(Local.getWarningSrc(), Remote.getWarningSrc())
+    fun getWeatherForecastRepo(): WeatherForecastCompositeSource = WeatherForecastCompositeSource(Local.getWeatherForecastSrc(), Remote.getWeatherForecastSrc())
     fun getWeatherRepo(): WeatherCompositeSource = WeatherCompositeSource(Local.getWeatherSrc(), Remote.getWeatherSrc())
 }

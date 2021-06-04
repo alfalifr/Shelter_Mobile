@@ -144,16 +144,25 @@
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                        android:id="@+id/cirRegisterButton"
-                        style="@style/loginButton"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:text="@string/daftar"
-                        app:initialCornerAngle="27dp"
-                        app:spinning_bar_color="#FFF"
-                        app:spinning_bar_padding="6dp"
-                        app:spinning_bar_width="4dp" />
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                            android:id="@+id/cirRegisterButton"
+                            style="@style/loginButton"
+                            android:text="@string/daftar"
+                            app:initialCornerAngle="27dp"
+                            app:spinning_bar_color="#FFF"
+                            app:spinning_bar_padding="6dp"
+                            app:spinning_bar_width="4dp" />
+                        <ProgressBar
+                            android:id="@+id/pb_signup"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
 
                     <TextView
                         android:id="@+id/tv_error_account"

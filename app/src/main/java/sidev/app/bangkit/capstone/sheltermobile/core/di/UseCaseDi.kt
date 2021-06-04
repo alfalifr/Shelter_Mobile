@@ -23,5 +23,5 @@ object UseCaseDi {
         RepoDi.getLocationRepo(),
     )
     fun getWarningUseCase(): WarningUseCase = WarningUseCaseImpl(RepoDi.getWarningRepo())
-    fun getWeatherUseCase(): WeatherUseCase = WeatherUseCaseImpl(RepoDi.getWeatherRepo())
+    fun getWeatherUseCase(): WeatherForecastUseCase = WeatherForecastUseCaseImpl(RepoDi.getWeatherForecastRepo())
 }

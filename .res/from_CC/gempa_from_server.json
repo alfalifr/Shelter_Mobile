@@ -1,0 +1,16 @@
+{
+  "Tanggal":"2021-01-01 00:00:00",
+  "lower Lintang":"-0.395973481908568",
+  "upper Lintang":"4.49567295648844",
+  "avg_lintang":"2.04984973728994",
+  "lower Bujur":"94.6451491732286",
+  "upper Bujur":"99.3267423538135",
+  "avg_bujur":"96.985945763521",
+  "lower Magnitudo (SR)":"1.90274721398716",
+  "upper Magnitudo (SR)":"4.9887210435984",
+  "avg_magnitude":"3.44573412879278",
+  "lower Kedalaman (km)":"-87.9348959682991",
+  "upper Kedalaman (km)":"131.930361257382",
+  "avg_kedalaman":"21.9977326445416",
+  "Name":"Pulo Batal"
+}

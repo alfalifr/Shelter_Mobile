@@ -12,12 +12,12 @@ class DashboardUseCaseImpl(
     private val warningUseCase: WarningUseCase,
     private val disasterRepo: DisasterRepo,
     private val emergencyRepo: EmergencyRepo,
-    private val weatherUseCase: WeatherUseCase,
+    private val weatherUseCase: WeatherForecastUseCase,
     private val userUseCase: UserUseCase
 ): DashboardUseCase,
     WarningUseCase by warningUseCase,
     DisasterRepo by disasterRepo,
-    WeatherUseCase by weatherUseCase,
+    WeatherForecastUseCase by weatherUseCase,
     UserUseCase by userUseCase
 {
     private var currentLocation: Location?= null
@@ -65,20 +65,18 @@ class DashboardUseCaseImpl(
         if(currentLocation == null) return Fail("currentLocation == null", -1, null)
 
         val location = currentLocation!!
-
+/*
         val basicDataRes = getAllBasicDataList()
         if(basicDataRes is Fail)
             return basicDataRes
+ */
         
         val unknownErrorResult = Fail("Unknown error", -1, null)
-        val disasterList = this.disasterList!!
-/*
-            ?: when(val disasterListResult = getDisasterList()) {
+        val disasterList = this.disasterList ?: when(val disasterListResult = getDisasterList()) {
             is Success -> disasterListResult.data
             is Fail -> return disasterListResult
             else -> return unknownErrorResult
         }
- */
 
         val warningStatusLists = mutableListOf<List<WarningStatus>>()
         for(disaster in disasterList){

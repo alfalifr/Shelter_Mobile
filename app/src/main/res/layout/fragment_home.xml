@@ -233,11 +233,11 @@
 
                     <ImageView
                         android:id="@+id/iv_weather"
+                        android:layout_marginTop="20dp"
                         android:layout_toLeftOf="@id/tv_temperature"
                         android:layout_marginRight="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="20dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:src="@drawable/ic_weather_hujan" />
 
                 </RelativeLayout>

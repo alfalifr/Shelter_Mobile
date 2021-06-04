@@ -83,6 +83,7 @@ class HomeFragment : Fragment() {
             weatherForecast.observe(viewLifecycleOwner){
                 if(it != null) {
                     binding.apply {
+                        ivWeather.setImg(it.weather.icon)
                         tvHumaditySrc.text = Util.getFormattedStr(it.humidity, "%")
                         tvWindspeedSrc.text = Util.getFormattedStr(it.windSpeed, "km/jam")
                         tvRainfallSrc.text = Util.getFormattedStr(it.rainfall, "%")
@@ -98,7 +99,7 @@ class HomeFragment : Fragment() {
             higlightedWarningStatus.observe(viewLifecycleOwner){
                 if(it != null) {
                     binding.apply {
-                        ivNotification.setImg(it.imgLink)
+                        ivNotification.setImg(it.disaster.imgLink)
                         tvTitleNotif.text = it.title
                         tvNotif.text = Util.getFormattedStr(it)
 

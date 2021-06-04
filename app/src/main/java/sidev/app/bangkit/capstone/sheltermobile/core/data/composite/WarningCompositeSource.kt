@@ -4,12 +4,9 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.Warni
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.WarningRemoteSource
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningDetail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WeatherForecast
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.WarningRepo
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.WeatherRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
-import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toListResult
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toWarningDetailListResult
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toWarningStatusListResult
 import java.lang.IllegalArgumentException

@@ -16,6 +16,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.*
         FormEntity::class,
         UserEntity::class,
         WarningEntity::class,
+        WeatherForecastEntity::class,
         WeatherEntity::class,
     ],
     version = 1,
@@ -29,6 +30,7 @@ abstract class RoomDb: RoomDatabase() {
     abstract fun getFormDao(): FormDao
     abstract fun getUserDao(): UserDao
     abstract fun getWarningDao(): WarningDao
+    abstract fun getWeatherForecastDao(): WeatherForecastDao
     abstract fun getWeatherDao(): WeatherDao
 
     companion object {

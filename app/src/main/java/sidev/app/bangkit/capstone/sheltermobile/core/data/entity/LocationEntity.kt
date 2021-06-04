@@ -1,11 +1,12 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "location")
+@Entity(tableName = "location", indices = [Index("name")])
 data class LocationEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,
     val latitude: Double,

@@ -22,10 +22,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivityPengaturanEditBinding
 import sidev.app.bangkit.capstone.sheltermobile.databinding.DialogLocationBinding
-import sidev.lib.android.std.tool.util.`fun`.asResNameOrNullBy
-import sidev.lib.android.std.tool.util.`fun`.findViewByType
-import sidev.lib.android.std.tool.util.`fun`.selectedInd
-import sidev.lib.android.std.tool.util.`fun`.toast
+import sidev.lib.android.std.tool.util.`fun`.*
 import java.lang.IllegalStateException
 
 class PengaturanEditActivity : AppCompatActivity() {
@@ -111,6 +108,7 @@ class PengaturanEditActivity : AppCompatActivity() {
                 }
             }
             locationList.observe(this@PengaturanEditActivity) {
+                loge("locationList.observe() list= $it")
                 if(it != null) {
                     locationAdp.dataList = it
                     showLocationLoading(false)

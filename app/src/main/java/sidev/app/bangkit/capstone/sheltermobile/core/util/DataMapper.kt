@@ -5,8 +5,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.*
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LoginBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
-import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.LoginResponse
-import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.NewsResponse
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
@@ -60,8 +59,9 @@ object DataMapper {
         desc = desc,
         relatedNews = relatedNews,
     )
-    fun WeatherEntity.toModel(): WeatherForecast = WeatherForecast(
-        temperature, humidity, rainfall, windSpeed, ultraviolet, timestamp.toTimeString()
+    fun WeatherEntity.toModel(): Weather = Weather(id, name, icon)
+    fun WeatherForecastEntity.toModel(weather: Weather): WeatherForecast = WeatherForecast(
+        weather, temperature, humidity, rainfall, windSpeed, ultraviolet, timestamp.toTimeString()
     )
 
     fun Disaster.toEntity(): DisasterEntity = DisasterEntity(id, name, imgLink)
@@ -81,14 +81,16 @@ object DataMapper {
         imgLink = status.imgLink,
         relatedNewsTimestamp = relatedNews.timestamp.time
     )
-    fun WeatherForecast.toEntity(locationId: Int): WeatherEntity = WeatherEntity(
+    fun Weather.toEntity(): WeatherEntity = WeatherEntity(id, name, icon)
+    fun WeatherForecast.toEntity(locationId: Int): WeatherForecastEntity = WeatherForecastEntity(
         timestamp = timestamp.time,
         locationId = locationId,
         temperature = temperature,
         humidity = humidity,
         rainfall = rainfall,
         windSpeed = windSpeed,
-        ultraviolet = ultraviolet
+        ultraviolet = ultraviolet,
+        weatherId = weather.id,
     )
 
 
@@ -106,6 +108,34 @@ object DataMapper {
         name = data.full_name,
         gender = data.gender,
     )
+
+    fun GeneralCityListResponse.toModel(coordinate: Coordinate = Coordinate(0.0, 0.0)): List<Location> = nestedcityList.map {
+        val locName = it.cityList.first()
+        Location(0, locName, coordinate)
+    }
+
+    fun WeatherForecastResponse.toModel(weather: Weather? = null): WeatherForecast = WeatherForecast(
+        weather ?: Dummy.getWeatherByName(weatherName), temperature.toFloat(), humidity.toFloat(), rainfall.toFloat(),
+        windSpeed.toFloat(), ultraviolet.toFloat(), Util.getTimeString(TimeString(date, Const.DB_TIME_PATTERN)),
+    )
+
+    fun LandslideResponse.toModel(location: Location): WarningStatus {
+        val disaster = Dummy.getDisasterByName(Const.Disaster.LANDSLIDE)
+        val emergency = Dummy.getLandslideEmergencyByName(condition)
+        val caption = CaptionMapper.WarningStatus.getCaption(disaster, emergency)
+
+        return WarningStatus(disaster, emergency, caption.title, Util.getTimeString(), location, "")
+    }
+
+    fun EarthQuakeResponse.toModel(location: Location): WarningStatus {
+        val disaster = Dummy.getDisasterByName(Const.Disaster.EARTH_QUAKE)
+        val emergency = Dummy.getEarthQuakeEmergencyByScale(avg_magnitude)
+        val caption = CaptionMapper.WarningStatus.getCaption(disaster, emergency)
+
+        return WarningStatus(disaster, emergency, caption.title, Util.getTimeString(), location, "")
+    }
+
+
 
     fun AuthData.toLoginBody(): LoginBody = LoginBody(
         _email = email,

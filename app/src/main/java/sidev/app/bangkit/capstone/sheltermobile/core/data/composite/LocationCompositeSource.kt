@@ -8,9 +8,11 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.DisasterRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.LocationRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toListResult
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toSingleResult
+import java.lang.IllegalStateException
 
 class LocationCompositeSource(
     private val localSrc: LocationLocalSource,
@@ -34,6 +36,18 @@ class LocationCompositeSource(
 
     override suspend fun saveDataList(remoteDataList: List<Location>): Result<Int> = localSrc.saveLocationList(remoteDataList)
 
+    override val shouldMapReturnedRemoteData: Boolean = true
+    override suspend fun mapNewReturnedData(remoteData: Location, args: Map<String, Any?>): Location {
+        val insertEntityRes = localSrc.saveLocation(remoteData)
+        if(insertEntityRes !is Success)
+            throw IllegalStateException("Can't insert location data ($remoteData)")
+
+        val entityRes = localSrc.getLocationByName(remoteData.name)
+        if(entityRes !is Success)
+            throw IllegalStateException("Somehow, expected newly inserted entity ($remoteData) can't be inserted ot queried")
+
+        return entityRes.data
+    }
 
     override suspend fun getAllLocation(): Result<List<Location>> = getDataList(emptyMap())
 

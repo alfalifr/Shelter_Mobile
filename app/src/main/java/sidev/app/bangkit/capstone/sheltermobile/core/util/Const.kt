@@ -1,6 +1,35 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.util
 
 object Const {
+    object Disaster {
+        const val EARTH_QUAKE = "Gempa"
+        const val LANDSLIDE = "Longsor"
+        const val FLOOD = "Banjir"
+        const val FOREST_FIRE = "Kebakaran Hutan"
+        const val FOREST_FIRE_SHORT = "Karhutla"
+    }
+    object Emergency {
+        const val SEVERITY_GREEN = 0
+        const val SEVERITY_YELLOW = 1
+        const val SEVERITY_RED = 2
+
+        const val LANDSLIDE_NORMAL = "Sedang"
+        const val LANDSLIDE_BIT_DANGER = "Agak Rawan"
+        const val LANDSLIDE_DANGER = "Rawan"
+        const val LANDSLIDE_VERY_DANGER = "Sangat Rawan"
+
+        val FIRE_FOREST_GREEN = 0 .. 30
+        val FIRE_FOREST_YELLOW = 31 .. 80
+        val FIRE_FOREST_RED = 81 .. 100
+///*
+        //TODO Alif 4 Juni 2021: Tanya ttg skala keparahan akibat gempa
+        val EARTH_QUAKE_GREEN = 0.0 .. 3.0
+        val EARTH_QUAKE_YELLOW = 3.0 .. 5.0
+        val EARTH_QUAKE_RED = 5.0 .. 100.0
+// */
+    }
+
+
     const val TYPE_NEWS = 1
     const val TYPE_ARTICLE = 2
 
@@ -12,7 +41,10 @@ object Const {
     const val REGEX_EMAIL_STR = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+$" //"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$"
     val REGEX_EMAIL = REGEX_EMAIL_STR.toRegex()
 
+    const val TIME_DAY_OFFSET: Long = 24L * 3600 * 1000
+    const val TIME_STANDARD_OFFSET: Long = TIME_DAY_OFFSET * 6L
     const val TIME_OFFSET: Long = 30L * 24L * 3600 * 1000
+
     const val PREFIX_DRAWABLE = "R.drawable."
     const val KEY_DATA = "DATA"
     const val KEY_PASSWORD = "password"
@@ -78,6 +110,7 @@ object Const {
     const val numberTextSatgas = "1231231231231231211" //"0618468469"
 
     const val API_ROOT = "http://35.240.165.229/API/v1/"
+    const val API_SHELTER = "shelter_api.php"
 
     /*
     =====================

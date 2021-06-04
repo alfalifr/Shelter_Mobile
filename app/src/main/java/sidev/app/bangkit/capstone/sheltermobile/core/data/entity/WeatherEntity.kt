@@ -1,23 +1,12 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.entity
 
 import androidx.room.Entity
-import java.sql.Timestamp
+import androidx.room.PrimaryKey
 
-@Entity(tableName = "weather", primaryKeys = ["timestamp", "locationId"])
+@Entity(tableName = "weather")
 data class WeatherEntity(
-    val timestamp: String,
-    val locationId: Int,
-    val temperature: Float,
-    val humidity: Float,
-    val rainfall: Float,
-    val windSpeed: Float,
-    val ultraviolet: Float,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val name: String,
+    val icon: String,
 )
-
-/*
-Banjir & longsor:
-- Data udah jadian, tinggal diemit.
-- Untuk alert, .
-*/
-
-

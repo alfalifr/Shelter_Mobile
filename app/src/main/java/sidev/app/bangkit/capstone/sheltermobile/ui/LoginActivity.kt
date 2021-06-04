@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         binding.apply {
+            showLoginLoading(false)
             cirLoginButton.setOnClickListener {
                 login()
             }
@@ -70,6 +71,11 @@ class LoginActivity : AppCompatActivity() {
 
 
         model = ViewModelDi.getAuthViewModel(this).apply {
+            onPreAsyncTask {
+                when(it) {
+                    Const.KEY_LOGIN -> showLoginLoading()
+                }
+            }
             onAuth.observe(this@LoginActivity) {
                 loge("LoginAct onAuth.observe() it= $it")
                 if (it != null) {
@@ -87,6 +93,7 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         binding.tvErrorAccount.visibility = View.VISIBLE
                     }
+                    showLoginLoading(false)
                 }
             }
             checkLoginStatus()
@@ -104,4 +111,15 @@ class LoginActivity : AppCompatActivity() {
         model.login(data)
     }
 
+    private fun showLoginLoading(show: Boolean = true) {
+        binding.apply {
+            if(show) {
+                pbLogin.visibility = View.VISIBLE
+                cirLoginButton.visibility = View.GONE
+            } else {
+                pbLogin.visibility = View.GONE
+                cirLoginButton.visibility = View.VISIBLE
+            }
+        }
+    }
 }

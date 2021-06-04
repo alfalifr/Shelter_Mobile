@@ -7,8 +7,77 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import java.lang.IllegalArgumentException
+import java.util.*
 
 object Dummy {
+
+/*
+=========================
+Not supposed to be dummy
+=========================
+ */
+    val disasterList = listOf<Disaster>(
+        Disaster(1, "Kebakaran Hutan", "R.drawable.ic_disaster_forest_fire"),
+        Disaster(2, "Banjir", "R.drawable.ic_disaster_flood"),
+        Disaster(3, "Longsor", "R.drawable.ic_disaster_landslide"),
+        //Disaster(4, "Gunung Meletus", "R.drawable.ic_disaster_landslide"),
+        Disaster(4, "Gempa", "R.drawable.ic_disaster_earthquake"),
+    )
+
+    val emergencyList = listOf<Emergency>(
+        Emergency(1, "Hijau", "#32a83e", Const.Emergency.SEVERITY_GREEN),
+        Emergency(2, "Kuning", "#e6de09", Const.Emergency.SEVERITY_YELLOW),
+        Emergency(3, "Merah", "#e61809", Const.Emergency.SEVERITY_RED),
+    )
+
+    val weatherList = listOf<Weather>(
+        Weather(1, "berangin", "R.drawable.ic_weather_berangin"),
+        Weather(2, "berawan", "R.drawable.ic_weather_berawan"),
+        Weather(3, "cerah", "R.drawable.ic_weather_cerah"),
+        Weather(4, "cerah berawan", "R.drawable.ic_weather_cerah_berawan"),
+        Weather(5, "dingin berangin", "R.drawable.ic_weather_dingin_berangin"),
+        Weather(6, "gerimis", "R.drawable.ic_weather_gerimis"),
+        Weather(7, "hujan", "R.drawable.ic_weather_hujan"),
+        Weather(8, "hujan deras", "R.drawable.ic_weather_hujan_deras"),
+        Weather(9, "mendung", "R.drawable.ic_weather_mendung"),
+    )
+
+
+    fun getWeatherByName(name: String): Weather = weatherList.find { it.name.equals(name, true) }
+        ?: throw IllegalArgumentException("No such weather data for name '$name'")
+
+    fun getDisasterByName(name: String): Disaster = disasterList.find { it.name.equals(name, ignoreCase = true) }
+        ?: throw IllegalArgumentException("No such disaster data for name '$name'")
+
+
+    fun getLandslideEmergencyByName(name: String): Emergency = when(name.toLowerCase(Locale.ROOT)) {
+        Const.Emergency.LANDSLIDE_NORMAL.toLowerCase(Locale.ROOT) -> emergencyList[0]
+        Const.Emergency.LANDSLIDE_BIT_DANGER.toLowerCase(Locale.ROOT) -> emergencyList[1]
+        Const.Emergency.LANDSLIDE_DANGER.toLowerCase(Locale.ROOT) -> emergencyList[2]
+        Const.Emergency.LANDSLIDE_VERY_DANGER.toLowerCase(Locale.ROOT) -> emergencyList[2]
+        else -> throw IllegalArgumentException("No such landslide emergency data for name '$name'")
+    }
+
+    fun getEarthQuakeEmergencyByScale(scale: Double): Emergency = when(scale) {
+        in Const.Emergency.EARTH_QUAKE_GREEN -> emergencyList[0]
+        in Const.Emergency.EARTH_QUAKE_YELLOW -> emergencyList[1]
+        in Const.Emergency.EARTH_QUAKE_RED -> emergencyList[2]
+        else -> throw IllegalArgumentException("No such earth quake emergency data for scale '$scale'")
+    }
+
+    fun getFireForestEmergencyByScale(scale: Int): Emergency = when(scale) {
+        in Const.Emergency.FIRE_FOREST_GREEN -> emergencyList[0]
+        in Const.Emergency.FIRE_FOREST_YELLOW -> emergencyList[1]
+        in Const.Emergency.FIRE_FOREST_RED -> emergencyList[2]
+        else -> throw IllegalArgumentException("No such fire forest emergency data for scale '$scale'")
+    }
+/*
+=========================
+Dummy section
+=========================
+ */
+
     val timestampList = listOf<TimeString>(
         //Util.getTimeString("2021-05-29 21:31:51"),
         //Util.getTimeString("2021-05-30 21:31:51"),
@@ -30,18 +99,6 @@ object Dummy {
     fun getLoginBody(i: Int): LoginBody = LoginBody(userList[i].email, userPswd[i])
     fun getSignupBody(i: Int): SignupBody = userList[i].let { SignupBody(it.email, userPswd[i], it.name, it.gender) }
 
-    val disasterList = listOf<Disaster>(
-        Disaster(1, "Kebakaran Hutan", "R.drawable.ic_disaster_forest_fire"),
-        Disaster(2, "Banjir", "R.drawable.ic_disaster_flood"),
-        Disaster(3, "Longsor", "R.drawable.ic_disaster_landslide"),
-        Disaster(4, "Gunung Meletus", "R.drawable.ic_disaster_landslide"),
-    )
-
-    val emergencyList = listOf<Emergency>(
-        Emergency(1, "Hijau", "#32a83e", 0),
-        Emergency(2, "Kuning", "#e6de09", 1),
-        Emergency(3, "Merah", "#e61809", 2),
-    )
 
     val locationList = listOf<Location>(
         Location(1, "Medan", Coordinate(0.0,0.0)),
@@ -88,10 +145,11 @@ object Dummy {
     }
     val warningListAll = warningList1 + warningList2 + warningList3
 
-    val weatherList = listOf<WeatherForecast>(
-        WeatherForecast(10f, 11f, 25f, 180f, 10f, timestampList[1]),
-        WeatherForecast(14f, 12f, 256f, 110f, 3012f, timestampList[2]),
+    val weatherForecastList = listOf<WeatherForecast>(
+        WeatherForecast(weatherList[0], 10f, 11f, 25f, 180f, 10f, timestampList[1]),
+        WeatherForecast(weatherList[3], 14f, 12f, 256f, 110f, 3012f, timestampList[2]),
     )
+
 
     val formList = listOf<Form>(
         Form(timestampList[0], "Ini judul 1", "Ini desc 1", emptyList()),

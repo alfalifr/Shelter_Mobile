@@ -48,6 +48,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.onLoginWord.startAnimation(anim)
 
         binding.apply {
+            showSignupLoading(false)
             cirRegisterButton.setOnClickListener {
                 signup()
             }
@@ -106,11 +107,16 @@ class RegisterActivity : AppCompatActivity() {
             onLoginPlus.setOnClickListener { finish() }
         }
 
-        model = ViewModelDi.getAuthViewModel(this)
-        model.onAuth.observe(this) {
-            if (it != null) {
-                if (it) {
-                    binding.textInputEmail.visibility = View.GONE
+        model = ViewModelDi.getAuthViewModel(this).apply {
+            onPreAsyncTask {
+                when(it) {
+                    Const.KEY_SIGNUP -> showSignupLoading()
+                }
+            }
+            onAuth.observe(this@RegisterActivity) {
+                if (it != null) {
+                    if (it) {
+                        binding.textInputEmail.visibility = View.GONE
 /*
                     Util.editSharedPref(this) {
                         putString(Const.KEY_USER_EMAIL, email)
@@ -118,12 +124,14 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     model.saveUser(user)
  */
-                    startAct<MainActivity> {
-                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startAct<MainActivity> {
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                        finish()
+                    } else {
+                        binding.tvErrorAccount.visibility = View.VISIBLE //TODO Mella: ganti pake text error dari server contoh : akun yg dimasukkan tidak valid
                     }
-                    finish()
-                } else {
-                    binding.tvErrorAccount.visibility = View.VISIBLE //TODO Mella: ganti pake text error dari server contoh : akun yg dimasukkan tidak valid
+                    showSignupLoading(false)
                 }
             }
         }
@@ -143,4 +151,15 @@ class RegisterActivity : AppCompatActivity() {
         model.signup(user,data)
     }
 
+    private fun showSignupLoading(show: Boolean = true) {
+        binding.apply {
+            if(show) {
+                pbSignup.visibility = View.VISIBLE
+                cirRegisterButton.visibility = View.GONE
+            } else {
+                pbSignup.visibility = View.GONE
+                cirRegisterButton.visibility = View.VISIBLE
+            }
+        }
+    }
 }

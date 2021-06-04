@@ -20,7 +20,6 @@ import sidev.lib.android.std.tool.util._FileUtil
 import sidev.lib.android.std.tool.util._ResUtil
 import sidev.lib.android.std.tool.util.`fun`.asResNameOrNullBy
 import sidev.lib.android.std.tool.util.`fun`.imgRes
-import sidev.lib.android.std.tool.util.`fun`.loge
 import java.io.File
 import java.lang.IllegalStateException
 import java.lang.IndexOutOfBoundsException
@@ -95,10 +94,17 @@ object Util {
     fun getFormattedStr(value: Float, unit: String? = null, afterComma: Int = 2): String = "%.${afterComma}f".format(value) + (if(unit != null) " $unit" else "")
     fun getFormattedStr(warning: WarningStatus): String = "Zona ${warning.emergency.name} ${warning.disaster.name}"
 
-    fun getTimeString(time: String?= null, pattern: String = Const.DB_TIME_PATTERN, millisOffset: Long = 0): TimeString {
+    fun getTimeString(inTimeString: TimeString? = null, millisOffset: Long = 0): TimeString {
+        //time: String?= null, pattern: String = Const.DB_TIME_PATTERN,
         //loge("Util.getTimeString() time= $time pattern= $pattern millisOffset= $millisOffset")
-        return TimeString(time ?: getTimestampStr(millisOffset = millisOffset), pattern)
+        val pattern = inTimeString?.pattern ?: Const.DB_TIME_PATTERN
+        return TimeString(getTimestampStr(inTimeString, millisOffset = millisOffset), pattern)
     }
+
+    fun getTimeStringStandardOffset(fromTimeStr: TimeString? = null): TimeString = getTimeString(
+        fromTimeStr, Const.TIME_STANDARD_OFFSET
+    )
+
 
     fun getImgLink(c: Context, link: String): Any {
         if(!link.startsWith(Const.PREFIX_DRAWABLE)) return link
@@ -181,6 +187,6 @@ object Util {
     fun cantUpdateFailResult(): Fail = failResult("Can't update")
     fun cantGetFailResult(): Fail = failResult("Can't get")
     fun unknownFailResult(): Fail = failResult("Unknown failure")
-    fun operationNotAvailableFailResult(): Fail = failResult("Operation is not available")
+    fun operationNotAvailableFailResult(operationName: String = "x"): Fail = failResult("Operation '$operationName' is not available")
     fun operationNotAvailableError(): Nothing = throw IllegalAccessError("Operation is not available")
 }

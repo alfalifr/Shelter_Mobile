@@ -20,7 +20,7 @@ class NewsRemoteSourceImpl(private val api: NewsApi): NewsRemoteSource {
     private suspend fun getDataList(startTimestamp: String, type: Int): Result<List<News>> {
         if(type != Const.TYPE_ARTICLE && type != Const.TYPE_NEWS)
             throw IllegalArgumentException("No such type ($type)")
-        val body = NewsBody(type)
+        val body = NewsBody(type.toString())
         val call = api.getNews(body)
         return call.toListResult {
             it.toModel(type)

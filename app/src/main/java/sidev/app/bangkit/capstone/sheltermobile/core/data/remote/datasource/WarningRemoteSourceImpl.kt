@@ -2,20 +2,21 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource
 
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.LocationLocalSource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.DisasterApi
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.EarthQuakeBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LandslideBody
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningDetail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.LocationRepo
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.*
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toWarningDetailListResult
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import java.lang.IllegalStateException
 
 class WarningRemoteSourceImpl(
     private val disasterApi: DisasterApi,
     private val localRepo: LocationRepo,
+    private val disasterRepo: DisasterRepo,
 ): WarningRemoteSource {
     override suspend fun getWarningStatusBatch(
         disasterId: Int,
@@ -28,23 +29,34 @@ class WarningRemoteSourceImpl(
 
         val location = locRes.data
 
-        val landslideReqBody = LandslideBody(location.name)
-        val landslideRes = disasterApi.getLandslidePredictions(landslideReqBody).execute()
-        if(!landslideRes.isSuccessful)
-            return Fail("Can't get landslide warning status", landslideRes.code(), null)
+        val disasterRes = disasterRepo.getDisaster(disasterId)
+        if(disasterRes !is Success)
+            return disasterRes as Fail
 
-        val landslideList = landslideRes.body()!!.map { it.toModel(location) }
 
-        val earthQuakeReqBody = LandslideBody(locRes.data.name)
-        val earthQuakeRes = disasterApi.getLandslidePredictions(landslideReqBody).execute()
-        if(!earthQuakeRes.isSuccessful)
-            return Fail("Can't get earth quake warning status", earthQuakeRes.code(), null)
+        val list = when(val disasterName = disasterRes.data.name) {
+            Const.Disaster.LANDSLIDE -> {
+                val landslideReqBody = LandslideBody(location.name)
+                val landslideRes = disasterApi.getLandslidePredictions(landslideReqBody).execute()
+                if(!landslideRes.isSuccessful)
+                    return Fail("Can't get landslide warning status", landslideRes.code(), null)
 
-        val earthQuakeList = earthQuakeRes.body()!!.map { it.toModel(location) }
+                landslideRes.body()!!.map { it.toModel(location) }
+            }
+            Const.Disaster.EARTH_QUAKE -> {
+                val earthQuakeReqBody = EarthQuakeBody(locRes.data.name)
+                val earthQuakeRes = disasterApi.getEarthQuakePredictions(earthQuakeReqBody).execute()
+                if(!earthQuakeRes.isSuccessful)
+                    return Fail("Can't get earth quake warning status", earthQuakeRes.code(), null)
 
-        //TODO Alif 4 Juni 2021: Tambahi predictions bencana lain
-
-        return Success(landslideList + earthQuakeList, 0)
+                earthQuakeRes.body()!!.map { it.toModel(location) }
+            }
+            //TODO Alif 4 Juni 2021: Tambahi predictions bencana lain
+            Const.Disaster.FLOOD -> emptyList()
+            Const.Disaster.FOREST_FIRE -> emptyList()
+            else -> throw IllegalStateException("No such disaster name ($disasterName)")
+        }
+        return Success(list, 0)
     }
 
     override suspend fun getWarningDetailBatch(

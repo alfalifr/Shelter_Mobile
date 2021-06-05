@@ -156,9 +156,13 @@ class RegisterActivity : AppCompatActivity() {
             if(show) {
                 pbSignup.visibility = View.VISIBLE
                 cirRegisterButton.visibility = View.GONE
+                onLoginPlus.visibility = View.GONE
+                onLoginWord.visibility = View.GONE
             } else {
                 pbSignup.visibility = View.GONE
                 cirRegisterButton.visibility = View.VISIBLE
+                onLoginPlus.visibility = View.VISIBLE
+                onLoginWord.visibility = View.VISIBLE
             }
         }
     }

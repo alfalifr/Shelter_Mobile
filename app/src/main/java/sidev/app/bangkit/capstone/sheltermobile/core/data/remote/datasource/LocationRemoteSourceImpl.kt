@@ -1,8 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource
 
-import kotlinx.coroutines.runBlocking
-import retrofit2.Retrofit
-import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.DisasterApi
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.LocationApi
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.Requests
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Coordinate
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
@@ -12,10 +10,10 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
-class LocationRemoteSourceImpl(private val disasterApi: DisasterApi): LocationRemoteSource {
+class LocationRemoteSourceImpl(private val api: LocationApi): LocationRemoteSource {
     override suspend fun getAllLocation(): Result<List<Location>> {
-        val earthQuakeCall = disasterApi.getDisasterLocations(Requests.getGempaCity)
-        val landslideCall = disasterApi.getDisasterLocations(Requests.getLongsorCity)
+        val earthQuakeCall = api.getLocationBasedOnDisaster(Requests.getGempaCity) //api.getDisasterLocations(Requests.getGempaCity)
+        val landslideCall = api.getLocationBasedOnDisaster(Requests.getLongsorCity)
 
         val earthQuakeRes = earthQuakeCall.execute()
         if(!earthQuakeRes.isSuccessful)

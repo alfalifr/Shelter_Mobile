@@ -9,7 +9,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.G
 import java.lang.reflect.Type
 
 
-object ConverterFactory: Converter.Factory() {
+object ApiConverterFactory: Converter.Factory() {
     private val gsonFactory = GsonConverterFactory.create()
 
     override fun responseBodyConverter(

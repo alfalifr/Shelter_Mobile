@@ -19,7 +19,8 @@ interface DisasterApi {
 
     @POST(Const.API_SHELTER)
     fun getEarthQuakePredictions(@Body body: EarthQuakeBody): Call<List<EarthQuakeResponse>>
-
+/*
     @POST(Const.API_SHELTER)
     fun getDisasterLocations(@Body body: GeneralRequestBodyImpl): Call<GeneralCityListResponse>
+ */
 }

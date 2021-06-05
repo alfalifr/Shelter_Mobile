@@ -8,10 +8,13 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.We
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.AuthData
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
 object DummyTest {
     const val MSG_SUCCESS = "success"
     const val MSG_FAILED = "failed"
+
+    val dummyTimeString = Util.getTimeString()
 
     //Login
     //{"response":"success","data":{"id":"2","email":"test111@mail.com","full_name":"test sata","gender":"M"}}
@@ -46,6 +49,7 @@ object DummyTest {
     val landslideResponse = LandslideResponse("Agak Rawan", "Sungai Korang") //{"kondisi":"Agak Rawan","lat":"100.1147994996","lon":"1.0629122256","lokasi":"Sungai Korang"}
     val earthQuakeResponse = EarthQuakeResponse("2021-01-01 00:00:00", "3.44573412879278".toDouble(), "Pulo Batal")
 
+    val fireForestCityFirstRaw = "Asahan"
     val earthQuakeCityResponsesRaw = listOf(
         listOf("Pulo Batal"),
         listOf("Batangtoru"),

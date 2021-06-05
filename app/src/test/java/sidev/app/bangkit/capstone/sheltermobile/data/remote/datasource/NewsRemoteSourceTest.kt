@@ -3,6 +3,8 @@ package sidev.app.bangkit.capstone.sheltermobile.data.remote.datasource
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Test
+import sidev.app.bangkit.capstone.sheltermobile.DummyTest
+import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.AppRetrofit
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.NewsRemoteSource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.NewsRemoteSourceImpl
@@ -21,13 +23,13 @@ class NewsRemoteSourceTest {
     @Test
     fun _1_getNews(){
         runBlocking {
-            result = src.getNewsList("")
+            result = src.getNewsList(DummyTest.dummyTimeString)
         }
     }
     @Test
     fun _2_getArticles(){
         runBlocking {
-            result = src.getArticleList("")
+            result = src.getArticleList(DummyTest.dummyTimeString)
         }
     }
 

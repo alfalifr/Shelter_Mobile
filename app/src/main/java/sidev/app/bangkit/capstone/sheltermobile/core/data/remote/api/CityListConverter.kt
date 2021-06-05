@@ -15,10 +15,17 @@ object CityListConverter: Converter<ResponseBody, GeneralCityListResponse> {
         val array = parser.parse(str).asJsonArray
 
         val list = array.map {
-            val arr = it.asJsonArray
+            //val arr = it.asJsonArray
+            val obj = it.asJsonObject
+
+            val nestedList = obj.keySet().map {
+                obj[it].asString
+            }
+/*
             val nestedList = arr.map {
                 it.asString
             }
+ */
             GeneralCityResponse(nestedList)
         }
         return GeneralCityListResponse(list)

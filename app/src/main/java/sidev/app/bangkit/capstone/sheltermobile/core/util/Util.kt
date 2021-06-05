@@ -83,7 +83,7 @@ object Util {
         val time = timeStr?.timeLong ?: getTime()
         val date = Date(time + millisOffset)
         return sdf.format(date).also {
-            loge("Util.getFormattedTimeStr() date= $date str= $it millisOffset= $millisOffset time= $time time + millisOffset= ${time + millisOffset}")
+//            loge("Util.getFormattedTimeStr() date= $date str= $it millisOffset= $millisOffset time= $time time + millisOffset= ${time + millisOffset}")
         }
     }
 

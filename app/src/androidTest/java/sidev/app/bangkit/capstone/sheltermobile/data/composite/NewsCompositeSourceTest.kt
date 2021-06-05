@@ -18,7 +18,10 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.News
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ConfigDi
 import sidev.app.bangkit.capstone.sheltermobile.core.di.RepoDi
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.News
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.console.prin
 import sidev.lib.console.prine
@@ -33,7 +36,7 @@ class NewsCompositeSourceTest {
         val dummyList = Dummy.emergencyList
         val dummyItem = dummyList.random()
  */
-        val timestamp = ""
+        val timestamp = Util.getTimeString(millisOffset = -Const.TIME_OFFSET)
         private lateinit var dataList: List<News>
 
         @BeforeClass
@@ -94,11 +97,11 @@ class NewsCompositeSourceTest {
         runBlocking {
             val randomItem = dataList.random()
 
-            val fromComposite = compositeSrc.getArticle(randomItem.timestamp.time)
+            val fromComposite = compositeSrc.getArticle(randomItem.timestamp)
             assert(fromComposite is Success)
             assertEquals(randomItem, (fromComposite as Success).data)
 
-            val fromLocal = localSrc.getArticle(randomItem.timestamp.time)
+            val fromLocal = localSrc.getArticle(randomItem.timestamp)
             assert(fromLocal is Success)
             assertEquals(randomItem, (fromLocal as Success).data)
         }

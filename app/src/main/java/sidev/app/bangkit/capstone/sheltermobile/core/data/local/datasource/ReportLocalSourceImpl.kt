@@ -4,6 +4,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.local.room.ReportDao
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.ReportDetail
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
@@ -33,7 +34,8 @@ class ReportLocalSourceImpl(
                         is Fail -> return res
                     }
                 }
-            val form = when(val res = formLocalSrc.getForm(reportEntity.timestamp)){
+            val timeStr = Util.getStandardTimeString(reportEntity.timestamp)
+            val form = when(val res = formLocalSrc.getForm(timeStr)){
                 is Success -> res.data
                 is Fail -> {
                     if(reportEntity.method == Const.METHOD_FORM) return res
@@ -61,7 +63,8 @@ class ReportLocalSourceImpl(
                     }
                 }
             loge("ReportLocalSourceImpl.getReportDetailList() location= $location")
-            val form = when(val res = formLocalSrc.getForm(reportEntity.timestamp)){
+            val timeStr = Util.getStandardTimeString(reportEntity.timestamp)
+            val form = when(val res = formLocalSrc.getForm(timeStr)){
                 is Success -> res.data
                 is Fail -> {
                     if(reportEntity.method == Const.METHOD_FORM) return res.also { loge("ReportLocalSourceImpl.getReportDetailList() getForm() ERROR= $it") }
@@ -75,14 +78,15 @@ class ReportLocalSourceImpl(
         return Success(list, 0)
     }
 
-    override suspend fun getReportDetail(timestamp: String): Result<ReportDetail> {
-        val entity = dao.getReport(timestamp) ?: return Util.noEntityFailResult()
+    override suspend fun getReportDetail(timestamp: TimeString): Result<ReportDetail> {
+        val entity = dao.getReport(timestamp.timeLong) ?: return Util.noEntityFailResult()
 
         val locRes = locationLocalSrc.getLocationById(entity.locationId)
         if(locRes !is Success)
             return locRes as Fail
 
-        val formRes = formLocalSrc.getForm(entity.timestamp)
+        val timeStr = Util.getStandardTimeString(entity.timestamp)
+        val formRes = formLocalSrc.getForm(timeStr)
 
         val formModel = if(formRes !is Success) {
             if(entity.method == Const.METHOD_FORM)

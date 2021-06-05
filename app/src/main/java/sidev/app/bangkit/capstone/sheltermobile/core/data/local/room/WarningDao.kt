@@ -9,7 +9,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.WarningEntity
 @Dao
 interface WarningDao {
     @Query("SELECT * FROM warning WHERE disasterId = :disasterId AND locationId = :locationId AND timestamp >= :startTimestamp")
-    fun getWarningStatusBatch(disasterId: Int, locationId: Int, startTimestamp: String): List<WarningEntity>
+    fun getWarningStatusBatch(disasterId: Int, locationId: Int, startTimestamp: Long): List<WarningEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveWarning(data: WarningEntity): Long

@@ -5,7 +5,7 @@ import java.sql.Timestamp
 
 @Entity(tableName = "warning", primaryKeys = ["timestamp", "locationId", "disasterId", "emergencyId"])
 data class WarningEntity(
-    val timestamp: String,
+    val timestamp: Long,
     val locationId: Int,
     val disasterId: Int,
     val emergencyId: Int,

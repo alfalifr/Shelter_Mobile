@@ -34,8 +34,9 @@ object DataMapper {
         }
     }
 
+    private fun Long.toTimeString(): TimeString = Util.getStandardTimeString(this)
     private fun String.toTimeString(pattern: String = Const.DB_TIME_PATTERN): TimeString = TimeString(this, pattern)
-    private fun String.remoteToDbTimeFormat(): TimeString {
+    fun String.remoteToDbTimeFormat(): TimeString {
         val remSdf = SimpleDateFormat(Const.REMOTE_TIME_PATTERN, Locale.ROOT)
         val dbSdf = SimpleDateFormat(Const.DB_TIME_PATTERN, Locale.ROOT)
         val time = remSdf.parse(this)!!
@@ -67,12 +68,12 @@ object DataMapper {
     fun Disaster.toEntity(): DisasterEntity = DisasterEntity(id, name, imgLink)
     fun Emergency.toEntity(): EmergencyEntity = EmergencyEntity(id, name, color, severity)
     fun Location.toEntity(parentId: Int): LocationEntity = LocationEntity(id, name, coordinate.latitude, coordinate.longitude, parentId)
-    fun News.toEntity(): NewsEntity = NewsEntity(timestamp.time, title, briefDesc, linkImage, link, type)
-    fun ReportDetail.toEntity(): ReportEntity = ReportEntity(report.timestamp.time, report.method, response, report.location.id)
-    fun Form.toEntity(): FormEntity = FormEntity(timestamp.time, title, desc, photoLinkList.joinToString(Const.CHAR_LINK_SEPARATOR.toString()))
+    fun News.toEntity(): NewsEntity = NewsEntity(timestamp.timeLong, title, briefDesc, linkImage, link, type)
+    fun ReportDetail.toEntity(): ReportEntity = ReportEntity(report.timestamp.timeLong, report.method, response, report.location.id)
+    fun Form.toEntity(): FormEntity = FormEntity(timestamp.timeLong, title, desc, photoLinkList.joinToString(Const.CHAR_LINK_SEPARATOR.toString()))
     fun User.toEntity(id: Int = 0): UserEntity = UserEntity(id, email, name, gender)
     fun WarningDetail.toEntity(): WarningEntity = WarningEntity(
-        timestamp = status.timestamp.time,
+        timestamp = status.timestamp.timeLong,
         locationId = status.location.id,
         disasterId = status.disaster.id,
         emergencyId = status.emergency.id,
@@ -83,7 +84,7 @@ object DataMapper {
     )
     fun Weather.toEntity(): WeatherEntity = WeatherEntity(id, name, icon)
     fun WeatherForecast.toEntity(locationId: Int): WeatherForecastEntity = WeatherForecastEntity(
-        timestamp = timestamp.time,
+        timestamp = timestamp.timeLong,
         locationId = locationId,
         temperature = temperature,
         humidity = humidity,
@@ -132,7 +133,7 @@ object DataMapper {
         val emergency = Dummy.getEarthQuakeEmergencyByScale(avg_magnitude)
         val caption = CaptionMapper.WarningStatus.getCaption(disaster, emergency)
 
-        return WarningStatus(disaster, emergency, caption.title, Util.getTimeString(), location, "")
+        return WarningStatus(disaster, emergency, caption.title, date.remoteToDbTimeFormat(), location, "")
     }
 
 

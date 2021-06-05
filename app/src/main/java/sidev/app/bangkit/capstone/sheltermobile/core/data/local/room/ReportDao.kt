@@ -15,7 +15,7 @@ interface ReportDao {
     fun getTopReportList(top: Int): List<ReportEntity>
 
     @Query("SELECT * FROM report WHERE timestamp = :timestamp")
-    fun getReport(timestamp: String): ReportEntity?
+    fun getReport(timestamp: Long): ReportEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveReport(data: ReportEntity): Long

@@ -4,6 +4,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.Repor
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.ReportRemoteSource
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.ReportDetail
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.ReportRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
@@ -26,7 +27,7 @@ class ReportCompositeSource(
             val top = args[Const.KEY_TOP] as? Int ?: -1
             repo.getReportDetailList(top)
         } else {
-            val timestamp = args[Const.KEY_TIMESTAMP] as? String ?: throw IllegalArgumentException("args[Const.KEY_TIMESTAMP] == null")
+            val timestamp = args[Const.KEY_TIMESTAMP] as? TimeString ?: throw IllegalArgumentException("args[Const.KEY_TIMESTAMP] == null")
             repo.getReportDetail(timestamp).toListResult()
         }
     }
@@ -44,7 +45,7 @@ class ReportCompositeSource(
         Const.KEY_TOP to top,
     ))
 
-    override suspend fun getReportDetail(timestamp: String): Result<ReportDetail> = getDataList(mapOf(
+    override suspend fun getReportDetail(timestamp: TimeString): Result<ReportDetail> = getDataList(mapOf(
         Const.KEY_IS_SINGLE to true,
         Const.KEY_TIMESTAMP to timestamp,
     )).toSingleResult()

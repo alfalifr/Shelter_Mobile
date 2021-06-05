@@ -57,7 +57,7 @@ class DashboardViewModel(app: Context?, val useCase: DashboardUseCase): AsyncVm(
     fun getWeatherForecast(forceLoad: Boolean = false){
         if(weatherForecast.value != null && !forceLoad) return
         startJob(Const.KEY_WEATHER_FORECAST) {
-            val timestamp = Util.getTimestampStr()
+            val timestamp = Util.getTimeString()
             when(val result = useCase.getHighlightedWeatherForecast(timestamp).also { loge("DashboardVm.getWeatherForecast() res= $it") }){
                 is Success -> mWeatherForecast.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
@@ -68,7 +68,7 @@ class DashboardViewModel(app: Context?, val useCase: DashboardUseCase): AsyncVm(
     fun getHighlightedWarningStatus(forceLoad: Boolean = false){
         if(higlightedWarningStatus.value != null && !forceLoad) return
         startJob(Const.KEY_WARNING_HIGHLIGHT) {
-            val timestamp = Util.getTimestampStr()
+            val timestamp = Util.getTimeString()
             when(val result = useCase.getHighlightedWarningStatus(timestamp)){
                 is Success -> mhiglightedWarningStatus.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)
@@ -79,7 +79,7 @@ class DashboardViewModel(app: Context?, val useCase: DashboardUseCase): AsyncVm(
     fun getDisasterGroupList(forceLoad: Boolean = false){
         if(disasterStatusList.value != null && !forceLoad) return
         startJob(Const.KEY_DISASTER_GROUP_LIST) {
-            val timestamp = Util.getTimestampStr()
+            val timestamp = Util.getTimeString()
             when(val result = useCase.getDisasterGroupList(timestamp)){
                 is Success -> {
                     val disasterWarningList = DataMapper.toDisasterGroupList(result.data)

@@ -2,6 +2,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.composite
 
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.WarningLocalSource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.WarningRemoteSource
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningDetail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
@@ -22,7 +23,7 @@ class WarningCompositeSource(
     private suspend fun getDataList(repo: WarningRepo, args: Map<String, Any?>): Result<List<WarningDetail>> {
         val disasterId = args[Const.KEY_DISASTER_ID] as? Int ?: throw IllegalArgumentException("args[Const.KEY_DISASTER_ID] == null")
         val locationId = args[Const.KEY_LOCATION_ID] as? Int ?: throw IllegalArgumentException("args[Const.KEY_LOCATION_ID] == null")
-        val timestamp = args[Const.KEY_TIMESTAMP] as? String ?: throw IllegalArgumentException("args[Const.KEY_TIMESTAMP] == null")
+        val timestamp = args[Const.KEY_TIMESTAMP] as? TimeString ?: throw IllegalArgumentException("args[Const.KEY_TIMESTAMP] == null")
         val noNews = args[Const.KEY_NO_NEWS] as? Boolean ?: true
 
         return if(noNews) repo.getWarningStatusBatch(disasterId, locationId, timestamp).toWarningDetailListResult()
@@ -37,7 +38,7 @@ class WarningCompositeSource(
     override suspend fun getWarningStatusBatch(
         disasterId: Int,
         locationId: Int,
-        startTimestamp: String
+        startTimestamp: TimeString
     ): Result<List<WarningStatus>> = getDataList(mapOf(
         Const.KEY_DISASTER_ID to disasterId,
         Const.KEY_LOCATION_ID to locationId,
@@ -48,7 +49,7 @@ class WarningCompositeSource(
     override suspend fun getWarningDetailBatch(
         disasterId: Int,
         locationId: Int,
-        startTimestamp: String
+        startTimestamp: TimeString
     ): Result<List<WarningDetail>> = getDataList(mapOf(
         Const.KEY_DISASTER_ID to disasterId,
         Const.KEY_LOCATION_ID to locationId,

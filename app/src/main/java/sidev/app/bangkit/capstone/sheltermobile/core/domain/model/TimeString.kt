@@ -13,7 +13,16 @@ data class TimeString(
 ): Parcelable {
     @IgnoredOnParcel
     val timeLong: Long by lazy {
-        val sdf = SimpleDateFormat(pattern, Locale.ROOT)
-        sdf.parse(time)!!.time
+        if(time.isBlank()) 0L
+        else {
+            val sdf = SimpleDateFormat(pattern, Locale.ROOT)
+            sdf.parse(time)!!.time
+        }
+    }
+
+    operator fun compareTo(other: TimeString): Int = when {
+        timeLong < other.timeLong -> -1
+        timeLong > other.timeLong -> 1
+        else -> 0
     }
 }

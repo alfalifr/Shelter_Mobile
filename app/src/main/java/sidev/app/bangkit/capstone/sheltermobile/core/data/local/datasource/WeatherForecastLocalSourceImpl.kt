@@ -2,6 +2,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource
 
 import android.content.Context
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.room.WeatherForecastDao
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WeatherForecast
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
@@ -18,8 +19,8 @@ class WeatherForecastLocalSourceImpl(
     private val weatherLocalSrc: WeatherLocalSource,
     private val ctx: Context
 ): WeatherForecastLocalSource {
-    override suspend fun getWeatherForecast(timestamp: String, locationId: Int): Result<WeatherForecast> {
-        val entity = dao.getWeatherForecast(timestamp, locationId) ?: return Util.noEntityFailResult()
+    override suspend fun getWeatherForecast(timestamp: TimeString, locationId: Int): Result<WeatherForecast> {
+        val entity = dao.getWeatherForecast(timestamp.timeLong, locationId) ?: return Util.noEntityFailResult()
         val weatherRes = weatherLocalSrc.getWeather(entity.weatherId)
         if(weatherRes !is Success)
             return weatherRes as Fail
@@ -28,8 +29,8 @@ class WeatherForecastLocalSourceImpl(
         return Success(data, 0)
     }
 
-    override suspend fun getWeatherForecastBatch(startTimestamp: String, locationId: Int): Result<List<WeatherForecast>> {
-        val list = dao.getWeatherForecastBatch(startTimestamp, locationId).map {
+    override suspend fun getWeatherForecastBatch(startTimestamp: TimeString, locationId: Int): Result<List<WeatherForecast>> {
+        val list = dao.getWeatherForecastBatch(startTimestamp.timeLong, locationId).map {
             val weatherRes = weatherLocalSrc.getWeather(it.weatherId)
             if(weatherRes !is Success)
                 return weatherRes as Fail

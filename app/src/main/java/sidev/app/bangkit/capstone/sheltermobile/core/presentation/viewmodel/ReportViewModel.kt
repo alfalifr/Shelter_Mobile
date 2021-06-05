@@ -10,6 +10,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.ReportUseCase
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
+import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.lib.`val`.SuppressLiteral
 import sidev.lib.android.std.tool.util.`fun`.loge
 import java.lang.IllegalStateException
@@ -75,8 +76,9 @@ class ReportViewModel(app: Context?, private val useCase: ReportUseCase): AsyncV
     fun getReportDetail(timestamp: String, forceLoad: Boolean = false) {
         loge("Vm.getReportDetail() timestamp= $timestamp forceLoad= $forceLoad")
         if (reportDetail.value != null && !forceLoad) return
+        val timeStr = Util.getStandardTimeString(timestamp)
         startJob(Const.KEY_REPORT_DETAIL) {
-            when(val res = useCase.getReportDetail(timestamp).also { loge("Vm.getReportDetail() useCase.getReportDetail res= $it") }) {
+            when(val res = useCase.getReportDetail(timeStr).also { loge("Vm.getReportDetail() useCase.getReportDetail res= $it") }) {
                 is Success -> mReportDetail.postValue(res.data)
                 is Fail -> doCallNotSuccess(res.code, res.error)
             }

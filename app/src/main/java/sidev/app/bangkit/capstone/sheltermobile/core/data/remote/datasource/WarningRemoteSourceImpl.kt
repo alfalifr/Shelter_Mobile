@@ -4,13 +4,16 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.Locat
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.DisasterApi
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.EarthQuakeBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LandslideBody
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningDetail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.*
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
+import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.remoteToDbTimeFormat
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toWarningDetailListResult
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import sidev.lib.android.std.tool.util.`fun`.loge
 import java.lang.IllegalStateException
 
 class WarningRemoteSourceImpl(
@@ -21,13 +24,14 @@ class WarningRemoteSourceImpl(
     override suspend fun getWarningStatusBatch(
         disasterId: Int,
         locationId: Int,
-        startTimestamp: String
+        startTimestamp: TimeString
     ): Result<List<WarningStatus>> {
         val locRes = localRepo.getLocationById(locationId)
         if(locRes !is Success)
             return locRes as Fail
 
         val location = locRes.data
+        loge("WarningRemoteSourceImpl.getWarningStatusBatch() location= $location")
 
         val disasterRes = disasterRepo.getDisaster(disasterId)
         if(disasterRes !is Success)
@@ -49,20 +53,21 @@ class WarningRemoteSourceImpl(
                 if(!earthQuakeRes.isSuccessful)
                     return Fail("Can't get earth quake warning status", earthQuakeRes.code(), null)
 
-                earthQuakeRes.body()!!.map { it.toModel(location) }
+                earthQuakeRes.body()!!.filter { it.date.remoteToDbTimeFormat() >= startTimestamp }.map { it.toModel(location) }
             }
             //TODO Alif 4 Juni 2021: Tambahi predictions bencana lain
             Const.Disaster.FLOOD -> emptyList()
             Const.Disaster.FOREST_FIRE -> emptyList()
             else -> throw IllegalStateException("No such disaster name ($disasterName)")
         }
+        loge("WarningRemote.getWarningStatusBatch() list.size = ${list.size} disasterId= $disasterId locationId= $locationId")
         return Success(list, 0)
     }
 
     override suspend fun getWarningDetailBatch(
         disasterId: Int,
         locationId: Int,
-        startTimestamp: String
+        startTimestamp: TimeString
     ): Result<List<WarningDetail>> =
         getWarningStatusBatch(disasterId, locationId, startTimestamp).toWarningDetailListResult()
 

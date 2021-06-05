@@ -20,6 +20,7 @@ import sidev.lib.android.std.tool.util._FileUtil
 import sidev.lib.android.std.tool.util._ResUtil
 import sidev.lib.android.std.tool.util.`fun`.asResNameOrNullBy
 import sidev.lib.android.std.tool.util.`fun`.imgRes
+import sidev.lib.android.std.tool.util.`fun`.loge
 import java.io.File
 import java.lang.IllegalStateException
 import java.lang.IndexOutOfBoundsException
@@ -82,8 +83,16 @@ object Util {
         val time = timeStr?.timeLong ?: getTime()
         val date = Date(time + millisOffset)
         return sdf.format(date).also {
-            //loge("Util.getFormattedTimeStr() date= $date str= $it millisOffset= $millisOffset time= $time time + millisOffset= ${time + millisOffset}")
+            loge("Util.getFormattedTimeStr() date= $date str= $it millisOffset= $millisOffset time= $time time + millisOffset= ${time + millisOffset}")
         }
+    }
+
+    fun getStandardTimeString(timeInStr: String): TimeString = TimeString(timeInStr, Const.DB_TIME_PATTERN)
+    fun getStandardTimeString(long: Long): TimeString {
+        val sdf = SimpleDateFormat(Const.DB_TIME_PATTERN, Locale.ROOT)
+        val date = Date(long)
+        val timeStr = sdf.format(date)
+        return TimeString(timeStr, Const.DB_TIME_PATTERN)
     }
 
     fun getDayName(timeStr: TimeString): String = getFormattedTimeStr(Const.DAY_PATTERN, timeStr)

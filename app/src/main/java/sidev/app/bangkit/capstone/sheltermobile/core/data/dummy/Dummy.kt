@@ -82,9 +82,9 @@ Dummy section
         //Util.getTimeString("2021-05-29 21:31:51"),
         //Util.getTimeString("2021-05-30 21:31:51"),
         //Util.getTimeString("2021-05-31 21:31:51"),
-        Util.getTimeString(millisOffset = Const.TIME_OFFSET),
-        Util.getTimeString(millisOffset = Const.TIME_OFFSET * 2),
-        Util.getTimeString(millisOffset = Const.TIME_OFFSET * 3),
+        Util.getTimeString(millisOffset = -Const.TIME_OFFSET),
+        Util.getTimeString(millisOffset = -Const.TIME_OFFSET * 2),
+        Util.getTimeString(millisOffset = -Const.TIME_OFFSET * 3),
     )
     val userList = listOf<User>(
         User("b@b.b", "bayu", 'M'),
@@ -157,11 +157,11 @@ Dummy section
     )
 
 
-    fun getWarningStatusList(disasterId: Int, locationId: Int, startTimestamp: String): List<WarningStatus> = warningListAll.filter {
-        it.disaster.id == disasterId && it.location.id == locationId
+    fun getWarningStatusList(disasterId: Int, locationId: Int, startTimestamp: TimeString): List<WarningStatus> = warningListAll.filter {
+        it.disaster.id == disasterId && it.location.id == locationId && it.timestamp.timeLong >= startTimestamp.timeLong
     }
-    fun getWarningDetailList(disasterId: Int, locationId: Int, startTimestamp: String): List<WarningDetail> = warningListAll.filter {
-        it.disaster.id == disasterId && it.location.id == locationId
+    fun getWarningDetailList(disasterId: Int, locationId: Int, startTimestamp: TimeString): List<WarningDetail> = warningListAll.filter {
+        it.disaster.id == disasterId && it.location.id == locationId && it.timestamp.timeLong >= startTimestamp.timeLong
     }.map { WarningDetail(it, "Ini deskripsi", newsList[0]) }
 
     fun <T> getEmptyListResult(): Success<List<T>> = Success(emptyList(), 0)

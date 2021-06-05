@@ -1,9 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase
 
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Disaster
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WeatherForecast
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.*
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toSingleResult
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
@@ -50,7 +47,7 @@ class DashboardUseCaseImpl(
         return result
     }
 
-    override suspend fun getHighlightedWeatherForecast(startTimestamp: String): Result<WeatherForecast> {
+    override suspend fun getHighlightedWeatherForecast(startTimestamp: TimeString): Result<WeatherForecast> {
         if(currentLocation == null) {
             val res = getCurrentLocation()
             if(res is Fail)
@@ -59,7 +56,7 @@ class DashboardUseCaseImpl(
         return getWeatherForecastBatch(startTimestamp, currentLocation!!.id).toSingleResult()
     }
 
-    override suspend fun getDisasterGroupList(timestamp: String): Result<List<Pair<Disaster, List<WarningStatus>>>> {
+    override suspend fun getDisasterGroupList(timestamp: TimeString): Result<List<Pair<Disaster, List<WarningStatus>>>> {
         val res = getCurrentLocation()
         if(res is Fail) return res
         if(currentLocation == null) return Fail("currentLocation == null", -1, null)
@@ -98,7 +95,7 @@ class DashboardUseCaseImpl(
         return unknownErrorResult
     }
 
-    override suspend fun getHighlightedWarningStatus(timestamp: String): Result<WarningStatus> {
+    override suspend fun getHighlightedWarningStatus(timestamp: TimeString): Result<WarningStatus> {
         if(disasterWarningList == null) {
             val result = getDisasterGroupList(timestamp)
             if(result is Fail) return result

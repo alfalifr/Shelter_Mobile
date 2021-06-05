@@ -31,11 +31,11 @@ object RepoDi {
     object Remote {
         fun getDisasterSrc(): DisasterRemoteSource = DisasterRemoteSourceDummy
         fun getEmergencySrc(): EmergencyRemoteSource = EmergencyRemoteSourceDummy
-        fun getLocationSrc(): LocationRemoteSource = LocationRemoteSourceImpl(AppRetrofit.disasterApi) //LocationRemoteSourceDummy
+        fun getLocationSrc(): LocationRemoteSource = LocationRemoteSourceImpl(AppRetrofit.disasterApi) //LocationRemoteSourceDummy //
         fun getReportSrc(): ReportRemoteSource = ReportRemoteSourceDummy
         fun getFormSrc(): FormRemoteSource = FormRemoteSourceDummy
-        fun getWarningSrc(): WarningRemoteSource = WarningRemoteSourceImpl(AppRetrofit.disasterApi, getLocationRepo(), getDisasterRepo()) //WarningRemoteSourceDummy
-        fun getWeatherForecastSrc(): WeatherForecastRemoteSource = WeatherForecastRemoteSourceImpl(AppRetrofit.weatherApi) //WeatherForecastRemoteSourceDummy
+        fun getWarningSrc(): WarningRemoteSource = WarningRemoteSourceImpl(AppRetrofit.disasterApi, getLocationRepo(), getDisasterRepo()) //WarningRemoteSourceDummy //
+        fun getWeatherForecastSrc(): WeatherForecastRemoteSource = WeatherForecastRemoteSourceImpl(AppRetrofit.weatherApi) //WeatherForecastRemoteSourceDummy //
         fun getWeatherSrc(): WeatherRemoteSource = WeatherRemoteSourceDummy
         fun getNewsSrc(): NewsRemoteSource = NewsRemoteSourceImpl(AppRetrofit.newsApi) //NewsRemoteSourceDummy //
         fun getUserSrc(): UserRemoteSource = UserRemoteSourceImpl(AppRetrofit.authApi) //UserRemoteSourceDummy //

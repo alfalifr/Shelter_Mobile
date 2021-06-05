@@ -9,7 +9,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.FormEntity
 @Dao
 interface FormDao {
     @Query("SELECT * FROM form WHERE timestamp = :timestamp")
-    fun getForm(timestamp: String): FormEntity?
+    fun getForm(timestamp: Long): FormEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveForm(data: FormEntity): Long

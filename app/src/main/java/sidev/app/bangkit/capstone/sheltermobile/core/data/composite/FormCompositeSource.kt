@@ -3,6 +3,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.composite
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.FormLocalSource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.FormRemoteSource
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Form
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.FormRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
@@ -21,7 +22,7 @@ class FormCompositeSource(
     override suspend fun getRemoteDataList(args: Map<String, Any?>): Result<List<Form>> = getDataList(remoteSrc, args)
 
     suspend fun getDataList(repo: FormRepo, args: Map<String, Any?>): Result<List<Form>> {
-        val id = args[Const.KEY_TIMESTAMP] as? String ?: throw IllegalArgumentException("args[Const.KEY_TIMESTAMP] == null")
+        val id = args[Const.KEY_TIMESTAMP] as? TimeString ?: throw IllegalArgumentException("args[Const.KEY_TIMESTAMP] == null")
         return repo.getForm(id).toListResult()
     }
 
@@ -31,7 +32,7 @@ class FormCompositeSource(
     }
 
 
-    override suspend fun getForm(timestamp: String): Result<Form> = getDataList(mapOf(
+    override suspend fun getForm(timestamp: TimeString): Result<Form> = getDataList(mapOf(
         Const.KEY_TIMESTAMP to timestamp
     )).toSingleResult()
 

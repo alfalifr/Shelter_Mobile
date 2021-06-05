@@ -23,7 +23,7 @@ interface LocationDao {
 
     fun getLocation(coordinate: Coordinate): LocationEntity? = getLocation(coordinate.latitude, coordinate.longitude)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE) //It could be duplicate because locations are gathered from each disaster from server.
+    @Insert(onConflict = OnConflictStrategy.REPLACE) //It could be duplicate because locations are gathered from each disaster from server.
     fun saveLocation(data: LocationEntity): Long
 
     fun saveLocationList(list: List<LocationEntity>): Int {

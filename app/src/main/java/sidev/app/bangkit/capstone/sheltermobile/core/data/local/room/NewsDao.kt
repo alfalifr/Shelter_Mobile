@@ -10,19 +10,19 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 @Dao
 interface NewsDao {
     @Query("SELECT * FROM news WHERE type = ${Const.TYPE_NEWS} AND timestamp >= :startTimestamp")
-    fun getNewsList(startTimestamp: String): List<NewsEntity>
+    fun getNewsList(startTimestamp: Long): List<NewsEntity>
 
     @Query("SELECT * FROM news WHERE type = ${Const.TYPE_ARTICLE} AND timestamp >= :startTimestamp")
-    fun getArticleList(startTimestamp: String): List<NewsEntity>
+    fun getArticleList(startTimestamp: Long): List<NewsEntity>
 
     @Query("SELECT * FROM news WHERE type = ${Const.TYPE_ARTICLE} AND timestamp = :timestamp")
-    fun getArticle(timestamp: String): NewsEntity?
+    fun getArticle(timestamp: Long): NewsEntity?
 
     @Query("SELECT * FROM news WHERE type = ${Const.TYPE_NEWS} AND timestamp = :timestamp")
-    fun getNews(timestamp: String): NewsEntity?
+    fun getNews(timestamp: Long): NewsEntity?
 
     @Query("SELECT * FROM news WHERE timestamp >= :startTimestamp AND (title LIKE '%' || :keyword || '%' OR briefDesc LIKE '%' || :keyword || '%')")
-    fun searchNews(keyword: String, startTimestamp: String): List<NewsEntity>
+    fun searchNews(keyword: String, startTimestamp: Long): List<NewsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveNews(data: NewsEntity): Long

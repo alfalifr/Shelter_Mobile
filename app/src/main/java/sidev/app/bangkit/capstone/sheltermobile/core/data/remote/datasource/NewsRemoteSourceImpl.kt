@@ -3,6 +3,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.NewsApi
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.NewsBody
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.News
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
@@ -13,11 +14,11 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import java.lang.IllegalStateException
 
 class NewsRemoteSourceImpl(private val api: NewsApi): NewsRemoteSource {
-    override suspend fun getNewsList(startTimestamp: String): Result<List<News>> = getDataList(startTimestamp, Const.TYPE_NEWS)
+    override suspend fun getNewsList(startTimestamp: TimeString): Result<List<News>> = getDataList(startTimestamp, Const.TYPE_NEWS)
 
-    override suspend fun getArticleList(startTimestamp: String): Result<List<News>> = getDataList(startTimestamp, Const.TYPE_ARTICLE)
+    override suspend fun getArticleList(startTimestamp: TimeString): Result<List<News>> = getDataList(startTimestamp, Const.TYPE_ARTICLE)
 
-    private suspend fun getDataList(startTimestamp: String, type: Int): Result<List<News>> {
+    private suspend fun getDataList(startTimestamp: TimeString, type: Int): Result<List<News>> {
         if(type != Const.TYPE_ARTICLE && type != Const.TYPE_NEWS)
             throw IllegalArgumentException("No such type ($type)")
         val body = NewsBody(type.toString())
@@ -27,21 +28,21 @@ class NewsRemoteSourceImpl(private val api: NewsApi): NewsRemoteSource {
         }
     }
 
-    override suspend fun getArticle(timestamp: String): Result<News> = getData(timestamp, Const.TYPE_ARTICLE)
+    override suspend fun getArticle(timestamp: TimeString): Result<News> = getData(timestamp, Const.TYPE_ARTICLE)
 
-    override suspend fun getNews(timestamp: String): Result<News> = getData(timestamp, Const.TYPE_NEWS)
+    override suspend fun getNews(timestamp: TimeString): Result<News> = getData(timestamp, Const.TYPE_NEWS)
 
-    private suspend fun getData(timestamp: String, type: Int): Result<News> = when(val res = getDataList(timestamp, type)) {
+    private suspend fun getData(timestamp: TimeString, type: Int): Result<News> = when(val res = getDataList(timestamp, type)) {
         is Success -> {
             //val time = Util.getTimestampStr(timestamp)
-            val news = res.data.find { it.timestamp.time == timestamp }
+            val news = res.data.find { it.timestamp.timeLong == timestamp.timeLong }
             if(news != null) Success(news, 0)
             else Util.noEntityFailResult()
         }
         is Fail -> res
     }
 
-    override suspend fun searchNews(keyword: String, startTimestamp: String): Result<List<News>> {
+    override suspend fun searchNews(keyword: String, startTimestamp: TimeString): Result<List<News>> {
         val newsRes = searchNewsEachType(keyword, startTimestamp, Const.TYPE_NEWS)
         val articleRes = searchNewsEachType(keyword, startTimestamp, Const.TYPE_ARTICLE)
 
@@ -65,7 +66,7 @@ class NewsRemoteSourceImpl(private val api: NewsApi): NewsRemoteSource {
         return Success(allNewsList, code)
     }
 
-    private suspend fun searchNewsEachType(keyword: String, startTimestamp: String, type: Int): Result<List<News>> = when(val res = getDataList(startTimestamp, type)) {
+    private suspend fun searchNewsEachType(keyword: String, startTimestamp: TimeString, type: Int): Result<List<News>> = when(val res = getDataList(startTimestamp, type)) {
         is Success -> {
             val newsList = res.data.filter { it.title.contains(keyword, true) || it.briefDesc.contains(keyword, true) }
             Success(newsList, 0)

@@ -40,7 +40,7 @@ class SearchArticleViewModel(app: Context?, private val useCase: NewsUseCase): A
         if(keyword == currentKeyword && !forceLoad) return
         currentKeyword = keyword
         startJob(Const.KEY_SEARCH_NEWS) {
-            val timestamp = Util.getTimestampStr()
+            val timestamp = Util.getTimeString()
             when(val result = useCase.searchNews(keyword, timestamp)){
                 is Success -> mSearchResult.postValue(result.data)
                 is Fail -> doCallNotSuccess(result.code, result.error)

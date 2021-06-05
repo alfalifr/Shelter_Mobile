@@ -1,9 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.domain.repo
 
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Coordinate
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Disaster
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningDetail
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
 
 interface WarningRepo {
 /*
@@ -13,8 +10,8 @@ interface WarningRepo {
     suspend fun getWarningStatusBatch(disasterId: Int, coordinate: Coordinate, timestamp: String): Result<List<WarningStatus>>
     suspend fun getWarningDetailBatch(disasterId: Int, coordinate: Coordinate, timestamp: String): Result<List<WarningDetail>>
  */
-    suspend fun getWarningStatusBatch(disasterId: Int, locationId: Int, startTimestamp: String): Result<List<WarningStatus>>
-    suspend fun getWarningDetailBatch(disasterId: Int, locationId: Int, startTimestamp: String): Result<List<WarningDetail>>
+    suspend fun getWarningStatusBatch(disasterId: Int, locationId: Int, startTimestamp: TimeString): Result<List<WarningStatus>>
+    suspend fun getWarningDetailBatch(disasterId: Int, locationId: Int, startTimestamp: TimeString): Result<List<WarningDetail>>
 
     suspend fun saveWarningDetailList(list: List<WarningDetail>): Result<Int>
 /*

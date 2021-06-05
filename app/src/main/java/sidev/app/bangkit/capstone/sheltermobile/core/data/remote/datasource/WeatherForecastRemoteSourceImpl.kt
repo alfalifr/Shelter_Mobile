@@ -2,6 +2,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource
 
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.WeatherApi
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.WeatherForecastBody
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WeatherForecast
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
@@ -12,18 +13,18 @@ import sidev.lib.android.std.tool.util.`fun`.loge
 
 class WeatherForecastRemoteSourceImpl(private val api: WeatherApi): WeatherForecastRemoteSource {
     override suspend fun getWeatherForecast(
-        timestamp: String,
+        timestamp: TimeString,
         locationId: Int
     ): Result<WeatherForecast> =
         Util.operationNotAvailableFailResult("WeatherForecastRemoteSourceImpl.getWeatherForecast(...)")
 
     override suspend fun getWeatherForecastBatch(
-        startTimestamp: String,
+        startTimestamp: TimeString,
         locationId: Int
     ): Result<List<WeatherForecast>> {
-        val min = Util.getTimeString()
-        val max = Util.getTimeStringStandardOffset(min)
-        val body = WeatherForecastBody(min.time, max.time)
+        //val min = Util.getTimeString()
+        val max = Util.getTimeStringStandardOffset(startTimestamp)
+        val body = WeatherForecastBody(startTimestamp.time, max.time)
 
         loge("getWeatherForecastBatch() body= $body")
 

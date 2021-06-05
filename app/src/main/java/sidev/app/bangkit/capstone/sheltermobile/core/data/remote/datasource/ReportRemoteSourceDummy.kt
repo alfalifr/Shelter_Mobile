@@ -3,6 +3,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.ReportDetail
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
@@ -13,7 +14,7 @@ object ReportRemoteSourceDummy: ReportRemoteSource {
 
     override suspend fun getReportDetailList(top: Int): Result<List<ReportDetail>> = Dummy.getEmptyListResult()
 
-    override suspend fun getReportDetail(timestamp: String): Result<ReportDetail> = Util.noEntityFailResult()
+    override suspend fun getReportDetail(timestamp: TimeString): Result<ReportDetail> = Util.noEntityFailResult()
 
     override suspend fun saveReportDetail(data: ReportDetail): Result<Int> = Util.operationNotAvailableFailResult()
 

@@ -2,6 +2,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.composite
 
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.WeatherForecastLocalSource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.WeatherForecastRemoteSource
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WeatherForecast
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.WeatherForecastRepo
@@ -20,7 +21,7 @@ class WeatherForecastCompositeSource(
     override suspend fun getRemoteDataList(args: Map<String, Any?>): Result<List<WeatherForecast>> = getDataList(remoteSrc, args.also { loge("WeatherCompositeSrc.getRemoteDataList() args = $args") })
 
     private suspend fun getDataList(repo: WeatherForecastRepo, args: Map<String, Any?>): Result<List<WeatherForecast>> {
-        val timestamp = args[Const.KEY_TIMESTAMP] as? String ?: throw IllegalArgumentException("args[Const.KEY_TIMESTAMP] == null")
+        val timestamp = args[Const.KEY_TIMESTAMP] as? TimeString ?: throw IllegalArgumentException("args[Const.KEY_TIMESTAMP] == null")
         val locationId = args[Const.KEY_LOCATION_ID] as? Int ?: throw IllegalArgumentException("args[Const.KEY_LOCATION_ID] == null")
         val isSingle = args[Const.KEY_IS_SINGLE] as? Boolean ?: false
 
@@ -44,7 +45,7 @@ class WeatherForecastCompositeSource(
 
 
     override suspend fun getWeatherForecast(
-        timestamp: String,
+        timestamp: TimeString,
         locationId: Int
     ): Result<WeatherForecast> = getDataList(mapOf(
         Const.KEY_TIMESTAMP to timestamp,
@@ -53,7 +54,7 @@ class WeatherForecastCompositeSource(
     )).toSingleResult()
 
     override suspend fun getWeatherForecastBatch(
-        startTimestamp: String,
+        startTimestamp: TimeString,
         locationId: Int
     ): Result<List<WeatherForecast>> = getDataList(mapOf(
         Const.KEY_TIMESTAMP to startTimestamp,

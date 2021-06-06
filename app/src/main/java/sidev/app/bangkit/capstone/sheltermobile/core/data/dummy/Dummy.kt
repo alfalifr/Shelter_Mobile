@@ -52,10 +52,10 @@ Not supposed to be dummy
 
 
     fun getLandslideEmergencyByName(name: String): Emergency = when(name.toLowerCase(Locale.ROOT)) {
-        Const.Emergency.LANDSLIDE_NORMAL.toLowerCase(Locale.ROOT) -> emergencyList[0]
-        Const.Emergency.LANDSLIDE_BIT_DANGER.toLowerCase(Locale.ROOT) -> emergencyList[1]
-        Const.Emergency.LANDSLIDE_DANGER.toLowerCase(Locale.ROOT) -> emergencyList[2]
-        Const.Emergency.LANDSLIDE_VERY_DANGER.toLowerCase(Locale.ROOT) -> emergencyList[2]
+        Const.Emergency.LANDSLIDE_NORMAL -> emergencyList[0]
+        Const.Emergency.LANDSLIDE_BIT_DANGER -> emergencyList[1]
+        Const.Emergency.LANDSLIDE_DANGER -> emergencyList[2]
+        Const.Emergency.LANDSLIDE_VERY_DANGER -> emergencyList[2]
         else -> throw IllegalArgumentException("No such landslide emergency data for name '$name'")
     }
 
@@ -64,6 +64,13 @@ Not supposed to be dummy
         in Const.Emergency.EARTH_QUAKE_YELLOW -> emergencyList[1]
         in Const.Emergency.EARTH_QUAKE_RED -> emergencyList[2]
         else -> throw IllegalArgumentException("No such earth quake emergency data for scale '$scale'")
+    }
+
+    fun getFloodEmergencyByName(name: String): Emergency = when(name.toLowerCase(Locale.ROOT)) {
+        in Const.Emergency.FLOOD_GREEN -> emergencyList[0]
+        in Const.Emergency.FLOOD_YELLOW -> emergencyList[1]
+        in Const.Emergency.FLOOD_RED -> emergencyList[2]
+        else -> throw IllegalArgumentException("No such flood emergency data for name '$name'")
     }
 
     fun getFireForestEmergencyByScale(scale: Int): Emergency = when(scale) {

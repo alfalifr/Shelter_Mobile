@@ -18,7 +18,8 @@ object Requests {
     val getGempaCity: GeneralRequestBodyImpl by lazy { getDisasterCityReqBody(EARTH_QUAKE.toLowerCase(Locale.ROOT)) }
     val getLongsorCity: GeneralRequestBodyImpl by lazy { getDisasterCityReqBody(LANDSLIDE.toLowerCase(Locale.ROOT)) }
     val getKarhutlaCity: GeneralRequestBodyImpl by lazy { getDisasterCityReqBody(FOREST_FIRE) }
-    val getBanjirCity: GeneralRequestBodyImpl by lazy { getDisasterCityReqBody(FLOOD.toLowerCase(Locale.ROOT)) }
+    //val getBanjirCity: GeneralRequestBodyImpl by lazy { getDisasterCityReqBody(FLOOD.toLowerCase(Locale.ROOT)) }
+    val getBanjirVillage: GeneralRequestBodyImpl by lazy { GeneralRequestBodyImpl("desa_${FLOOD.toLowerCase(Locale.ROOT)}") }
 
     fun getGeneralReqBody(requestType: String): GeneralRequestBodyImpl = GeneralRequestBodyImpl(requestType)
 

@@ -13,10 +13,10 @@ object Const {
         const val SEVERITY_YELLOW = 1
         const val SEVERITY_RED = 2
 
-        const val LANDSLIDE_NORMAL = "Sedang"
-        const val LANDSLIDE_BIT_DANGER = "Agak Rawan"
-        const val LANDSLIDE_DANGER = "Rawan"
-        const val LANDSLIDE_VERY_DANGER = "Sangat Rawan"
+        const val LANDSLIDE_NORMAL = "sedang"
+        const val LANDSLIDE_BIT_DANGER = "agak rawan"
+        const val LANDSLIDE_DANGER = "rawan"
+        const val LANDSLIDE_VERY_DANGER = "sangat rawan"
 
         val FIRE_FOREST_GREEN = 0 .. 30
         val FIRE_FOREST_YELLOW = 31 .. 80
@@ -26,6 +26,10 @@ object Const {
         val EARTH_QUAKE_GREEN = 0.0 .. 3.0
         val EARTH_QUAKE_YELLOW = 3.0 .. 5.0
         val EARTH_QUAKE_RED = 5.0 .. 100.0
+
+        val FLOOD_GREEN = "rendah"
+        val FLOOD_YELLOW = "tinggi"
+        val FLOOD_RED = "ekstrim"
 // */
     }
 

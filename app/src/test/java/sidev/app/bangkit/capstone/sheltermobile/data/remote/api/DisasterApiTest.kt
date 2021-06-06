@@ -55,4 +55,21 @@ class DisasterApiTest {
         assert(data!!.isNotEmpty())
         assertEquals(DummyTest.earthQuakeResponse, data.first())
     }
+/*
+//TODO Flood api test
+    @Test
+    fun getFloodPredictions() {
+        val call = api.getFloodPredictions(DummyTest.earthQuakeBody.also { prin("reqBody = ${Gson().toJson(it)}") })
+        val res = call.execute()
+
+        assert(res.isSuccessful)
+
+        val data = res.body()
+        prin("data = $data")
+
+        assertNotNull(data)
+        assert(data!!.isNotEmpty())
+        assertEquals(DummyTest.earthQuakeResponse, data.first())
+    }
+ */
 }

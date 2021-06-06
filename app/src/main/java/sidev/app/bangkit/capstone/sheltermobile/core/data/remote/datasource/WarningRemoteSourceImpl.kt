@@ -3,6 +3,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.LocationLocalSource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.DisasterApi
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.EarthQuakeBody
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.FloodBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LandslideBody
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.TimeString
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningDetail
@@ -55,8 +56,16 @@ class WarningRemoteSourceImpl(
 
                 earthQuakeRes.body()!!.filter { it.date.remoteToDbTimeFormat() >= startTimestamp }.map { it.toModel(location) }
             }
+            //TODO Alif 6 Juni 2021: Test
+            Const.Disaster.FLOOD -> {
+                val floodReqBody = FloodBody(locRes.data.name)
+                val floodRes = disasterApi.getFloodPredictions(floodReqBody).execute()
+                if(!floodRes.isSuccessful)
+                    return Fail("Can't get flood warning status", floodRes.code(), null)
+
+                floodRes.body()!!.map { it.toModel(location) }
+            }
             //TODO Alif 4 Juni 2021: Tambahi predictions bencana lain
-            Const.Disaster.FLOOD -> emptyList()
             Const.Disaster.FOREST_FIRE -> emptyList()
             else -> throw IllegalStateException("No such disaster name ($disasterName)")
         }

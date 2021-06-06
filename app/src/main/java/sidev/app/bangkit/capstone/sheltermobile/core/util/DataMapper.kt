@@ -137,6 +137,15 @@ object DataMapper {
     }
 
 
+    fun FloodResponse.toModel(location: Location): WarningStatus {
+        val disaster = Dummy.getDisasterByName(Const.Disaster.FLOOD)
+        val emergency = Dummy.getFloodEmergencyByName(condition)
+        val caption = CaptionMapper.WarningStatus.getCaption(disaster, emergency)
+
+        return WarningStatus(disaster, emergency, caption.title, Util.getTimeString(), location, "")
+    }
+
+
 
     fun AuthData.toLoginBody(): LoginBody = LoginBody(
         _email = email,

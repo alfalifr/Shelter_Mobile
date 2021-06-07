@@ -198,4 +198,7 @@ object Util {
     fun unknownFailResult(): Fail = failResult("Unknown failure")
     fun operationNotAvailableFailResult(operationName: String = "x"): Fail = failResult("Operation '$operationName' is not available")
     fun operationNotAvailableError(): Nothing = throw IllegalAccessError("Operation is not available")
+
+
+    //TODO Alif 7 Juni 2021: Buat notifikasi dan AlarmManager yg donlot prediksi bencana setiap 2 minggu skali
 }

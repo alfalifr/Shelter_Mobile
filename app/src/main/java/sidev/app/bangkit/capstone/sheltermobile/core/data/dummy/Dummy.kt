@@ -47,7 +47,7 @@ Not supposed to be dummy
     fun getWeatherByName(name: String): Weather = weatherList.find { it.name.equals(name, true) }
         ?: throw IllegalArgumentException("No such weather data for name '$name'")
 
-    fun getDisasterByName(name: String): Disaster = disasterList.find { it.name.equals(name, ignoreCase = true) }
+    fun getDisasterByName(name: String): Disaster = disasterList.find { it.name.equals(name, ignoreCase = true) || name.equals(Const.Disaster.FOREST_FIRE_SHORT, true) }
         ?: throw IllegalArgumentException("No such disaster data for name '$name'")
 
 

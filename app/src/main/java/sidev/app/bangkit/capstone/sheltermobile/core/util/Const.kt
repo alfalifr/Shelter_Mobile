@@ -23,9 +23,9 @@ object Const {
         val FIRE_FOREST_RED = 81 .. 100
 ///*
         //TODO Alif 4 Juni 2021: Tanya ttg skala keparahan akibat gempa
-        val EARTH_QUAKE_GREEN = 0.0 .. 3.0
-        val EARTH_QUAKE_YELLOW = 3.0 .. 5.0
-        val EARTH_QUAKE_RED = 5.0 .. 100.0
+        val EARTH_QUAKE_GREEN = 0.0 .. 3.9 //3.0
+        val EARTH_QUAKE_YELLOW = 3.9 .. 5.9
+        val EARTH_QUAKE_RED = 5.9 .. 100.0
 
         val FLOOD_GREEN = "rendah"
         val FLOOD_YELLOW = "tinggi"

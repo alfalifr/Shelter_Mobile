@@ -1,5 +1,7 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.util
 
+import android.app.AlarmManager
+
 object Const {
     object Disaster {
         const val EARTH_QUAKE = "Gempa"
@@ -23,9 +25,9 @@ object Const {
         val FIRE_FOREST_RED = 81 .. 100
 ///*
         //TODO Alif 4 Juni 2021: Tanya ttg skala keparahan akibat gempa
-        val EARTH_QUAKE_GREEN = 0.0 .. 3.0
-        val EARTH_QUAKE_YELLOW = 3.0 .. 5.0
-        val EARTH_QUAKE_RED = 5.0 .. 100.0
+        val EARTH_QUAKE_GREEN = 0.0 .. 3.9 //3.0
+        val EARTH_QUAKE_YELLOW = 3.9 .. 5.9
+        val EARTH_QUAKE_RED = 5.9 .. 100.0
 
         val FLOOD_GREEN = "rendah"
         val FLOOD_YELLOW = "tinggi"
@@ -33,6 +35,8 @@ object Const {
 // */
     }
 
+    const val PKG_APP_MAIN = "sidev.app.bangkit.capstone.sheltermobile"
+    const val ACTION_ALARM_NOTIF = "$PKG_APP_MAIN.NOTIF"
 
     const val TYPE_NEWS = 1
     const val TYPE_ARTICLE = 2
@@ -51,6 +55,8 @@ object Const {
 
     const val PREFIX_DRAWABLE = "R.drawable."
     const val KEY_DATA = "DATA"
+    const val KEY_TITLE = "title"
+    const val KEY_DESC = "desc"
     const val KEY_PASSWORD = "password"
     const val KEY_LOCATION_ID = "location_id"
     const val KEY_USER_EMAIL = "user_email"
@@ -106,6 +112,8 @@ object Const {
     const val VIEW_DATE_PATTERN_WITH_DAY = "$DAY_PATTERN, $VIEW_DATE_PATTERN"
     const val DB_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
     const val REMOTE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
+
+    const val INTERVAL_2_WEEKS = AlarmManager.INTERVAL_DAY * 14
 
     //const val LEN_FORM_TITLE = 30
     //const val LEN_FORM_DESC = 300

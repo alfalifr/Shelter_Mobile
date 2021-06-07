@@ -5,6 +5,8 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.*
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.room.RoomDb
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.AppRetrofit
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.*
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.DisasterRepo
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.LocationRepo
 
 object RepoDi {
     object Local {
@@ -12,6 +14,7 @@ object RepoDi {
         fun getDisasterSrc(): DisasterLocalSource = DisasterLocalSourceImpl(getDb().getDisasterDao())
         fun getEmergencySrc(): EmergencyLocalSource = EmergencyLocalSourceImpl(getDb().getEmergencyDao())
         fun getLocationSrc(): LocationLocalSource = LocationLocalSourceImpl(getDb().getLocationDao(), AppDi.getContext())
+            //else LocationLocalSourceDummy
         fun getNewsSrc(): NewsLocalSource = NewsLocalSourceImpl(getDb().getNewsDao())
         fun getReportSrc(): ReportLocalSource = ReportLocalSourceImpl(getDb().getReportDao(), getLocationSrc(), getFormSrc())
         fun getFormSrc(): FormLocalSource = FormLocalSourceImpl(getDb().getFormDao())
@@ -34,7 +37,8 @@ object RepoDi {
         fun getLocationSrc(): LocationRemoteSource = LocationRemoteSourceImpl(AppRetrofit.locationApi) //LocationRemoteSourceDummy //
         fun getReportSrc(): ReportRemoteSource = ReportRemoteSourceDummy
         fun getFormSrc(): FormRemoteSource = FormRemoteSourceDummy
-        fun getWarningSrc(): WarningRemoteSource = WarningRemoteSourceImpl(AppRetrofit.disasterApi, getLocationRepo(), getDisasterRepo()) //WarningRemoteSourceDummy //
+        fun getWarningSrc(locationRepo: LocationRepo?= null, disasterRepo: DisasterRepo?= null): WarningRemoteSource =
+            WarningRemoteSourceImpl(AppRetrofit.disasterApi, locationRepo ?: getLocationRepo(), disasterRepo ?: getDisasterRepo()) //WarningRemoteSourceDummy //
         fun getWeatherForecastSrc(): WeatherForecastRemoteSource = WeatherForecastRemoteSourceImpl(AppRetrofit.weatherApi) //WeatherForecastRemoteSourceDummy //
         fun getWeatherSrc(): WeatherRemoteSource = WeatherRemoteSourceDummy
         fun getNewsSrc(): NewsRemoteSource = NewsRemoteSourceImpl(AppRetrofit.newsApi) //NewsRemoteSourceDummy //

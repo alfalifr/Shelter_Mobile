@@ -1,6 +1,5 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource
 
-import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.LocationLocalSource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api.DisasterApi
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.EarthQuakeBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.FloodBody
@@ -15,11 +14,12 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toWarningDetailListResult
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.lib.android.std.tool.util.`fun`.loge
+import sidev.lib.console.prine
 import java.lang.IllegalStateException
 
 class WarningRemoteSourceImpl(
     private val disasterApi: DisasterApi,
-    private val localRepo: LocationRepo,
+    private val locRepo: LocationRepo,
     private val disasterRepo: DisasterRepo,
 ): WarningRemoteSource {
     override suspend fun getWarningStatusBatch(
@@ -27,12 +27,13 @@ class WarningRemoteSourceImpl(
         locationId: Int,
         startTimestamp: TimeString
     ): Result<List<WarningStatus>> {
-        val locRes = localRepo.getLocationById(locationId)
+        val locRes = locRepo.getLocationById(locationId)
         if(locRes !is Success)
             return locRes as Fail
 
         val location = locRes.data
-        loge("WarningRemoteSourceImpl.getWarningStatusBatch() location= $location")
+        //loge("WarningRemoteSourceImpl.getWarningStatusBatch() location= $location")
+        prine("WarningRemoteSourceImpl.getWarningStatusBatch() location= $location")
 
         val disasterRes = disasterRepo.getDisaster(disasterId)
         if(disasterRes !is Success)
@@ -69,7 +70,8 @@ class WarningRemoteSourceImpl(
             Const.Disaster.FOREST_FIRE -> emptyList()
             else -> throw IllegalStateException("No such disaster name ($disasterName)")
         }
-        loge("WarningRemote.getWarningStatusBatch() list.size = ${list.size} disasterId= $disasterId locationId= $locationId")
+        //loge("WarningRemote.getWarningStatusBatch() list.size = ${list.size} disasterId= $disasterId locationId= $locationId")
+        prine("WarningRemote.getWarningStatusBatch() list.size = ${list.size} disasterId= $disasterId locationId= $locationId")
         return Success(list, 0)
     }
 

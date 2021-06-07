@@ -11,6 +11,9 @@
     <string name="emergency_green">Bersyukurlah, Anda di Tempat Aman</string>
 
 
+    <string name="template_text">This is text</string>
+    <string name="template_title">This is title</string>
+
     <string name="selamat_datang">Selamat Datang,</string>
     <string name="note_notif">Anda berada di wilayah</string>
     <string name="siaga_bencana">Siaga Bencana</string>

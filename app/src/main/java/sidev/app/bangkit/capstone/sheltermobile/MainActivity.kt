@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.setWithBnv
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivityMainBinding
+import sidev.app.bangkit.capstone.sheltermobile.receiver.AlarmNotifReceiver
 import sidev.app.bangkit.capstone.sheltermobile.ui.MainViewPagerAdapter
 import java.lang.IllegalStateException
 

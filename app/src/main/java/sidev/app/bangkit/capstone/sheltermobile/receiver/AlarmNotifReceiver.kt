@@ -32,16 +32,21 @@ class AlarmNotifReceiver: BroadcastReceiver(){
  */
             return PendingIntent.getBroadcast(c, 0, intent, flags)
         }
-        //TODO Alif 7 Juni 2021: Blum kepake
-        fun setOn(c: Context, on: Boolean = true){
-            if(on){
+
+        /**
+         * returns `true` if the alarm was `off` previously
+         */
+        fun setOn(c: Context, on: Boolean = true): Boolean {
+            return if(on){
                 val pi = getAlarmPendingIntent(c, PendingIntent.FLAG_NO_CREATE)
                 if(pi != null){
                     Util.setAlarm(
                         c, pi,
                         9, // Set the time for the notification here
+                        interval = Const.INTERVAL_2_WEEKS,
                     )
-                }
+                    true
+                } else false
             } else {
                 val pi = getAlarmPendingIntent(c, PendingIntent.FLAG_NO_CREATE)
                     ?: run {
@@ -49,19 +54,26 @@ class AlarmNotifReceiver: BroadcastReceiver(){
                         // so the pendingIntent got erased while the preference still persists in storage.
                         // The resulting pendingIntent will null, so just skip the remaining process.
                         loge("Previous pendingIntent got erased, but the preference still persists in storage, then just return")
-                        return
+                        return false
                     }
                 Util.stopAlarm(c, pi)
+                false
             }
         }
     }
-    //TODO Alif 7 Juni 2021: PendingIntent harusnya manggil API tuk ngecek apakah ada warning.
-    //Notif muncul saat prediksi dari server terdapat warning merah.
+
     override fun onReceive(context: Context?, intent: Intent?) {
         if(context != null){
             if(intent?.action == Const.ACTION_ALARM_NOTIF){
                 runBlocking {
                     val timeStr = Util.getTimeString()
+
+                    val locRes = dashboardUseCase.getCurrentLocation()
+                    if(locRes !is Success) return@runBlocking
+
+                    val weatherRes = dashboardUseCase.getWeatherForecast(timeStr, locRes.data.id)
+                    if(weatherRes !is Success) return@runBlocking
+
                     val res = dashboardUseCase.getDisasterGroupList(timeStr)
                     if(res !is Success) return@runBlocking
 
@@ -89,7 +101,6 @@ class AlarmNotifReceiver: BroadcastReceiver(){
                     )
                     val broadcast = Intent(Const.ACTION_ALARM_NOTIF_ACT)
                     context.sendBroadcast(broadcast)
-                    //context.toast("Alarm lewat bro")
                 }
             }
         }

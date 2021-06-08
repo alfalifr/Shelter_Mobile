@@ -37,6 +37,8 @@
         <activity android:name=".ui.WebViewPage" />
         <activity android:name=".ui.ReportHistoryListActivity"/>
         <activity android:name=".ui.RiwayatLaporFormDetilActivity"/>
+        <receiver android:name=".receiver.AlarmNotifReceiver"
+            android:enabled="true"/>
     </application>
 
 </manifest>

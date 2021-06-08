@@ -1,5 +1,9 @@
 package sidev.app.bangkit.capstone.sheltermobile.ui
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,18 +15,32 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.DisasterWarningAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.DashboardViewModel
+import sidev.app.bangkit.capstone.sheltermobile.core.util.CaptionMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.setImg
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentHomeBinding
+import sidev.app.bangkit.capstone.sheltermobile.receiver.AlarmNotifReceiver
 import sidev.lib.android.std.tool.util.`fun`.bgColorTint
 
 
 class HomeFragment : Fragment() {
 
+    private inner class WarningReceiver: BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            vm.apply {
+                getHighlightedWarningStatus(true)
+                getWeatherForecast(true)
+                getDisasterGroupList(true)
+            }
+        }
+    }
+
     private lateinit var binding : FragmentHomeBinding
     private lateinit var vm : DashboardViewModel
     private lateinit var disasterAdp : DisasterWarningAdapter
+    private lateinit var warningReceiver : WarningReceiver
+    private var initAlarm = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -112,6 +130,16 @@ class HomeFragment : Fragment() {
                         //cardNotifications.bgColorTint = Color.parseColor()
                     }
                     showLoading(binding.pbWarningHighlight, binding.vgWarningHighlight, false)
+                    if(initAlarm){
+                        if(it.emergency.severity != Const.Emergency.SEVERITY_GREEN){
+                            val caption = CaptionMapper.WarningStatus.getCaption(it.disaster, it.emergency)
+                            Util.showNotif(
+                                requireContext(),
+                                title = caption.title,
+                                desc = caption.desc,
+                            )
+                        }
+                    }
                 }
             }
             disasterStatusList.observe(viewLifecycleOwner){
@@ -127,6 +155,8 @@ class HomeFragment : Fragment() {
             getWeatherForecast()
             getHighlightedWarningStatus()
         }
+        warningReceiver = WarningReceiver()
+        initAlarm = AlarmNotifReceiver.setOn(requireContext())
     }
 
     /**
@@ -138,6 +168,13 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         vm.getCurrentLocation(true)
+        val intentFilter = IntentFilter(Const.ACTION_ALARM_NOTIF_ACT)
+        requireActivity().registerReceiver(warningReceiver, intentFilter)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().unregisterReceiver(warningReceiver)
     }
 
     private fun showLoading(pb: ProgressBar, loadedView: View, show: Boolean = true) {

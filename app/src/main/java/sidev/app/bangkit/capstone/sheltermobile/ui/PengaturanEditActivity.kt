@@ -34,8 +34,6 @@ class PengaturanEditActivity : AppCompatActivity() {
     private lateinit var vm : ProfileViewModel
     private lateinit var locationVm : LocationViewModel
 
-    //private var gender : Char = ''
-    //internal lateinit var myDialog : Dialog
 
     private var isNameValid = true
     private var isEmailValid = true

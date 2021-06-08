@@ -11,16 +11,16 @@ A system to detect weather and potential disasters, there are forest fire, lands
 5. Account System
 
 # Technology Stack
-1. Room for Storage :
+1. **Room** for Storage :
 By using room for storage, it will make our code cleaner, because writing queries becomes simpler and directly generates an object.
 
-2. MVVM for design pattern :
+2. **MVVM** for design pattern :
 Beside we used MVVM because of Google best practice, MVVM could make our application more reactive. We also make an improvement in model by using Asynchronous View Model. So we can put preasync method in our view model, the view can be adjusted before Asynchronous Task performed.
 
-3. Retrofit for network : 
+3. **Retrofit** for network : 
 Because it will make the object relational mapping more clean than the other library rest client.
 
-4. Clean Architecture : 
+4. **Clean Architecture** : 
 By using clean architecture we do separation of concern. We divide between layers data and view. So the dependency between them is loosely coupled. So if there are some modification in one layer, it will not make a major changes to another components.
 
 # Machine Learning

@@ -4,33 +4,44 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import kotlinx.coroutines.runBlocking
+import sidev.app.bangkit.capstone.sheltermobile.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.R
+import sidev.app.bangkit.capstone.sheltermobile.core.di.RepoDi
+import sidev.app.bangkit.capstone.sheltermobile.core.di.UseCaseDi
+import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.WarningRepo
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.DashboardUseCase
+import sidev.app.bangkit.capstone.sheltermobile.core.util.CaptionMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.intro.SplashActivity
 import sidev.lib.android.std.tool.util.`fun`.loge
 
 class AlarmNotifReceiver: BroadcastReceiver(){
+    private val dashboardUseCase: DashboardUseCase by lazy { UseCaseDi.getDashbosrdUseCase() }
+
     companion object {
-        fun getAlarmPendingIntent(
-            c: Context,
-            flags: Int = PendingIntent.FLAG_UPDATE_CURRENT,
-            title: String = c.getString(R.string.template_title),
-            desc: String = c.getString(R.string.template_text),
-        ): PendingIntent? {
+        fun getAlarmPendingIntent(c: Context, flags: Int = PendingIntent.FLAG_UPDATE_CURRENT,): PendingIntent? {
             val intent = Intent(c, AlarmNotifReceiver::class.java)
             intent.action = Const.ACTION_ALARM_NOTIF
+/*
             intent.putExtra(Const.KEY_TITLE, title)
                 .putExtra(Const.KEY_DESC, desc)
+ */
             return PendingIntent.getBroadcast(c, 0, intent, flags)
         }
         //TODO Alif 7 Juni 2021: Blum kepake
         fun setOn(c: Context, on: Boolean = true){
             if(on){
-                Util.setAlarm(
-                    c, getAlarmPendingIntent(c)!!, // It's safe to use !! here
-                    9, // Set the time for the notification here
-                )
+                val pi = getAlarmPendingIntent(c, PendingIntent.FLAG_NO_CREATE)
+                if(pi != null){
+                    Util.setAlarm(
+                        c, pi,
+                        9, // Set the time for the notification here
+                    )
+                }
             } else {
                 val pi = getAlarmPendingIntent(c, PendingIntent.FLAG_NO_CREATE)
                     ?: run {
@@ -49,17 +60,37 @@ class AlarmNotifReceiver: BroadcastReceiver(){
     override fun onReceive(context: Context?, intent: Intent?) {
         if(context != null){
             if(intent?.action == Const.ACTION_ALARM_NOTIF){
-                Util.showNotif(
-                    context,
-                    title = intent.getStringExtra(Const.KEY_TITLE)!!,
-                    desc = intent.getStringExtra(Const.KEY_DESC)!!,
-                    pendingIntent = PendingIntent.getActivity(
-                        context, 0,
-                        Intent(context, SplashActivity::class.java),
-                        PendingIntent.FLAG_ONE_SHOT
+                runBlocking {
+                    val timeStr = Util.getTimeString()
+                    val res = dashboardUseCase.getDisasterGroupList(timeStr)
+                    if(res !is Success) return@runBlocking
+
+                    val highlightedRes = dashboardUseCase.getHighlightedWarningStatus(timeStr)
+                    if(highlightedRes !is Success) return@runBlocking
+
+                    val highlightedWarning = highlightedRes.data
+                    val highlightedEmergency = highlightedWarning.emergency
+                    if(highlightedEmergency.severity == Const.Emergency.SEVERITY_GREEN) return@runBlocking
+
+                    val caption = CaptionMapper.WarningStatus.getCaption(
+                        highlightedWarning.disaster,
+                        highlightedEmergency
                     )
-                )
-                //context.toast("Alarm lewat bro")
+
+                    Util.showNotif(
+                        context,
+                        title = caption.title, //intent.getStringExtra(Const.KEY_TITLE)!!,
+                        desc = caption.desc, //intent.getStringExtra(Const.KEY_DESC)!!,
+                        pendingIntent = PendingIntent.getActivity(
+                            context, 0,
+                            Intent(context, MainActivity::class.java),
+                            PendingIntent.FLAG_ONE_SHOT
+                        )
+                    )
+                    val broadcast = Intent(Const.ACTION_ALARM_NOTIF_ACT)
+                    context.sendBroadcast(broadcast)
+                    //context.toast("Alarm lewat bro")
+                }
             }
         }
     }

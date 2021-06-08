@@ -94,6 +94,20 @@
                         </RelativeLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputEmail"
+                            style="@style/parent"
+                            android:layout_marginTop="@dimen/loginViewsMargin">
+
+                            <EditText
+                                android:id="@+id/editTextEmail"
+                                android:enabled="false"
+                                style="@style/modifiedEditText"
+                                android:hint="@string/email"
+                                android:inputType="textEmailAddress"
+                                android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textInputName"
                             style="@style/parent"
                             android:layout_marginTop="@dimen/loginViewsMargin">
@@ -103,20 +117,6 @@
                                 style="@style/modifiedEditText"
                                 android:hint="Name"
                                 android:inputType="textPersonName"
-                                android:maxLines="1" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputEmail"
-                            style="@style/parent"
-                            android:layout_marginTop="@dimen/loginViewsMargin">
-
-                            <EditText
-                                android:id="@+id/editTextEmail"
-                                style="@style/modifiedEditText"
-                                android:hint="@string/email"
-                                android:inputType="textEmailAddress"
                                 android:maxLines="1" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -152,6 +152,19 @@
 
                         </RadioGroup>
 
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputOldPassword"
+                            style="@style/parent"
+                            android:layout_marginTop="@dimen/loginViewsMargin">
+
+                            <EditText
+                                android:id="@+id/editTextOldPassword"
+                                style="@style/modifiedEditText"
+                                android:hint="@string/old_password"
+                                android:inputType="textPassword"
+                                android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textInputPassword"

@@ -7,46 +7,61 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/iv_bullet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_circle"
-        android:contentDescription="@string/app_name"
-        android:padding="8dp"/>
-
     <TextView
-        android:id="@+id/tv_date_forecast"
+        android:id="@+id/txt_safe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/no_prediction_in_future"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        android:padding="6dp"
-        android:layout_marginStart="30dp"
-        android:text="20 Mei 2020"/>
+        android:textColor="@color/green"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_zone"
+    <RelativeLayout
+        android:id="@+id/vg_main"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_date_forecast"
-        android:layout_marginStart="40dp"
-        app:cardBackgroundColor="@color/green"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="2dp">
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_bullet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_circle"
+            android:contentDescription="@string/app_name"
+            android:padding="8dp"/>
+
         <TextView
-            android:id="@+id/tv_zone"
-            android:layout_gravity="center"
+            android:id="@+id/tv_date_forecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="6dp"
+            android:layout_marginStart="30dp"
+            android:text="20 Mei 2020"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_zone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_date_forecast"
-            android:elevation="8dp"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            tools:text="Zona Hijau"/>
-    </androidx.cardview.widget.CardView>
+            android:layout_marginStart="40dp"
+            app:cardBackgroundColor="@color/green"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp">
+            <TextView
+                android:id="@+id/tv_zone"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_date_forecast"
+                android:elevation="8dp"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                tools:text="Zona Hijau"/>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 
 </RelativeLayout>

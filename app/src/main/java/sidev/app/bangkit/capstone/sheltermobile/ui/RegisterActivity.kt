@@ -13,6 +13,7 @@ import sidev.app.bangkit.capstone.sheltermobile.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.AuthData
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.LocationAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.AuthViewModel
@@ -36,17 +37,20 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var model: AuthViewModel
     private lateinit var user: User
 
+    private var location: Location?= null
+
     private var name: String = ""
     private var email: String = ""
     private var pass: String = ""
     private var gender: Char = '_'
     private var confirm_pass: String = ""
+    private val isLocValid: Boolean get()= location != null
     private var isNameValid = false
     private var isEmailValid = false
     private var isPswdValid = false
     private var isRePswdValid = false
     private val isGenderValid: Boolean get() = gender == Const.GENDER_MALE || gender == Const.GENDER_FEMALE
-    private val isAllValid: Boolean get() = isNameValid && isEmailValid && isPswdValid && isRePswdValid && isGenderValid
+    private val isAllValid: Boolean get() = isNameValid && isEmailValid && isPswdValid && isRePswdValid && isGenderValid && isLocValid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -148,6 +152,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
             currentLocation.observe(this@RegisterActivity) {
+                location = it
                 if(it != null) {
                     binding.tvLocationSet.text = it.name
                 }
@@ -174,7 +179,6 @@ class RegisterActivity : AppCompatActivity() {
             onSaveCurrentLocation.observe(this@RegisterActivity) {
                 if (it != null) {
                     if (it) {
-
                         model.getCurrentLocation(true)
                         toast("Lokasi berhasil dipilih")
                     } else {
@@ -189,7 +193,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun initDialog() {
         locationAdapter = LocationAdapter().apply {
             onItemClick {
-                locationViewModel.saveCurrentLocations(it)
+                locationViewModel.saveCurrentLocation(it)
                 dialog.cancel()
             }
         }
@@ -234,8 +238,7 @@ class RegisterActivity : AppCompatActivity() {
         pass = binding.editTextPassword.text.toString()
         confirm_pass = binding.editTextConfirmPassword.text.toString()
 
-
-        user = User(email, name, gender)
+        user = User(email, name, gender, location!!)
         val data = AuthData(email, pass)
         model.signup(user, data)
     }

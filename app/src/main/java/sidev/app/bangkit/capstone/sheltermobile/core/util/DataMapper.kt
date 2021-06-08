@@ -5,6 +5,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.*
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LoginBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.UpdateProfileReqBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
@@ -51,7 +52,7 @@ object DataMapper {
     fun ReportEntity.toModel(location: Location, form: Form?): Report = Report(timestamp.toTimeString(), method, location, form)
     fun ReportEntity.toModelDetail(location: Location, form: Form?): ReportDetail = ReportDetail(toModel(location, form), response)
     fun FormEntity.toModel(): Form = Form(timestamp.toTimeString(), title, desc, photoLinkList.split(Const.CHAR_LINK_SEPARATOR))
-    fun UserEntity.toModel(): User = User(email, name, gender)
+    fun UserEntity.toModel(location: Location): User = User(email, name, gender, location)
     fun WarningEntity.toModel(disaster: Disaster, emergency: Emergency, location: Location): WarningStatus = WarningStatus(
         disaster, emergency, title, timestamp.toTimeString(), location, imgLink
     )
@@ -71,7 +72,7 @@ object DataMapper {
     fun News.toEntity(): NewsEntity = NewsEntity(timestamp.timeLong, title, briefDesc, linkImage, link, type)
     fun ReportDetail.toEntity(): ReportEntity = ReportEntity(report.timestamp.timeLong, report.method, response, report.location.id)
     fun Form.toEntity(): FormEntity = FormEntity(timestamp.timeLong, title, desc, photoLinkList.joinToString(Const.CHAR_LINK_SEPARATOR.toString()))
-    fun User.toEntity(id: Int = 0): UserEntity = UserEntity(id, email, name, gender)
+    fun User.toEntity(id: Int = 0): UserEntity = UserEntity(id, email, name, gender, location.id)
     fun WarningDetail.toEntity(): WarningEntity = WarningEntity(
         timestamp = status.timestamp.timeLong,
         locationId = status.location.id,
@@ -108,6 +109,10 @@ object DataMapper {
         email = data.email,
         name = data.full_name,
         gender = data.gender,
+        location = Location(0, "TODO", Coordinate(0.0, 0.0)) //TODO
+    )
+    fun User.toUpdateReqBody(newPswd: String): UpdateProfileReqBody = UpdateProfileReqBody(
+        email, name, location.name, gender, newPswd,
     )
 
     fun GeneralCityListResponse.toModel(coordinate: Coordinate = Coordinate(0.0, 0.0)): List<Location> = nestedcityList.map {

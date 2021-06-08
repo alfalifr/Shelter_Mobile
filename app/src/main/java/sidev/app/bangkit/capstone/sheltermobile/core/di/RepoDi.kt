@@ -18,7 +18,7 @@ object RepoDi {
         fun getNewsSrc(): NewsLocalSource = NewsLocalSourceImpl(getDb().getNewsDao())
         fun getReportSrc(): ReportLocalSource = ReportLocalSourceImpl(getDb().getReportDao(), getLocationSrc(), getFormSrc())
         fun getFormSrc(): FormLocalSource = FormLocalSourceImpl(getDb().getFormDao())
-        fun getUserSrc(): UserLocalSource = UserLocalSourceImpl(getDb().getUserDao(), AppDi.getContext())
+        fun getUserSrc(): UserLocalSource = UserLocalSourceImpl(getDb().getUserDao(), Local.getLocationSrc(), AppDi.getContext())
         fun getWarningSrc(): WarningLocalSource = WarningLocalSourceImpl(
             getDb().getWarningDao(),
             getDisasterSrc(),

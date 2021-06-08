@@ -39,6 +39,8 @@ object Const {
     const val ACTION_ALARM_NOTIF = "$PKG_APP_MAIN.NOTIF"
     const val ACTION_ALARM_NOTIF_ACT = "$ACTION_ALARM_NOTIF.Activity"
 
+    const val NO_NAME = "<no_name>"
+
     const val TYPE_NEWS = 1
     const val TYPE_ARTICLE = 2
 

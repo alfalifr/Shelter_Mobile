@@ -1,6 +1,5 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.dummy
 
-import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LoginBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
@@ -17,6 +16,7 @@ object Dummy {
 Not supposed to be dummy
 =========================
  */
+
     val disasterList = listOf<Disaster>(
         Disaster(1, "Kebakaran Hutan", "R.drawable.ic_disaster_forest_fire"),
         Disaster(2, "Banjir", "R.drawable.ic_disaster_flood"),
@@ -79,6 +79,16 @@ Not supposed to be dummy
         in Const.Emergency.FIRE_FOREST_RED -> emergencyList[2]
         else -> throw IllegalArgumentException("No such fire forest emergency data for scale '$scale'")
     }
+
+    /// =========== Placeholder for empty prediction ==============
+    val safeDisaster = Disaster(-1, Const.NO_NAME, "")
+    //val safeEmergency = Emergency(-1, "<no_name>", "", -1)
+    val emptyTimeStr = TimeString("", "")
+    val emptyLocation = Location(-1, "", Coordinate(0.0, 0.0))
+    val emptySafeWarningList = listOf<WarningStatus>(
+        WarningStatus(safeDisaster, emergencyList[0], "", emptyTimeStr, emptyLocation, "")
+    )
+    /// =========== Placeholder for empty prediction - END ==============
 /*
 =========================
 Dummy section
@@ -93,9 +103,18 @@ Dummy section
         Util.getTimeString(millisOffset = -Const.TIME_OFFSET * 2),
         Util.getTimeString(millisOffset = -Const.TIME_OFFSET * 3),
     )
+
+    val locationList = listOf<Location>(
+        Location(1, "Medan", Coordinate(0.0,0.0)),
+        Location(2, "Palembang", Coordinate(0.0,0.0)),
+        Location(3, "Bandung", Coordinate(0.0,0.0)),
+        //Location(4, "Surabaya", Coordinate(0.0,0.0)),
+        //Location(5, "Jakart", Coordinate(0.0,0.0)),
+    )
+
     val userList = listOf<User>(
-        User("b@b.b", "bayu", 'M'),
-        User("a@a.a", "ayu", 'M'),
+        User("b@b.b", "bayu", 'M', locationList[0]),
+        User("a@a.a", "ayu", 'M', locationList[1]),
     )
 
     val userPswd = listOf<String>(
@@ -106,14 +125,6 @@ Dummy section
     fun getLoginBody(i: Int): LoginBody = LoginBody(userList[i].email, userPswd[i])
     fun getSignupBody(i: Int): SignupBody = userList[i].let { SignupBody(it.email, userPswd[i], it.name, it.gender) }
 
-
-    val locationList = listOf<Location>(
-        Location(1, "Medan", Coordinate(0.0,0.0)),
-        Location(2, "Palembang", Coordinate(0.0,0.0)),
-        Location(3, "Bandung", Coordinate(0.0,0.0)),
-        //Location(4, "Surabaya", Coordinate(0.0,0.0)),
-        //Location(5, "Jakart", Coordinate(0.0,0.0)),
-    )
 
     val newsList = listOf<News>(
         News(timestampList[0], "Ini CLickbait", "Ini juga sama aja", "https://i.pinimg.com/originals/e1/1b/f8/e11bf8a6206dda58d61dfc004b813516.jpg", "https://i.pinimg.com/originals/e1/1b/f8/e11bf8a6206dda58d61dfc004b813516.jpg", Const.TYPE_NEWS),

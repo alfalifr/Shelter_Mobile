@@ -11,18 +11,28 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toEntity
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
-class UserLocalSourceImpl(private val dao: UserDao, private val ctx: Context): UserLocalSource {
+class UserLocalSourceImpl(
+    private val dao: UserDao,
+    private val localLocationSrc: LocationLocalSource,
+    private val ctx: Context
+): UserLocalSource {
     override suspend fun getUser(email: String): Result<User> {
-        val data = dao.getUser(email)?.toModel() ?: return Util.noEntityFailResult()
+        val entity = dao.getUser(email) ?: return Util.noEntityFailResult()
+        val locRes = localLocationSrc.getLocationById(entity.id)
+        if(locRes !is Success) return locRes as Fail
+        val data = entity.toModel(locRes.data)
         return Success(data, 0)
     }
 
     override suspend fun getUserById(id: Int): Result<User> {
-        val data = dao.getUserById(id)?.toModel() ?: return Util.noEntityFailResult()
+        val entity = dao.getUserById(id) ?: return Util.noEntityFailResult()
+        val locRes = localLocationSrc.getLocationById(entity.id)
+        if(locRes !is Success) return locRes as Fail
+        val data = entity.toModel(locRes.data)
         return Success(data, 0)
     }
 
-    override suspend fun updateUser(oldEmail: String, newData: User): Result<Boolean> {
+    override suspend fun updateUser(oldEmail: String, newData: User, newPswd: String): Result<Boolean> {
         val userEntity = dao.getUser(oldEmail) ?: return Util.noEntityFailResult()
         val userId = userEntity.id
         val newEntity = newData.toEntity(userId)
@@ -33,7 +43,10 @@ class UserLocalSourceImpl(private val dao: UserDao, private val ctx: Context): U
     }
 
     override suspend fun saveUser(data: User): Result<Boolean> {
-        val entity = data.toEntity()
+        var entity = data.toEntity()
+        val existingUser = dao.getUser(data.email)
+        if(existingUser != null)
+            entity = entity.copy(id = existingUser.id)
         val insertedRowId = dao.saveUser(entity)
         return if(insertedRowId >= 0L) Success(true, 0)
         else Util.cantInsertFailResult()
@@ -71,4 +84,6 @@ class UserLocalSourceImpl(private val dao: UserDao, private val ctx: Context): U
         val pswd = Util.getSharedPref(ctx).getString(Const.KEY_PASSWORD, null) ?: return Util.noValueFailResult()
         return Success(pswd, 0)
     }
+
+    //private suspend fun getCurrentLocation(): Result<Location> = localLocationSrc.getCurrentLocation()
 }

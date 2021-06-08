@@ -21,16 +21,19 @@ class UserUseCaseImpl(
 
     override suspend fun login(authData: AuthData): Result<Boolean> = when(val res = userRemoteSrc.searchUser(authData).also { loge("UserUseCaseImpl login() authData= $authData res = $it") }){
         is Success -> {
+            val user = res.data
+
             val isPswdResSuccess = userLocalSrc.savePassword(authData.password) is Success
             val isEmailResSuccess = userLocalSrc.saveEmail(authData.email) is Success
-            val isUserResSuccess = userLocalSrc.saveUser(res.data) is Success
-            val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
+            val isUserResSuccess = userLocalSrc.saveUser(user) is Success
+            //val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
+            val isSaveLocSuccess = saveCurrentLocation(user.location) is Success
 
-            loge("isPswdResSuccess= $isPswdResSuccess isEmailResSuccess= $isEmailResSuccess isUserResSuccess= $isUserResSuccess isSetDefaultLocSuccess= $isSetDefaultLocSuccess")
+            loge("isPswdResSuccess= $isPswdResSuccess isEmailResSuccess= $isEmailResSuccess isUserResSuccess= $isUserResSuccess isSaveLocSuccess= $isSaveLocSuccess")
 
             when {
-                isPswdResSuccess && isEmailResSuccess && isSetDefaultLocSuccess && isUserResSuccess -> Success(true, 0)
-                !isPswdResSuccess && !isEmailResSuccess && !isSetDefaultLocSuccess && !isUserResSuccess -> Fail("Can't save both email, password, and default location to local", -1, null)
+                isPswdResSuccess && isEmailResSuccess && isSaveLocSuccess && isUserResSuccess -> Success(true, 0)
+                !isPswdResSuccess && !isEmailResSuccess && !isSaveLocSuccess && !isUserResSuccess -> Fail("Can't save both email, password, and default location to local", -1, null)
                 else -> Success(true, 1)
             }
         }
@@ -43,11 +46,12 @@ class UserUseCaseImpl(
                 val isPswdResSuccess = userLocalSrc.savePassword(authData.password) is Success
                 val isEmailResSuccess = userLocalSrc.saveEmail(authData.email) is Success
                 val isUserResSuccess = userLocalSrc.saveUser(user) is Success
-                val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
+                //val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
+                val isSaveLocSuccess = saveCurrentLocation(user.location) is Success
 
                 when {
-                    isPswdResSuccess && isEmailResSuccess && isSetDefaultLocSuccess && isUserResSuccess-> Success(true, 0)
-                    !isPswdResSuccess && !isEmailResSuccess && !isSetDefaultLocSuccess && !isUserResSuccess -> Fail("Can't save both email, password, and default location to local", -1, null)
+                    isPswdResSuccess && isEmailResSuccess && isSaveLocSuccess && isUserResSuccess-> Success(true, 0)
+                    !isPswdResSuccess && !isEmailResSuccess && !isSaveLocSuccess && !isUserResSuccess -> Fail("Can't save both email, password, and default location to local", -1, null)
                     else -> Success(true, 1)
                 }
             }
@@ -86,8 +90,13 @@ class UserUseCaseImpl(
             }
         }
 
-        return when(val remRes = userRemoteSrc.updateUser(oldUser.email, user)) {
-            is Success -> userLocalSrc.updateUser(oldUser.email, user)
+        val pswd = password ?: userLocalSrc.getPassword().let {
+            if(it !is Success) return Fail("Can't get old password from local", -1, null)
+            it.data
+        }
+
+        return when(val remRes = userRemoteSrc.updateUser(oldUser.email, user, pswd)) {
+            is Success -> userLocalSrc.updateUser(oldUser.email, user, pswd)
             is Fail -> remRes
         }
     }

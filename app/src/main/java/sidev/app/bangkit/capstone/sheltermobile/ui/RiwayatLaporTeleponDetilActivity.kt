@@ -34,10 +34,12 @@ class RiwayatLaporTeleponDetilActivity : AppCompatActivity() {
         vm = ViewModelDi.getReportViewModel(this).apply {
             reportDetail.observe(this@RiwayatLaporTeleponDetilActivity) {
                 loge("reportDetail.observe() detail = $it")
+/*
                 if(it != null) {
                     val resp = it.response
                     binding.tvIsiDetilNote.text = if(resp.isBlank()) "<${getString(R.string.no_data)}>" else resp
                 }
+ */
             }
             getReportDetail(data.timestamp.time)
         }

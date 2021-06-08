@@ -1,22 +1,17 @@
 package sidev.app.bangkit.capstone.sheltermobile.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.ProfileViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.setGenderImg
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentProfilBinding
-import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.startAct
 import sidev.lib.android.std.tool.util.`fun`.toast
 

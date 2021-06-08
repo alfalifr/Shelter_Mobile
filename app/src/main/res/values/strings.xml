@@ -24,6 +24,7 @@
     <string name="riwayat_lapor">Riwayat Lapor</string>
     <string name="already_nhave_an_naccount">Sudah Memiliki Akun?</string>
     <string name="email">Email</string>
+    <string name="old_password">Password Lama</string>
     <string name="password">Password</string>
     <string name="forgot_password">Lupa Password?</string>
     <string name="register">Pengguna baru? Daftar sekarang !</string>
@@ -77,6 +78,9 @@
     <string name="fill_a_valid_email">Masukan email yang benar</string>
     <string name="female">Wanita</string>
     <string name="male">Pria</string>
+    <string name="check_your_email">Cek email Anda</string>
+    <string name="template_response">Silahkan pergi ke pos 12 di Jalan\nBangau No.12</string>
+    <string name="no_prediction_in_future">Tidak ada prediksi di masa mendatang</string>
 
 
 </resources>

@@ -34,8 +34,8 @@ class RiwayatLaporFormDetilActivity : AppCompatActivity() {
                     binding.apply {
                         tvDateDetail.text = Util.getDateWithDayStr(it.report.timestamp)
                         tvLocationSet.text = it.report.location.name
-                        val resp = it.response
-                        tvIsiDetilNote.text = if(resp.isBlank()) "<${getString(R.string.no_data)}>" else resp
+                        //val resp = it.response
+                        //tvIsiDetilNote.text = if(resp.isBlank()) "<${getString(R.string.no_data)}>" else resp
 
                         tvIsiJudul.text = it.report.form!!.title
                         tvIsiDetilLaporan.text = it.report.form.desc

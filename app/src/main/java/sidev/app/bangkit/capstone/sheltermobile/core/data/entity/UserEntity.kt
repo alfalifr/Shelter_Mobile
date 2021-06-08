@@ -10,5 +10,5 @@ data class UserEntity(
     val email: String,
     val name: String,
     val gender: Char,
-    //val locationId: Int, //TODO tambahin location ID
+    val locationId: Int,
 )

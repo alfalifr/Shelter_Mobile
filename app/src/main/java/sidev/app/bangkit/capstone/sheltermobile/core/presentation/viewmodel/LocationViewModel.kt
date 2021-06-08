@@ -42,7 +42,7 @@ class LocationViewModel(c: Context?, private val useCase: LocationUseCase): Asyn
         }
     }
 
-    fun saveCurrentLocations(location: Location) {
+    fun saveCurrentLocation(location: Location) {
         startJob(Const.KEY_SAVE_CURRENT_LOC) {
             when(useCase.saveCurrentLocation(location)) {
                 is Success -> mOnSaveCurrentLocation.postValue(true)

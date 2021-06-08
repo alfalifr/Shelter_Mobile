@@ -1,11 +1,8 @@
 package sidev.app.bangkit.capstone.sheltermobile.ui
 
-import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.system.Os.close
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -18,7 +15,6 @@ import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.Locati
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.LocationViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.ProfileViewModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
-import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivityPengaturanEditBinding
 import sidev.app.bangkit.capstone.sheltermobile.databinding.DialogLocationBinding
@@ -34,6 +30,8 @@ class PengaturanEditActivity : AppCompatActivity() {
     private lateinit var vm : ProfileViewModel
     private lateinit var locationVm : LocationViewModel
 
+    //private lateinit var location: Location
+    private lateinit var currentUser: User
 
     private var isNameValid = true
     private var isEmailValid = true
@@ -75,11 +73,13 @@ class PengaturanEditActivity : AppCompatActivity() {
                             else -> throw IllegalStateException("No such gender (${it.gender})")
                         })
                     }
+                    this@PengaturanEditActivity.currentUser = it
                 }
             }
             currentLocation.observe(this@PengaturanEditActivity) {
                 if(it != null) {
                     binding.tvLocationSet.text = it.name
+                    this@PengaturanEditActivity.currentUser = this@PengaturanEditActivity.currentUser.copy(location = it)
                 }
             }
             onSaveProfile.observe(this@PengaturanEditActivity) {
@@ -130,7 +130,7 @@ class PengaturanEditActivity : AppCompatActivity() {
     private fun initDialog(){
         locationAdp = LocationAdapter().apply {
             onItemClick {
-                locationVm.saveCurrentLocations(it)
+                locationVm.saveCurrentLocation(it)
                 dialog.cancel()
             }
         }
@@ -197,7 +197,7 @@ class PengaturanEditActivity : AppCompatActivity() {
                 R.id.radio_wanita -> Const.GENDER_FEMALE
                 else -> throw IllegalStateException("No such view id for gender (${id asResNameOrNullBy this@PengaturanEditActivity})")
             }
-            val user = User(email, name, gender)
+            val user = User(email, name, gender, currentUser.location)
             vm.saveCurrentUser(user) // TODO Alif 3 Juni 2021: Buat ganti pswd
         }
     }

@@ -2,6 +2,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
@@ -9,6 +10,7 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableList
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
 import sidev.app.bangkit.capstone.sheltermobile.R
+import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Disaster
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.model.DisasterGroup
@@ -31,11 +33,19 @@ class DisasterViewHolder(private val binding: RowSiagaExpandableBinding): GroupV
 class WarningViewHolder(private val binding: RowSiagaDetilExpandableBinding): ChildViewHolder(binding.root) {
     fun bind(data: WarningStatus){
         binding.apply {
-            tvDateForecast.text = Util.getDateStr(data.timestamp)
-            tvZone.text = root.context.getString(R.string.zone_fill, data.emergency.name)
-            val colorInt = Color.parseColor(data.emergency.color)
-            cardZone.bgColorTint = colorInt
-            ivBullet.colorTint = colorInt
+            if(data == Dummy.emptySafeWarningList.first()) {
+                vgMain.visibility = View.GONE
+                txtSafe.visibility = View.VISIBLE
+            } else {
+                vgMain.visibility = View.VISIBLE
+                txtSafe.visibility = View.GONE
+
+                tvDateForecast.text = Util.getDateStr(data.timestamp)
+                tvZone.text = root.context.getString(R.string.zone_fill, data.emergency.name)
+                val colorInt = Color.parseColor(data.emergency.color)
+                cardZone.bgColorTint = colorInt
+                ivBullet.colorTint = colorInt
+            }
         }
     }
 }
@@ -95,7 +105,7 @@ class DisasterWarningAdapter(disasterWarnings: List<DisasterGroup>)
     ) {
         loge("onBindChildViewHolder() childIndex= $childIndex flatPosition= $flatPosition group= $group")
         if(group != null && holder != null){
-            val data = (group as DisasterGroup).warningStatusList[childIndex]
+            val data = (group as DisasterGroup).getWarningStatus(childIndex)
             holder.bind(data)
         }
     }

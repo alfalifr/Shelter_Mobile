@@ -249,7 +249,7 @@
                             android:textSize="20sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_note_admin"
-                            tools:text="Laporan Selesai" />
+                            android:text="@string/check_your_email" />
 
                         <View
                             android:id="@+id/divider_line_3"

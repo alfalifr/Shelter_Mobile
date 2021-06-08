@@ -10,22 +10,23 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toLoginBody
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toSignupData
+import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toUpdateReqBody
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 
 class UserRemoteSourceImpl(private val api: AuthApi): UserRemoteSource {
     override suspend fun searchUser(authData: AuthData): Result<User> {
         val body = authData.toLoginBody()
         val call = api.login(body)
-        val resp = call.execute()
-        return if(resp.isSuccessful) {
-            try {
+        return try {
+            val resp = call.execute()
+            if(resp.isSuccessful) {
                 val res = resp.body()!!
                 Success(res.toModel(), 0)
-            } catch (e: Throwable) {
-                Fail("Email or password don't match", Const.CODE_USER_NOT_FOUND, null)
+            } else {
+                Util.unknownFailResult()
             }
-        } else {
-            Util.unknownFailResult()
+        } catch (e: Throwable) {
+            Fail("Email or password don't match", Const.CODE_USER_NOT_FOUND, null)
         }
     }
 
@@ -50,5 +51,15 @@ class UserRemoteSourceImpl(private val api: AuthApi): UserRemoteSource {
         newPswd: String
     ): Result<Boolean> = Util.operationNotAvailableFailResult()
 
-    override suspend fun updateUser(oldEmail: String, newData: User): Result<Boolean> = Util.operationNotAvailableFailResult()
+    override suspend fun updateUser(oldEmail: String, newData: User, newPswd: String): Result<Boolean> {
+        val req = newData.toUpdateReqBody(newPswd)
+        val res = api.updateProfile(req).execute()
+        if(!res.isSuccessful)
+            return Fail("Can't update profile, something not right", res.code(), null)
+
+        val resData = res.body()!!
+
+        return if(resData.response_code == Const.CODE_REGIS_SUCCESS) Success(true, 0)
+        else Fail("Can't update profile", res.code(), null)
+    } //Util.operationNotAvailableFailResult()
 }

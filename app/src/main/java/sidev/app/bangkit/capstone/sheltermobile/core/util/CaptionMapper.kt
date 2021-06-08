@@ -33,6 +33,7 @@ object CaptionMapper {
                     Const.Emergency.SEVERITY_RED -> "Mari bersiap untuk evakuasi" to "Siapkan diri dan keluarga"
                     else -> throw IllegalArgumentException("No such emergency level ($emergency)")
                 }
+                Const.NO_NAME -> "Bersyukurlah, Anda di tempat Aman" to "Mari jaga lingkungan"
                 else -> throw IllegalArgumentException("No such disaster data ($disaster)")
             }
             return BasicCaption(title, desc)

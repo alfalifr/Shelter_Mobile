@@ -1,0 +1,9 @@
+{
+  "data": {
+    "error": "No image data was sent to the upload api",
+    "request": "\/3\/image",
+    "method": "POST"
+  },
+  "success": false,
+  "status": 400
+}

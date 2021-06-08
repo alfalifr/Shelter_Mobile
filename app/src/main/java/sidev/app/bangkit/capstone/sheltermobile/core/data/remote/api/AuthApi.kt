@@ -7,6 +7,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.Lo
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.UpdateProfileReqBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.GeneralResponse
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.GeneralShortResponse
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.LoginResponse
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 
@@ -18,5 +19,5 @@ interface AuthApi {
     fun signup(@Body data: SignupBody): Call<GeneralResponse>
 
     @POST(Const.API_SHELTER)
-    fun updateProfile(@Body data: UpdateProfileReqBody): Call<GeneralResponse>
+    fun updateProfile(@Body data: UpdateProfileReqBody): Call<GeneralShortResponse>
 }

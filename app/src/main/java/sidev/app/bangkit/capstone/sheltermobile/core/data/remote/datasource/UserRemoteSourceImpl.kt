@@ -12,6 +12,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toSignupData
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toUpdateReqBody
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import sidev.lib.text.getQuoted
 
 class UserRemoteSourceImpl(private val api: AuthApi): UserRemoteSource {
     override suspend fun searchUser(authData: AuthData): Result<User> {
@@ -59,7 +60,7 @@ class UserRemoteSourceImpl(private val api: AuthApi): UserRemoteSource {
 
         val resData = res.body()!!
 
-        return if(resData.response_code == Const.CODE_REGIS_SUCCESS) Success(true, 0)
+        return if(resData.response.equals(Const.RESP_OK, true)) Success(true, 0)
         else Fail("Can't update profile", res.code(), null)
     } //Util.operationNotAvailableFailResult()
 }

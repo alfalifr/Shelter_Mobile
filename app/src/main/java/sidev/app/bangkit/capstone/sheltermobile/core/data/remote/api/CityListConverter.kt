@@ -3,8 +3,10 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
+import retrofit2.http.FormUrlEncoded
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.GeneralCityListResponse
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.GeneralCityResponse
 
@@ -31,3 +33,18 @@ object CityListConverter: Converter<ResponseBody, GeneralCityListResponse> {
         return GeneralCityListResponse(list)
     }
 }
+
+/*
+object CityListConverter2: Converter<GeneralCityListResponse, RequestBody> {
+    override fun convert(value: GeneralCityListResponse): RequestBody? {
+        return RequestBody.Companion.
+    }
+}
+ */
+
+/*
+interface ag{
+    fun afa(@FormUrlEncoded)
+}
+
+ */

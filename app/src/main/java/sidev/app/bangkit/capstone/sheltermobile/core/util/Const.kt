@@ -102,6 +102,9 @@ object Const {
     const val CODE_REGIS_SUCCESS = 104
     const val CODE_REGIS_FAIL = 105
 
+    const val RESP_OK = "success"
+    const val RESP_FAIL = "failed"
+
     const val REQ_CALL = 2
 
     const val INT_TOP_REPORT_LIMIT = 5

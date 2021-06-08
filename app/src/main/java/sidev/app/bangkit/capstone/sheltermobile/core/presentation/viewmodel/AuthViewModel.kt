@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.AuthData
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
@@ -30,6 +31,9 @@ class AuthViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm(ap
             }
         ).get(AuthViewModel::class.java)
     }
+
+    val currentLocation: LiveData<Location> get()= mCurrentLocation
+    private val mCurrentLocation = MutableLiveData<Location>()
 
     val onAuth: LiveData<Boolean> get()= mOnAuth
     private val mOnAuth = MutableLiveData<Boolean>()
@@ -56,6 +60,16 @@ class AuthViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm(ap
         startJob(Const.KEY_LOGIN_STATUS) {
             if(useCase.getCurrentUser() is Success){
                 mOnAuth.postValue(true)
+            }
+        }
+    }
+
+    fun getCurrentLocation(forceLoad: Boolean = false) {
+        if (mCurrentLocation.value != null && !forceLoad) return
+        startJob(Const.KEY_CURRENT_LOC) {
+            when(val result = useCase.getCurrentLocation()){
+                is Success -> mCurrentLocation.postValue(result.data)
+                is Fail -> doCallNotSuccess(result.code, result.error)
             }
         }
     }

@@ -140,6 +140,7 @@ class PengaturanEditActivity : AppCompatActivity() {
                 }
             }
             getCurrentUser()
+            getCurrentPassword()
             getCurrentLocation()
         }
 

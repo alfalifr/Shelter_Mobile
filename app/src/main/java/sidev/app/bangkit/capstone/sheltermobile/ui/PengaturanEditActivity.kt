@@ -121,6 +121,11 @@ class PengaturanEditActivity : AppCompatActivity() {
                     this@PengaturanEditActivity.currentUser = it
                 }
             }
+            currentPassword.observe(this@PengaturanEditActivity) {
+                if(it != null) {
+                    oldPswd = it
+                }
+            }
             currentLocation.observe(this@PengaturanEditActivity) {
                 if(it != null) {
                     binding.tvLocationSet.text = it.name

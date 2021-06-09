@@ -57,7 +57,7 @@ object Const {
     const val TIME_OFFSET: Long = 30L * 24L * 3600 * 1000
 
     const val PREFIX_DRAWABLE = "R.drawable."
-    const val KEY_DATA = "DATA"
+    const val KEY_DATA = "data"
     const val KEY_TITLE = "title"
     const val KEY_DESC = "desc"
     const val KEY_PASSWORD = "password"
@@ -74,6 +74,8 @@ object Const {
     const val KEY_NO_NEWS = "no_news"
     const val KEY_IS_SINGLE = "is_single"
     const val KEY_URL = "url"
+    const val KEY_LINK = "link"
+    const val KEY_STATUS = "status"
     const val SHARED_PREF_NAME = "_shared_pref_"
 
     const val KEY_CURRENT_LOC = "current_location"

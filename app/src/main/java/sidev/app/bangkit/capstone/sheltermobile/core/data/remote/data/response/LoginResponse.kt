@@ -11,6 +11,7 @@ data class LoginDataResponse(
     val email: String,
     val full_name: String,
     val gender: Char,
+    val address: String,
     //val location: String, //TODO
 ) {
     override fun equals(other: Any?): Boolean = other is LoginDataResponse

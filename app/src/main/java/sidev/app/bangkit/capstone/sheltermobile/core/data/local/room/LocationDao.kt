@@ -15,7 +15,7 @@ interface LocationDao {
     @Query("SELECT * FROM location WHERE latitude = :latitude AND longitude = :longitude")
     fun getLocation(latitude: Double, longitude: Double): LocationEntity?
 
-    @Query("SELECT * FROM location WHERE name = :name COLLATE NOCASE")
+    @Query("SELECT * FROM location WHERE name = :name")
     fun getLocationByName(name: String): LocationEntity?
 
     @Query("SELECT * FROM location WHERE id = :id")

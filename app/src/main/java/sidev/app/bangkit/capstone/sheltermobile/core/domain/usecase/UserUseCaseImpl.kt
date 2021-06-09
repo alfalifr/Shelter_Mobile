@@ -23,14 +23,17 @@ class UserUseCaseImpl(
         return when(val res = userRemoteSrc.searchUser(authData).also { loge("UserUseCaseImpl login() authData= $authData res = $it") }){
             is Success -> {
                 val user = res.data
+                loge("login() user= $user")
+
+                val getLocRes = locationLocalSrc.getLocationByName(user.location.name)
+                loge("getLocRes= $getLocRes")
+                if(getLocRes !is Success)
+                    return getLocRes as Fail
 
                 val isPswdResSuccess = userLocalSrc.savePassword(authData.password) is Success
                 val isEmailResSuccess = userLocalSrc.saveEmail(authData.email) is Success
                 val isUserResSuccess = userLocalSrc.saveUser(user) is Success
                 //val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
-                val getLocRes = locationLocalSrc.getLocationByName(user.location.name)
-                if(getLocRes !is Success)
-                    return getLocRes as Fail
 
                 val newLoc = getLocRes.data
                 val isSaveLocSuccess = saveCurrentLocation(newLoc) is Success

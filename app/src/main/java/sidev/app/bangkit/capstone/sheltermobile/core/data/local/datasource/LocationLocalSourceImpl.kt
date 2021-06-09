@@ -38,6 +38,7 @@ class LocationLocalSourceImpl(private val dao: LocationDao, private val ctx: Con
     }
 
     override suspend fun getLocationByName(name: String): Result<Location> {
+        loge("dao.getLocationByName(name) name= $name")
         val data = dao.getLocationByName(name)?.toModel() ?: return Util.noEntityFailResult()
         return Success(data, 0)
     }

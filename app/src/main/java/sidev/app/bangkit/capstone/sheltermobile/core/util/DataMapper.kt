@@ -110,7 +110,7 @@ object DataMapper {
         email = data.email,
         name = data.full_name,
         gender = data.gender,
-        location = Location(0, "TODO", Coordinate(0.0, 0.0)) //TODO
+        location = Location(0, data.address, Coordinate(0.0, 0.0)) //TODO
     )
     fun User.toUpdateReqBody(newPswd: String): UpdateProfileReqBody = UpdateProfileReqBody(
         email, name, location.name, gender, newPswd,

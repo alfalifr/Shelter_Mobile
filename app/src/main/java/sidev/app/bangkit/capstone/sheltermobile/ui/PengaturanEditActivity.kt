@@ -31,6 +31,7 @@ class PengaturanEditActivity : AppCompatActivity() {
     private lateinit var vm : ProfileViewModel
     private lateinit var locationVm : LocationViewModel
 
+    private var currentLocation: Location?= null
     private lateinit var location: Location
     private lateinit var currentUser: User
     private lateinit var oldPswd: String
@@ -131,6 +132,8 @@ class PengaturanEditActivity : AppCompatActivity() {
                     binding.tvLocationSet.text = it.name
                     this@PengaturanEditActivity.location = it
                     //this@PengaturanEditActivity.currentUser = this@PengaturanEditActivity.currentUser.copy(location = it)
+                    if(this@PengaturanEditActivity.currentLocation == null)
+                        this@PengaturanEditActivity.currentLocation = it
                 }
             }
             onSaveProfile.observe(this@PengaturanEditActivity) {
@@ -253,6 +256,18 @@ class PengaturanEditActivity : AppCompatActivity() {
             }
             val sentPswd = if(isNewPswdValid) newPswd else null
             val user = User(email, name, gender, location)
+
+            if(
+                email.equals(currentUser.email, true)
+                && name.equals(currentUser.name, true)
+                && gender.equals(currentUser.gender, true)
+                && sentPswd == oldPswd
+                && location == currentLocation
+            ) {
+                finish()
+                return
+            }
+
             vm.saveCurrentUser(user, sentPswd) // TODO Alif 3 Juni 2021: Buat ganti pswd
         }
     }

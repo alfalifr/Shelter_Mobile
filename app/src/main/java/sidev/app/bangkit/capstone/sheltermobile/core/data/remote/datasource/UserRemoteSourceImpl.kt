@@ -64,7 +64,7 @@ class UserRemoteSourceImpl(private val api: AuthApi): UserRemoteSource {
 
         val resData = res.body()!!
 
-        return if(resData.response.equals(Const.RESP_OK, true)) Success(true, 0)
+        return if(resData.response.equals(Const.RESP_OK_EDIT_PROFILE, true)) Success(true, 0)
         else Fail("Can't update profile", res.code(), null)
     } //Util.operationNotAvailableFailResult()
 }

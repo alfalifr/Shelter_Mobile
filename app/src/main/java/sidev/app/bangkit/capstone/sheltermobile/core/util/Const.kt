@@ -110,6 +110,7 @@ object Const {
 
     const val RESP_OK = "success"
     const val RESP_FAIL = "failed"
+    const val RESP_OK_EDIT_PROFILE = "Password Successfull Change!"
 
     const val REQ_CALL = 2
 

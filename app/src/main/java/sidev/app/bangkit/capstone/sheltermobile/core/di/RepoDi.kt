@@ -16,9 +16,9 @@ object RepoDi {
         fun getLocationSrc(): LocationLocalSource = LocationLocalSourceImpl(getDb().getLocationDao(), AppDi.getContext())
             //else LocationLocalSourceDummy
         fun getNewsSrc(): NewsLocalSource = NewsLocalSourceImpl(getDb().getNewsDao())
-        fun getReportSrc(): ReportLocalSource = ReportLocalSourceImpl(getDb().getReportDao(), getLocationSrc(), getFormSrc())
-        fun getFormSrc(): FormLocalSource = FormLocalSourceImpl(getDb().getFormDao())
-        fun getUserSrc(): UserLocalSource = UserLocalSourceImpl(getDb().getUserDao(), Local.getLocationSrc(), AppDi.getContext())
+        fun getReportSrc(): ReportLocalSource = ReportLocalSourceImpl(getDb().getReportDao(), getLocationSrc(), getFormSrc(), getUserSrc())
+        fun getFormSrc(): FormLocalSource = FormLocalSourceImpl(getDb().getFormDao(), getUserSrc())
+        fun getUserSrc(): UserLocalSource = UserLocalSourceImpl(getDb().getUserDao(), getLocationSrc(), AppDi.getContext())
         fun getWarningSrc(): WarningLocalSource = WarningLocalSourceImpl(
             getDb().getWarningDao(),
             getDisasterSrc(),
@@ -35,7 +35,7 @@ object RepoDi {
         fun getDisasterSrc(): DisasterRemoteSource = DisasterRemoteSourceDummy
         fun getEmergencySrc(): EmergencyRemoteSource = EmergencyRemoteSourceDummy
         fun getLocationSrc(): LocationRemoteSource = LocationRemoteSourceImpl(AppRetrofit.locationApi) //LocationRemoteSourceDummy //
-        fun getReportSrc(): ReportRemoteSource = ReportRemoteSourceDummy
+        fun getReportSrc(): ReportRemoteSource = ReportRemoteSourceImpl(AppRetrofit.reportApi, AppRetrofit.imgurApi) //ReportRemoteSourceDummy
         fun getFormSrc(): FormRemoteSource = FormRemoteSourceDummy
         fun getWarningSrc(locationRepo: LocationRepo?= null, disasterRepo: DisasterRepo?= null): WarningRemoteSource =
             WarningRemoteSourceImpl(AppRetrofit.disasterApi, locationRepo ?: getLocationRepo(), disasterRepo ?: getDisasterRepo()) //WarningRemoteSourceDummy //

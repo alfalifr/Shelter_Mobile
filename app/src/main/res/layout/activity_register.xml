@@ -88,6 +88,17 @@
                             android:text="Pilih Lokasi"
                             android:textColor="@color/greenbow" />
 
+                        <TextView
+                            android:id="@+id/tv_loc_error"
+                            android:layout_centerHorizontal="true"
+                            android:layout_below="@id/tv_change_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/choose_location"
+                            android:textColor="@color/red_velvet" />
+
                     </RelativeLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -147,6 +158,16 @@
 
                     </RadioGroup>
 
+                    <TextView
+                        android:id="@+id/tv_gender_error"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/choose_gender"
+                        android:textColor="@color/red_velvet" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputPassword"
                         style="@style/parent"
@@ -202,6 +223,7 @@
                         android:textColor="@color/red_velvet"
                         android:padding="10dp"
                         android:text="@string/error_account" />
+
 
                     <TextView
                         android:id="@+id/on_Login_Word"

@@ -44,12 +44,17 @@ class RegisterActivity : AppCompatActivity() {
     private var pass: String = ""
     private var gender: Char = '_'
     private var confirm_pass: String = ""
-    private val isLocValid: Boolean get()= location != null
+    private val isLocValid: Boolean
+        get() = (location != null).also {
+            binding.tvLocError.visibility = if(it) View.GONE else View.VISIBLE
+        }
     private var isNameValid = false
     private var isEmailValid = false
     private var isPswdValid = false
     private var isRePswdValid = false
-    private val isGenderValid: Boolean get() = gender == Const.GENDER_MALE || gender == Const.GENDER_FEMALE
+    private val isGenderValid: Boolean get() = (gender == Const.GENDER_MALE || gender == Const.GENDER_FEMALE).also {
+        binding.tvGenderError.visibility = if(it) View.GONE else View.VISIBLE
+    }
     private val isAllValid: Boolean get() = isNameValid && isEmailValid && isPswdValid && isRePswdValid && isGenderValid && isLocValid
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,12 +67,13 @@ class RegisterActivity : AppCompatActivity() {
         binding.onLoginWord.startAnimation(anim)
 
         binding.apply {
+            tvLocError.visibility = View.GONE
+            tvErrorAccount.visibility = View.GONE
             tvChangeLocation.setOnClickListener { dialog.show() }
             showSignupLoading(false)
             cirRegisterButton.setOnClickListener {
                 signup()
             }
-            tvErrorAccount.visibility = View.GONE
             editTextName.addTextChangedListener {
                 if (it != null) {
                     isNameValid = Util.validateName(it.toString())
@@ -118,8 +124,10 @@ class RegisterActivity : AppCompatActivity() {
                     R.id.radio_wanita -> gender = Const.GENDER_FEMALE
                     else -> throw IllegalStateException("No such view id for gender (${checkedId asResNameOrNullBy this@RegisterActivity})")
                 }
+                tvGenderError.visibility = View.GONE
             }
             onLoginPlus.setOnClickListener { finish() }
+            onLoginWord.setOnClickListener { finish() }
         }
 
         model = ViewModelDi.getAuthViewModel(this).apply {
@@ -153,8 +161,12 @@ class RegisterActivity : AppCompatActivity() {
             }
             currentLocation.observe(this@RegisterActivity) {
                 location = it
+                //isLocValid
                 if(it != null) {
-                    binding.tvLocationSet.text = it.name
+                    binding.apply {
+                        tvLocError.visibility = View.GONE
+                        tvLocationSet.text = it.name
+                    }
                 }
             }
             getCurrentLocation()
@@ -250,6 +262,7 @@ class RegisterActivity : AppCompatActivity() {
                 cirRegisterButton.visibility = View.GONE
                 onLoginPlus.visibility = View.GONE
                 onLoginWord.visibility = View.GONE
+                tvErrorAccount.visibility = View.GONE
             } else {
                 pbSignup.visibility = View.GONE
                 cirRegisterButton.visibility = View.VISIBLE

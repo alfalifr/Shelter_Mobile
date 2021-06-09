@@ -102,6 +102,9 @@ object Const {
     const val CODE_REGIS_SUCCESS = 104
     const val CODE_REGIS_FAIL = 105
 
+    const val CODE_OK = 200
+    const val CODE_NOT_OK = 400
+
     const val RESP_OK = "success"
     const val RESP_FAIL = "failed"
 
@@ -129,6 +132,9 @@ object Const {
 
     const val API_ROOT = "http://35.240.165.229/API/v1/"
     const val API_SHELTER = "shelter_api.php"
+    const val API_KEY_IMGUR = "Authorization: Client-ID e6392bda16ff035"
+    const val API_IMGUR_ROOT = "https://api.imgur.com/3/"
+    const val API_IMGUR_IMAGE = "image.json"
 
     /*
     =====================

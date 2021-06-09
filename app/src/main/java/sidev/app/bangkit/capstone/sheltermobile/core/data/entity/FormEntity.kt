@@ -16,4 +16,5 @@ data class FormEntity(
      * Can contains multiple link. If so, links are separated by [Const.CHAR_LINK_SEPARATOR]
      */
     val photoLinkList: String,
+    val userId: Int,
 )

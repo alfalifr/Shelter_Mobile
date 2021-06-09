@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.provider.MediaStore
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -92,8 +93,19 @@ class LaporPesanActivity : AppCompatActivity() {
         }
 
         model = ViewModelDi.getReportViewModel(this).apply {
+            onCallNotSuccess { key, code, e ->
+                when(key) {
+                    Const.KEY_SEND_REPORT -> showUploadLoading(false)
+                }
+            }
+            onPreAsyncTask {
+                when(it) {
+                    Const.KEY_SEND_REPORT -> showUploadLoading()
+                }
+            }
             onSend.observe(this@LaporPesanActivity) {
                 if (it != null) {
+                    showUploadLoading(false)
                     if (it) {
                         finish()
                         toast("Laporan anda sudah terkirim, akan kami proses")
@@ -190,5 +202,16 @@ class LaporPesanActivity : AppCompatActivity() {
         }
     }
 
+    private fun showUploadLoading(show: Boolean = true) {
+        binding.apply {
+            if(show){
+                pbUpload.visibility = View.VISIBLE
+                cardHubungiTeks.visibility = View.GONE
+            } else {
+                pbUpload.visibility = View.GONE
+                cardHubungiTeks.visibility = View.VISIBLE
+            }
+        }
+    }
 
 }

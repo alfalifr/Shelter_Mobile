@@ -44,7 +44,7 @@ class NewsViewModel(app: Context?, private val useCase: NewsUseCase): AsyncVm(ap
             val timestamp = Util.getTimeString()
             when(val result = useCase.getArticleList(timestamp)){
                 is Success -> mArticleList.postValue(result.data)
-                is Fail -> doCallNotSuccess(result.code, result.error)
+                is Fail -> doCallNotSuccess(Const.KEY_ARTICLE_LIST, result.code, result.error)
             }
         }
     }
@@ -54,7 +54,7 @@ class NewsViewModel(app: Context?, private val useCase: NewsUseCase): AsyncVm(ap
             val timestamp = Util.getTimeString()
             when(val result = useCase.getNewsList(timestamp)){
                 is Success -> mNewsList.postValue(result.data)
-                is Fail -> doCallNotSuccess(result.code, result.error)
+                is Fail -> doCallNotSuccess(Const.KEY_NEWS_LIST, result.code, result.error)
             }
         }
     }

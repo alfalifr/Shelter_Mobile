@@ -12,6 +12,8 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toSignupData
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toUpdateReqBody
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import sidev.lib.android.std.tool.util.`fun`.loge
+import sidev.lib.console.prine
 import sidev.lib.text.getQuoted
 
 class UserRemoteSourceImpl(private val api: AuthApi): UserRemoteSource {
@@ -32,6 +34,8 @@ class UserRemoteSourceImpl(private val api: AuthApi): UserRemoteSource {
     }
 
     override suspend fun registerUser(user: User, authData: AuthData): Result<Boolean> {
+        loge("RemoteUserSrc.registerUser() user= $user authData= $")
+        prine("RemoteUserSrc.registerUser() user= $user authData= $")
         val body = user.toSignupData(authData.password)
         val call = api.signup(body)
         val resp = call.execute()

@@ -32,6 +32,11 @@ class UserLocalSourceImpl(
         return Success(data, 0)
     }
 
+    override suspend fun getUserId(email: String): Result<Int> {
+        val entity = dao.getUser(email) ?: return Util.noEntityFailResult()
+        return Success(entity.id, 0)
+    }
+
     override suspend fun updateUser(oldEmail: String, newData: User, newPswd: String): Result<Boolean> {
         val userEntity = dao.getUser(oldEmail) ?: return Util.noEntityFailResult()
         val userId = userEntity.id
@@ -58,10 +63,18 @@ class UserLocalSourceImpl(
         return getUser(email)
     }
 
+    override suspend fun getCurrentUserId(): Result<Int> {
+        val userRes = getCurrentUser()
+        if(userRes !is Success)
+            return userRes as Fail
+        return getUserId(userRes.data.email)
+    }
+
     override suspend fun deleteCurrentUser(): Result<Boolean> {
         Util.editSharedPref(ctx) {
             remove(Const.KEY_USER_EMAIL)
             remove(Const.KEY_PASSWORD)
+            remove(Const.KEY_LOCATION_ID)
         }
         return Success(true, 0)
     }

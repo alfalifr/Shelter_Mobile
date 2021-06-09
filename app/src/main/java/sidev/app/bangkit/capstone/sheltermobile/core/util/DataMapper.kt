@@ -4,6 +4,7 @@ import retrofit2.Call
 import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.data.entity.*
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LoginBody
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.ReportReqBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.UpdateProfileReqBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.*
@@ -70,8 +71,8 @@ object DataMapper {
     fun Emergency.toEntity(): EmergencyEntity = EmergencyEntity(id, name, color, severity)
     fun Location.toEntity(parentId: Int): LocationEntity = LocationEntity(id, name, coordinate.latitude, coordinate.longitude, parentId)
     fun News.toEntity(): NewsEntity = NewsEntity(timestamp.timeLong, title, briefDesc, linkImage, link, type)
-    fun ReportDetail.toEntity(): ReportEntity = ReportEntity(report.timestamp.timeLong, report.method, response, report.location.id)
-    fun Form.toEntity(): FormEntity = FormEntity(timestamp.timeLong, title, desc, photoLinkList.joinToString(Const.CHAR_LINK_SEPARATOR.toString()))
+    fun ReportDetail.toEntity(userId: Int): ReportEntity = ReportEntity(report.timestamp.timeLong, report.method, response, report.location.id, userId)
+    fun Form.toEntity(userId: Int): FormEntity = FormEntity(timestamp.timeLong, title, desc, photoLinkList.joinToString(Const.CHAR_LINK_SEPARATOR.toString()), userId)
     fun User.toEntity(id: Int = 0): UserEntity = UserEntity(id, email, name, gender, location.id)
     fun WarningDetail.toEntity(): WarningEntity = WarningEntity(
         timestamp = status.timestamp.timeLong,
@@ -163,6 +164,8 @@ object DataMapper {
         _fname = name,
         _gender = gender,
     )
+
+    fun Form.toReportReqBody(email: String): ReportReqBody = ReportReqBody(email, desc, photoLinkList.firstOrNull() ?: "")
 
     fun getGenderName(char: Char): String = when(char) {
         Const.GENDER_MALE -> "Pria"

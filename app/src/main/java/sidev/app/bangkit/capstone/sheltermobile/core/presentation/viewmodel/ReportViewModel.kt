@@ -1,8 +1,8 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel
 
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.lifecycle.*
-import kotlinx.coroutines.runBlocking
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.ReportDetail
@@ -13,7 +13,6 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.lib.`val`.SuppressLiteral
 import sidev.lib.android.std.tool.util.`fun`.loge
-import java.lang.IllegalStateException
 
 class ReportViewModel(app: Context?, private val useCase: ReportUseCase): AsyncVm(app) {
     companion object {
@@ -52,7 +51,7 @@ class ReportViewModel(app: Context?, private val useCase: ReportUseCase): AsyncV
         startJob(Const.KEY_CURRENT_LOC) {
             when(val res = useCase.getCurrentLocation()) {
                 is Success -> mCurrentLocation.postValue(res.data)
-                else -> doCallNotSuccess(-1, null) //throw IllegalStateException("Error when getting the current location.")
+                else -> doCallNotSuccess(Const.KEY_CURRENT_LOC, -1, null) //throw IllegalStateException("Error when getting the current location.")
             }
         }
     }
@@ -68,7 +67,7 @@ class ReportViewModel(app: Context?, private val useCase: ReportUseCase): AsyncV
                         if (top <= 0 || list.size < top) list else list.subList(0, top)
                     )
                 }
-                is Fail -> doCallNotSuccess(result.code, result.error)
+                is Fail -> doCallNotSuccess(Const.KEY_REPORT_LIST, result.code, result.error)
             }
         }
     }
@@ -80,14 +79,14 @@ class ReportViewModel(app: Context?, private val useCase: ReportUseCase): AsyncV
         startJob(Const.KEY_REPORT_DETAIL) {
             when(val res = useCase.getReportDetail(timeStr).also { loge("Vm.getReportDetail() useCase.getReportDetail res= $it") }) {
                 is Success -> mReportDetail.postValue(res.data)
-                is Fail -> doCallNotSuccess(res.code, res.error)
+                is Fail -> doCallNotSuccess(Const.KEY_REPORT_DETAIL, res.code, res.error)
             }
         }
     }
 
-    fun sendReport(data: Report){
+    fun sendReport(data: Report, pict: Bitmap? = null){
         startJob(Const.KEY_SEND_REPORT) {
-            when(useCase.sendReport(data)) {
+            when(useCase.sendReport(data, pict)) {
                 is Success -> mOnSend.postValue(true)
                 is Fail -> mOnSend.postValue(false)
             }

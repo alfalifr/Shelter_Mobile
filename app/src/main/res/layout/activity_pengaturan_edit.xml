@@ -204,6 +204,12 @@
                             app:spinning_bar_padding="6dp"
                             app:spinning_bar_width="4dp" />
 
+                        <ProgressBar
+                            android:id="@+id/pb_upload"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

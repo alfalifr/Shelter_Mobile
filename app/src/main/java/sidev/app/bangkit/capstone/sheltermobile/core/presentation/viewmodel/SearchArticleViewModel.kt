@@ -43,7 +43,7 @@ class SearchArticleViewModel(app: Context?, private val useCase: NewsUseCase): A
             val timestamp = Util.getTimeString()
             when(val result = useCase.searchNews(keyword, timestamp)){
                 is Success -> mSearchResult.postValue(result.data)
-                is Fail -> doCallNotSuccess(result.code, result.error)
+                is Fail -> doCallNotSuccess(Const.KEY_SEARCH_NEWS, result.code, result.error)
             }
         }
     }

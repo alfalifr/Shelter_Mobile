@@ -22,6 +22,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.setImg
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentHomeBinding
 import sidev.app.bangkit.capstone.sheltermobile.receiver.AlarmNotifReceiver
 import sidev.lib.android.std.tool.util.`fun`.bgColorTint
+import sidev.lib.android.std.tool.util.`fun`.toast
 
 
 class HomeFragment : Fragment() {
@@ -74,6 +75,9 @@ class HomeFragment : Fragment() {
         }
 
         vm.apply {
+            onCallNotSuccess { key, code, e ->
+                toast("Terjadi kesalahan, code = $code, e = $e")
+            }
             onPreAsyncTask {
                 when(it) {
                     Const.KEY_CURRENT_LOC -> {

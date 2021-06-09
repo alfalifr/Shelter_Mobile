@@ -61,6 +61,16 @@ class PengaturanEditActivity : AppCompatActivity() {
         }
 
         vm = ViewModelDi.getProfileViewModel(this).apply {
+            onCallNotSuccess { key, code, e ->
+                when(key) {
+                    Const.KEY_SAVE_CURRENT_USER -> showUploadLoading(false)
+                }
+            }
+            onPreAsyncTask {
+                when(it) {
+                    Const.KEY_SAVE_CURRENT_USER -> showUploadLoading()
+                }
+            }
             currentUser.observe(this@PengaturanEditActivity) {
                 if(it != null) {
                     binding.apply {
@@ -88,6 +98,7 @@ class PengaturanEditActivity : AppCompatActivity() {
                         finish()
                         toast("Berhasil memperbarui profil")
                     } else {
+                        showUploadLoading(false)
                         toast("Terjadi kesalahan saat memperbarui profil.\nHarap ulangi.")
                     }
                 }
@@ -199,6 +210,18 @@ class PengaturanEditActivity : AppCompatActivity() {
             }
             val user = User(email, name, gender, currentUser.location)
             vm.saveCurrentUser(user) // TODO Alif 3 Juni 2021: Buat ganti pswd
+        }
+    }
+
+    private fun showUploadLoading(show: Boolean = true) {
+        binding.apply {
+            if(show) {
+                pbUpload.visibility = View.VISIBLE
+                btnSave.visibility = View.GONE
+            } else {
+                pbUpload.visibility = View.GONE
+                btnSave.visibility = View.VISIBLE
+            }
         }
     }
 }

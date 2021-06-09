@@ -19,6 +19,7 @@ class ReportLocalSourceImpl(
     private val dao: ReportDao,
     private val locationLocalSrc: LocationLocalSource,
     private val formLocalSrc: FormLocalSource,
+    private val userLocalSrc: UserLocalSource,
 ): ReportLocalSource {
     override suspend fun getReportList(top: Int): Result<List<Report>> {
         val entityList = if(top <= 0) dao.getAllReportList() else dao.getTopReportList(top)
@@ -102,7 +103,10 @@ class ReportLocalSourceImpl(
 
     override suspend fun saveReportDetail(data: ReportDetail): Result<Int> {
         loge("ReportLocalSourceImpl.saveReportDetail() data = $data")
-        val entity = data.toEntity() //ReportDetail(data, "").toEntity()
+        val uidRes = userLocalSrc.getCurrentUserId()
+        if(uidRes !is Success)
+            return uidRes as Fail
+        val entity = data.toEntity(uidRes.data) //ReportDetail(data, "").toEntity()
         val form = data.report.form
 
         if(form != null) {
@@ -118,7 +122,10 @@ class ReportLocalSourceImpl(
     }
 
     override suspend fun saveReportDetailList(list: List<ReportDetail>): Result<Int> {
-        val entityList = list.map { it.toEntity() } //ReportDetail(data, "").toEntity()
+        val uidRes = userLocalSrc.getCurrentUserId()
+        if(uidRes !is Success)
+            return uidRes as Fail
+        val entityList = list.map { it.toEntity(uidRes.data) } //ReportDetail(data, "").toEntity()
         val insertedCount = dao.saveReportList(entityList)
         return Util.getInsertResult(insertedCount, entityList.size)
     }

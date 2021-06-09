@@ -53,6 +53,10 @@ class UserCompositeSource(
 
     override suspend fun getUserById(id: Int): Result<User> = localSrc.getUserById(id)
 
+    override suspend fun getCurrentUserId(): Result<Int> = localSrc.getCurrentUserId()
+
+    override suspend fun getUserId(email: String): Result<Int> = localSrc.getUserId(email)
+
     override suspend fun updateUser(oldEmail: String, newData: User, newPswd: String): Result<Boolean> = when(val remRes = remoteSrc.updateUser(
         oldEmail, newData, newPswd,
     )) {

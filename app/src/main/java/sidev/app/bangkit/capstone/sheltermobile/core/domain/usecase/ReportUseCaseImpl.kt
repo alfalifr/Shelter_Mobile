@@ -1,5 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase
 
+import android.graphics.Bitmap
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.LocationLocalSource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.ReportLocalSource
 import sidev.app.bangkit.capstone.sheltermobile.core.data.local.datasource.UserLocalSource
@@ -7,7 +8,6 @@ import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource.Repo
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.ReportDetail
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.ReportRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
@@ -21,10 +21,22 @@ class ReportUseCaseImpl(
     private val userLocalSrc: UserLocalSource,
 ): ReportUseCase, ReportRepo by repo {
     override suspend fun getCurrentLocation(): Result<Location> = locationLocalSrc.getCurrentLocation()
-    override suspend fun sendReport(data: Report): Result<Boolean> =
+    override suspend fun sendReport(data: Report, img: Bitmap?): Result<Boolean> =
         when(val userRes = userLocalSrc.getCurrentUser()) {
             is Success -> {
-                when(val remRes = remoteSrc.sendReport(data, userRes.data)){
+                val imgLink = if(img != null){
+                    val res = remoteSrc.sendImg(img)
+                    if(res is Success) res.data
+                    else ""
+                } else ""
+
+                val form = data.form
+                val sentReport = if(form != null) {
+                    val sentForm = form.copy(photoLinkList = listOf(imgLink))
+                    data.copy(form = sentForm)
+                } else data
+
+                when(val remRes = remoteSrc.sendReport(sentReport, userRes.data)){
                     is Success -> {
                         val reportDetail = ReportDetail(data, "")
                         when(val locRes = localSrc.saveReportDetail(reportDetail)) {
@@ -37,4 +49,6 @@ class ReportUseCaseImpl(
             }
             is Fail -> userRes
         }
+
+    //override suspend fun sendImg(data: Bitmap): Result<String> = remoteSrc.sendImg(data)
 }

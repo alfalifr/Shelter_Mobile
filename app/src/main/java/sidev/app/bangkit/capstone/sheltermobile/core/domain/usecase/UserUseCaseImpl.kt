@@ -19,25 +19,32 @@ class UserUseCaseImpl(
     override suspend fun getCurrentLocation(): Result<Location> = locationLocalSrc.getCurrentLocation()
     override suspend fun getCurrentUser(): Result<User> = userLocalSrc.getCurrentUser()
 
-    override suspend fun login(authData: AuthData): Result<Boolean> = when(val res = userRemoteSrc.searchUser(authData).also { loge("UserUseCaseImpl login() authData= $authData res = $it") }){
-        is Success -> {
-            val user = res.data
+    override suspend fun login(authData: AuthData): Result<Boolean> {
+        return when(val res = userRemoteSrc.searchUser(authData).also { loge("UserUseCaseImpl login() authData= $authData res = $it") }){
+            is Success -> {
+                val user = res.data
 
-            val isPswdResSuccess = userLocalSrc.savePassword(authData.password) is Success
-            val isEmailResSuccess = userLocalSrc.saveEmail(authData.email) is Success
-            val isUserResSuccess = userLocalSrc.saveUser(user) is Success
-            //val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
-            val isSaveLocSuccess = saveCurrentLocation(user.location) is Success
+                val isPswdResSuccess = userLocalSrc.savePassword(authData.password) is Success
+                val isEmailResSuccess = userLocalSrc.saveEmail(authData.email) is Success
+                val isUserResSuccess = userLocalSrc.saveUser(user) is Success
+                //val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
+                val getLocRes = locationLocalSrc.getLocationByName(user.location.name)
+                if(getLocRes !is Success)
+                    return getLocRes as Fail
 
-            loge("isPswdResSuccess= $isPswdResSuccess isEmailResSuccess= $isEmailResSuccess isUserResSuccess= $isUserResSuccess isSaveLocSuccess= $isSaveLocSuccess")
+                val newLoc = getLocRes.data
+                val isSaveLocSuccess = saveCurrentLocation(newLoc) is Success
 
-            when {
-                isPswdResSuccess && isEmailResSuccess && isSaveLocSuccess && isUserResSuccess -> Success(true, 0)
-                !isPswdResSuccess && !isEmailResSuccess && !isSaveLocSuccess && !isUserResSuccess -> Fail("Can't save both email, password, and default location to local", -1, null)
-                else -> Success(true, 1)
+                loge("isPswdResSuccess= $isPswdResSuccess isEmailResSuccess= $isEmailResSuccess isUserResSuccess= $isUserResSuccess isSaveLocSuccess= $isSaveLocSuccess")
+
+                when {
+                    isPswdResSuccess && isEmailResSuccess && isSaveLocSuccess && isUserResSuccess -> Success(true, 0)
+                    !isPswdResSuccess && !isEmailResSuccess && !isSaveLocSuccess && !isUserResSuccess -> Fail("Can't save both email, password, and default location to local", -1, null)
+                    else -> Success(true, 1)
+                }
             }
+            is Fail -> res
         }
-        is Fail -> res
     }
 
     override suspend fun signup(user: User, authData: AuthData): Result<Boolean> = when(val remoteRes = userRemoteSrc.registerUser(user, authData)){
@@ -48,6 +55,8 @@ class UserUseCaseImpl(
                 val isUserResSuccess = userLocalSrc.saveUser(user) is Success
                 //val isSetDefaultLocSuccess = setDefaultCurrentLocation() is Success
                 val isSaveLocSuccess = saveCurrentLocation(user.location) is Success
+
+                userRemoteSrc.updateUser(user.email, user, authData.password) //TODO optimasi, dari server.
 
                 when {
                     isPswdResSuccess && isEmailResSuccess && isSaveLocSuccess && isUserResSuccess-> Success(true, 0)

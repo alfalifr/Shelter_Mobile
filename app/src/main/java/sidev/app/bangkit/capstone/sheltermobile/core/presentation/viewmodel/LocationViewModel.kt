@@ -37,7 +37,7 @@ class LocationViewModel(c: Context?, private val useCase: LocationUseCase): Asyn
         startJob(Const.KEY_LOCATION_LIST) {
             when(val res = useCase.getAllLocation()) {
                 is Success -> mLocationList.postValue(res.data)
-                is Fail -> doCallNotSuccess(res.code, res.error)
+                is Fail -> doCallNotSuccess(Const.KEY_LOCATION_LIST, res.code, res.error)
             }
         }
     }

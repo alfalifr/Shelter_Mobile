@@ -10,12 +10,15 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toEntity
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toModel
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
+import sidev.lib.android.std.tool.util.`fun`.loge
 
 class LocationLocalSourceImpl(private val dao: LocationDao, private val ctx: Context): LocationLocalSource {
     override suspend fun getCurrentLocation(): Result<Location> {
         val dataId = Util.getSharedPref(ctx).getInt(Const.KEY_LOCATION_ID, -1)
         if(dataId < 0)
             return Util.noValueFailResult()
+
+        loge("LocLocalSrc getCurrentLocation() dataId = $dataId")
         return getLocationById(dataId)
     }
 
@@ -42,6 +45,7 @@ class LocationLocalSourceImpl(private val dao: LocationDao, private val ctx: Con
     override suspend fun saveCurrentLocation(data: Location): Result<Boolean> {
         Util.editSharedPref(ctx, true) {
             putInt(Const.KEY_LOCATION_ID, data.id)
+            loge("LocLocalSrc saveCurrentLocation() data = $data")
         }
         return Success(true, 0)
     }

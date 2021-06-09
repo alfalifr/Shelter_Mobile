@@ -1,5 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.remote.datasource
 
+import android.graphics.Bitmap
 import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Report
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.ReportDetail
@@ -21,4 +22,6 @@ object ReportRemoteSourceDummy: ReportRemoteSource {
     override suspend fun saveReportDetailList(list: List<ReportDetail>): Result<Int> = Util.operationNotAvailableFailResult()
 
     override suspend fun sendReport(data: Report, user: User): Result<Boolean> = Success(true, 0)
+
+    override suspend fun sendImg(data: Bitmap): Result<String> = Success("http://", 0)
 }

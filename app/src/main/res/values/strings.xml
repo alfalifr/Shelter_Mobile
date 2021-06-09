@@ -81,6 +81,8 @@
     <string name="check_your_email">Cek email Anda</string>
     <string name="template_response">Silahkan pergi ke pos 12 di Jalan\nBangau No.12</string>
     <string name="no_prediction_in_future">Tidak ada prediksi di masa mendatang</string>
+    <string name="choose_location">Mohon pilih lokasi</string>
+    <string name="choose_gender">Mohon pilih kelamin</string>
 
 
 </resources>

@@ -69,7 +69,7 @@ class AuthViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm(ap
         startJob(Const.KEY_CURRENT_LOC) {
             when(val result = useCase.getCurrentLocation()){
                 is Success -> mCurrentLocation.postValue(result.data)
-                is Fail -> doCallNotSuccess(result.code, result.error)
+                is Fail -> doCallNotSuccess(Const.KEY_CURRENT_LOC, result.code, result.error)
             }
         }
     }

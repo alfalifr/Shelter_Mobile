@@ -19,7 +19,7 @@ object DummyTest {
     //Login
     //{"response":"success","data":{"id":"2","email":"test111@mail.com","full_name":"test sata","gender":"M"}}
     //{"response":"failed","response_code":101}
-    val userIndex = 1
+    val userIndex = 0
     val loginBody = Dummy.getLoginBody(userIndex)
     val userData = Dummy.userList[userIndex]
 

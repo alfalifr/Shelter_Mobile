@@ -113,7 +113,7 @@ Dummy section
     )
 
     val userList = listOf<User>(
-        User("b@b.b", "bayu", 'M', locationList[0]),
+        User("b2@b.b", "bayu", 'M', locationList[0]),
         User("a@a.a", "ayu", 'M', locationList[1]),
     )
 
@@ -172,6 +172,11 @@ Dummy section
     val formList = listOf<Form>(
         Form(timestampList[0], "Ini judul 1", "Ini desc 1", emptyList()),
         Form(timestampList[1], "Ini judul 2", "Ini desc 2", emptyList()),
+    )
+
+    val reportList = listOf<Report>(
+        Report(timestampList[0], Const.METHOD_FORM, locationList[0], formList[0]),
+        Report(timestampList[1], Const.METHOD_FORM, locationList[1], formList[1]),
     )
 
 

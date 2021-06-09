@@ -33,7 +33,7 @@ open class AsyncVm(app: Context?): ViewModel() {
      * Executed before any async task in `this` runs.
      */
     protected var onPreAsyncTask: ((key: String) -> Unit)?= null
-    private var onCallNotSuccess: ((code: Int, e: Throwable?) -> Unit)?= null
+    private var onCallNotSuccess: ((key: String, code: Int, e: Throwable?) -> Unit)?= null
 
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
@@ -65,14 +65,14 @@ open class AsyncVm(app: Context?): ViewModel() {
     fun onPreAsyncTask(f: ((key: String) -> Unit)?){
         onPreAsyncTask= f
     }
-    fun onCallNotSuccess(f: ((code: Int, e: Throwable?) -> Unit)?){
+    fun onCallNotSuccess(f: ((key: String, code: Int, e: Throwable?) -> Unit)?){
         onCallNotSuccess= f
     }
     protected fun doOnPreAsyncTask(key: String){
         onPreAsyncTask?.also { ctx?.runOnUiThread { it(key) } }
     }
-    protected fun doCallNotSuccess(code: Int, e: Throwable?){
-        onCallNotSuccess?.also { ctx?.runOnUiThread { it(code, e) } }
+    protected fun doCallNotSuccess(key: String, code: Int, e: Throwable?){
+        onCallNotSuccess?.also { ctx?.runOnUiThread { it(key, code, e) } }
     }
 /*
     fun multipleJob(lazyBlock: () -> List<Job?>) {

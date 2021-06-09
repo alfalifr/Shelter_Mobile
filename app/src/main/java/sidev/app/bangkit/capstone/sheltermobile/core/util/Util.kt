@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.os.Build
 import android.widget.ImageView
 import androidx.core.app.NotificationCompat
@@ -28,6 +29,7 @@ import sidev.lib.android.std.tool.util._ResUtil
 import sidev.lib.android.std.tool.util.`fun`.asResNameOrNullBy
 import sidev.lib.android.std.tool.util.`fun`.imgRes
 import sidev.lib.android.std.tool.util.`fun`.loge
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.lang.IllegalStateException
 import java.lang.IndexOutOfBoundsException
@@ -263,5 +265,11 @@ object Util {
 
         val notif = builder.build()
         manager.notify(notifId, notif)
+    }
+
+    suspend fun Bitmap.compressToJpg(): ByteArray {
+        val baos = ByteArrayOutputStream()
+        compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        return baos.toByteArray()
     }
 }

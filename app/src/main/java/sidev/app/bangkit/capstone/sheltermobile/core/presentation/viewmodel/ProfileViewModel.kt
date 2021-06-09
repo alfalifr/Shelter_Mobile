@@ -53,7 +53,7 @@ class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm
         startJob(Const.KEY_CURRENT_USER) {
             when(val result = useCase.getCurrentUser()){
                 is Success -> mCurrentUser.postValue(result.data)
-                is Fail -> doCallNotSuccess(result.code, result.error)
+                is Fail -> doCallNotSuccess(Const.KEY_CURRENT_USER, result.code, result.error)
             }
         }
     }
@@ -75,7 +75,7 @@ class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm
         startJob(Const.KEY_CURRENT_LOC) {
             when(val result = useCase.getCurrentLocation()){
                 is Success -> mCurrentLocation.postValue(result.data)
-                is Fail -> doCallNotSuccess(result.code, result.error)
+                is Fail -> doCallNotSuccess(Const.KEY_CURRENT_LOC, result.code, result.error)
             }
         }
     }
@@ -87,10 +87,10 @@ class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm
                     val old = oldPswdResult.data
                     when(val result = useCase.changePassword(old, newPswd)){
                         is Success -> mChangePasswordStatus.postValue(true)
-                        is Fail -> doCallNotSuccess(result.code, result.error)
+                        is Fail -> doCallNotSuccess(Const.KEY_CHANGE_PSWD, result.code, result.error)
                     }
                 }
-                is Fail -> doCallNotSuccess(oldPswdResult.code, oldPswdResult.error)
+                is Fail -> doCallNotSuccess(Const.KEY_CHANGE_PSWD, oldPswdResult.code, oldPswdResult.error)
             }
         }
     }

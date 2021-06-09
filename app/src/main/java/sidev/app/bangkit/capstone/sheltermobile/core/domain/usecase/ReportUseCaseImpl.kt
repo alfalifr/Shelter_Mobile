@@ -29,7 +29,11 @@ class ReportUseCaseImpl(
                 val imgLink = if(img != null){
                     val res = remoteSrc.sendImg(img)
                     loge("remoteSrc.sendImg() res = $res")
-                    if(res is Success) res.data.also { loge("remoteSrc.sendImg() imgLink = $it") }
+                    if(res is Success) res.data.also {
+                        val isHttp = "http" in it
+                        val isStar = "*" in it
+                        loge("remoteSrc.sendImg() imgLink = $it isHttp= $isHttp isStar= $isStar")
+                    }
                     else ""
                 } else ""
 
@@ -39,9 +43,11 @@ class ReportUseCaseImpl(
                     data.copy(form = sentForm)
                 } else data
 
+                //val sentData = data.copy(form = form)
+
                 when(val remRes = remoteSrc.sendReport(sentReport, userRes.data)){
                     is Success -> {
-                        val reportDetail = ReportDetail(data, "")
+                        val reportDetail = ReportDetail(sentReport, "")
                         when(val locRes = localSrc.saveReportDetail(reportDetail)) {
                             is Success -> Success(true, 0)
                             is Fail -> locRes

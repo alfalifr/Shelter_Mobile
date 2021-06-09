@@ -55,7 +55,7 @@ class RegisterActivity : AppCompatActivity() {
     private val isGenderValid: Boolean get() = (gender == Const.GENDER_MALE || gender == Const.GENDER_FEMALE).also {
         binding.tvGenderError.visibility = if(it) View.GONE else View.VISIBLE
     }
-    private val isAllValid: Boolean get() = isNameValid && isEmailValid && isPswdValid && isRePswdValid && isGenderValid && isLocValid
+    private val isAllValid: Boolean get() = (isGenderValid and isLocValid) && isNameValid && isEmailValid && isPswdValid && isRePswdValid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +68,7 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.apply {
             tvLocError.visibility = View.GONE
+            tvGenderError.visibility = View.GONE
             tvErrorAccount.visibility = View.GONE
             tvChangeLocation.setOnClickListener { dialog.show() }
             showSignupLoading(false)

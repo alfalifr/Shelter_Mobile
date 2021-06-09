@@ -61,7 +61,7 @@ class NewsCompositeSource(
         Const.KEY_IS_SINGLE to true,
     )).toSingleResult()
 
-    override suspend fun searchNews(keyword: String, startTimestamp: TimeString): Result<List<News>> = localSrc.searchNews(keyword, startTimestamp)
+    override suspend fun searchNews(keyword: String, startTimestamp: TimeString): Result<List<News>> = remoteSrc.searchNews(keyword, startTimestamp)
 
     override suspend fun saveNewsList(list: List<News>): Result<Int> = saveDataList(list)
 }

@@ -5,11 +5,14 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -37,6 +40,8 @@ class LaporPesanActivity : AppCompatActivity() {
         private const val CAMERA_REQUEST_CODE = 2
     }
 
+    private lateinit var actPermissionLauncher: ActivityResultLauncher<Array<String>>
+
     private lateinit var binding: ActivityLaporPesanBinding
     private lateinit var model: ReportViewModel
     private var filePhoto: File? = null
@@ -58,6 +63,15 @@ class LaporPesanActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         loge("LaporPesanActivity.onCreate() binding.root= ${binding.root}")
+
+        actPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            if(it[Manifest.permission.CAMERA] == true) {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, CAMERA_REQUEST_CODE)
+            } else {
+                toast("Ups anda menolak Shelter menggunakan kamera anda")
+            }
+        }
 
         //call the function
         cameraFuction()
@@ -159,17 +173,20 @@ class LaporPesanActivity : AppCompatActivity() {
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(intent, CAMERA_REQUEST_CODE)
             } else {
+                actPermissionLauncher.launch(arrayOf(Manifest.permission.CAMERA))
+/*
                 ActivityCompat.requestPermissions(
                     (
                             this),
                     arrayOf(Manifest.permission.CAMERA),
                     CAMERA_PERMISSION_CODE
                 )
+ */
             }
 
         }
     }
-
+/*
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -189,6 +206,7 @@ class LaporPesanActivity : AppCompatActivity() {
             }
         }
     }
+ */
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

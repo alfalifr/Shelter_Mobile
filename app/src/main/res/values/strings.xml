@@ -76,6 +76,9 @@
 
     <string name="name_cant_be_blank">Nama gak boleh kosong</string>
     <string name="fill_a_valid_email">Masukan email yang benar</string>
+    <string name="fill_old_password">Masukan password lama Anda</string>
+    <string name="fill_new_password">Masukan password baru Anda</string>
+    <string name="password_confirmation_must_be_same">Password konfirmasi harus sama</string>
     <string name="female">Wanita</string>
     <string name="male">Pria</string>
     <string name="check_your_email">Cek email Anda</string>

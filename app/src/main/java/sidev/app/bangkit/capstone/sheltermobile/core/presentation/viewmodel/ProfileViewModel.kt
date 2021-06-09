@@ -47,6 +47,9 @@ class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm
     val onSaveProfile: LiveData<Boolean> get()= mOnSaveProfile
     private val mOnSaveProfile = MutableLiveData<Boolean>()
 
+    val currentPassword: LiveData<String> get()= mCurrentPassword
+    private val mCurrentPassword = MutableLiveData<String>()
+
 
     fun getCurrentUser(forceLoad: Boolean = false){
         if(mCurrentUser.value != null && !forceLoad) return
@@ -96,7 +99,12 @@ class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm
     }
 
     fun getCurrentPassword(){
-
+        startJob(Const.KEY_CURRENT_PSWD) {
+            when(val oldPswdResult = useCase.getPassword()){
+                is Success -> mCurrentPassword.postValue(oldPswdResult.data)
+                is Fail -> doCallNotSuccess(Const.KEY_CURRENT_PSWD, oldPswdResult.code, oldPswdResult.error)
+            }
+        }
     }
 
     fun logout() {

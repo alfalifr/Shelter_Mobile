@@ -33,13 +33,25 @@ class PengaturanEditActivity : AppCompatActivity() {
 
     private lateinit var location: Location
     private lateinit var currentUser: User
+    private lateinit var oldPswd: String
 
-    private var isOldPswdValid = true
-    private var isNewPswdValid = true
-    private var isNewRePswdValid = true
+    private var typedOldPswd: String? = null
+    private var newPswd: String? = null
+    private var newRePswd: String? = null
+
+
+    private val isOldPswdValid get()= typedOldPswd == oldPswd
+    private val isNewPswdValid: Boolean get()= newPswd?.isNotBlank() == true
+    private val isNewRePswdValid: Boolean get()= newRePswd == newPswd
+    private val isPswdChanged: Boolean
+        get()= typedOldPswd?.isNotBlank() == true
+                || newPswd?.isNotBlank() == true
+                || newRePswd?.isNotBlank() == true
+
     private var isNameValid = true
     private var isEmailValid = true
     private val isAllValid: Boolean get()= isNameValid && isEmailValid
+            && isPswdChanged && isOldPswdValid && isNewPswdValid && isNewRePswdValid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +59,7 @@ class PengaturanEditActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
+            showUploadLoading(false)
             tvChangeLocation.setOnClickListener { dialog.show() }
             editTextName.apply {
                 addTextChangedListener {
@@ -58,6 +71,24 @@ class PengaturanEditActivity : AppCompatActivity() {
                 addTextChangedListener {
                     isEmailValid = Util.validateEmail(it.toString())
                     error = if(isEmailValid) null else getString(R.string.fill_a_valid_email)
+                }
+            }
+            editTextOldPassword.apply {
+                addTextChangedListener {
+                    typedOldPswd = it?.toString()
+                    error = if(!isPswdChanged || isOldPswdValid) null else getString(R.string.fill_old_password)
+                }
+            }
+            editTextPassword.apply {
+                addTextChangedListener {
+                    newPswd = it?.toString()
+                    error = if(!isPswdChanged || isNewPswdValid) null else getString(R.string.fill_new_password)
+                }
+            }
+            editTextConfirmPassword.apply {
+                addTextChangedListener {
+                    newRePswd = it?.toString()
+                    error = if(!isPswdChanged || isNewRePswdValid) null else getString(R.string.password_confirmation_must_be_same)
                 }
             }
             btnSave.setOnClickListener { saveProfile() }
@@ -213,8 +244,9 @@ class PengaturanEditActivity : AppCompatActivity() {
                 R.id.radio_wanita -> Const.GENDER_FEMALE
                 else -> throw IllegalStateException("No such view id for gender (${id asResNameOrNullBy this@PengaturanEditActivity})")
             }
+            val sentPswd = if(isNewPswdValid) newPswd else null
             val user = User(email, name, gender, location)
-            vm.saveCurrentUser(user) // TODO Alif 3 Juni 2021: Buat ganti pswd
+            vm.saveCurrentUser(user, sentPswd) // TODO Alif 3 Juni 2021: Buat ganti pswd
         }
     }
 

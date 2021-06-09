@@ -86,6 +86,7 @@ object Const {
     const val KEY_SIGNUP = "signup"
     const val KEY_LOGIN = "login"
     const val KEY_LOGOUT = "logout"
+    const val KEY_CURRENT_PSWD = "current_pswd"
     const val KEY_LOGIN_STATUS = "login_status"
     const val KEY_ARTICLE_LIST = "getArticleList"
     const val KEY_NEWS_LIST = "getNewsList"

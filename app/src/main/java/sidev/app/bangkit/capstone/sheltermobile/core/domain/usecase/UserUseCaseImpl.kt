@@ -86,7 +86,7 @@ class UserUseCaseImpl(
             return userRes as Fail
 
         val oldUser = userRes.data
-
+/*
         if(password != null) {
             val pswdRes = userLocalSrc.getPassword()
             if(pswdRes !is Success)
@@ -98,6 +98,7 @@ class UserUseCaseImpl(
                 is Fail -> return res
             }
         }
+ */
 
         val pswd = password ?: userLocalSrc.getPassword().let {
             if(it !is Success) return Fail("Can't get old password from local", -1, null)

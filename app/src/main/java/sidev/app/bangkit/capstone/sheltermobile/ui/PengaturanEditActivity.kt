@@ -51,7 +51,7 @@ class PengaturanEditActivity : AppCompatActivity() {
     private var isNameValid = true
     private var isEmailValid = true
     private val isAllValid: Boolean get()= isNameValid && isEmailValid
-            && isPswdChanged && isOldPswdValid && isNewPswdValid && isNewRePswdValid
+            && (!isPswdChanged || (isOldPswdValid && isNewPswdValid && isNewRePswdValid))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -241,6 +241,7 @@ class PengaturanEditActivity : AppCompatActivity() {
     }
 
     private fun saveProfile() {
+        loge("saveProfile() isAllValid= $isAllValid")
         if(!isAllValid) return
         binding.apply {
             val email = editTextEmail.text.toString()

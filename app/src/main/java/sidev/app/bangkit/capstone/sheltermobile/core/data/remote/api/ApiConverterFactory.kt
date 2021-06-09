@@ -6,6 +6,7 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.GeneralCityListResponse
+import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.response.ImgurUploadResponse
 import java.lang.reflect.Type
 
 
@@ -18,6 +19,7 @@ object ApiConverterFactory: Converter.Factory() {
         retrofit: Retrofit
     ): Converter<ResponseBody, *>? = when (type) {
         GeneralCityListResponse::class.java -> CityListConverter
+        ImgurUploadResponse::class.java -> ImgUploadResponseConverter
         else -> gsonFactory.responseBodyConverter(type, annotations, retrofit)
     }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shelter Mobile</string>
+    <string name="app_name">Shelter</string>
     <string name="home">Beranda</string>
     <string name="news">Berita</string>
     <string name="emergency">Darurat</string>

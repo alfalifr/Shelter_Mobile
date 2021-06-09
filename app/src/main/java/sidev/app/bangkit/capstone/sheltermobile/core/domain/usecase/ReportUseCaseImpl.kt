@@ -12,6 +12,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.ReportRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Result
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
+import sidev.lib.android.std.tool.util.`fun`.loge
 
 class ReportUseCaseImpl(
     private val repo: ReportRepo,
@@ -24,9 +25,11 @@ class ReportUseCaseImpl(
     override suspend fun sendReport(data: Report, img: Bitmap?): Result<Boolean> =
         when(val userRes = userLocalSrc.getCurrentUser()) {
             is Success -> {
+                loge("sendReport img = $img")
                 val imgLink = if(img != null){
                     val res = remoteSrc.sendImg(img)
-                    if(res is Success) res.data
+                    loge("remoteSrc.sendImg() res = $res")
+                    if(res is Success) res.data.also { loge("remoteSrc.sendImg() imgLink = $it") }
                     else ""
                 } else ""
 

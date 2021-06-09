@@ -41,6 +41,7 @@ class LaporPesanActivity : AppCompatActivity() {
     private lateinit var model: ReportViewModel
     private var filePhoto: File? = null
 
+    private var pict: Bitmap? = null
     private var titleLaporan: String = ""
     private var isiLaporan: String = ""
     private var isTitleLaporanNotBlank = false
@@ -145,7 +146,7 @@ class LaporPesanActivity : AppCompatActivity() {
         }
         val data = Report(Util.getTimeString(), Const.METHOD_FORM, location, form)
 
-        model.sendReport(data)
+        model.sendReport(data, pict)
     }
 
     private fun cameraFuction() {
@@ -195,6 +196,7 @@ class LaporPesanActivity : AppCompatActivity() {
             if (requestCode == CAMERA_REQUEST_CODE) {
                 val thumbNail: Bitmap =
                     data?.extras?.get("data") as Bitmap //data can be from any type but we convert it to Bitmap hehe :p
+                pict = thumbNail
                 binding.ivImage.setImageBitmap(thumbNail)
                 filePhoto = Util.getExternalFile(this, "foto_lapor.png")!!
                 _BitmapUtil.savePict(thumbNail, filePhoto!!.parentFile!!.absolutePath, filePhoto!!.name)

@@ -2,6 +2,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.data.remote.api
 
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LoginBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
@@ -18,6 +19,7 @@ interface AuthApi {
     @POST(Const.API_SHELTER)
     fun signup(@Body data: SignupBody): Call<GeneralResponse>
 
+    @Headers("Content-Type: application/json")
     @POST(Const.API_SHELTER)
     fun updateProfile(@Body data: UpdateProfileReqBody): Call<GeneralShortResponse>
 }

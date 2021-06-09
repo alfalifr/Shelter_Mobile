@@ -1,5 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase
 
+import sidev.app.bangkit.capstone.sheltermobile.core.data.dummy.Dummy
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.*
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper.toSingleResult
@@ -111,6 +112,6 @@ class DashboardUseCaseImpl(
             }
         }
         return if(mostSevereWarning != null) Success(mostSevereWarning, 0)
-        else Fail("No warning status available", -1, null)
+        else Success(Dummy.emptySafeWarningList.first(), -1) //Fail("No warning status available", -1, null)
     }
 }

@@ -110,7 +110,9 @@ object Util {
     fun getDateWithDayStr(timeStr: TimeString): String = getFormattedTimeStr(Const.VIEW_DATE_PATTERN_WITH_DAY, timeStr)
 
     fun getFormattedStr(value: Float, unit: String? = null, afterComma: Int = 2): String = "%.${afterComma}f".format(value) + (if(unit != null) " $unit" else "")
-    fun getFormattedStr(warning: WarningStatus): String = "Zona ${warning.emergency.name} ${warning.disaster.name}"
+    fun getFormattedStr(warning: WarningStatus): String =
+        if(warning.disaster.name != Const.NO_NAME) "Zona ${warning.emergency.name} ${warning.disaster.name}"
+        else "Zona hijau"
 
     fun getTimeString(inTimeString: TimeString? = null, millisOffset: Long = 0): TimeString {
         //time: String?= null, pattern: String = Const.DB_TIME_PATTERN,

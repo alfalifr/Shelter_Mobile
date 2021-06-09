@@ -121,8 +121,9 @@ class HomeFragment : Fragment() {
             higlightedWarningStatus.observe(viewLifecycleOwner){
                 if(it != null) {
                     binding.apply {
+                        val caption = CaptionMapper.WarningStatus.getCaption(it.disaster, it.emergency)
                         ivNotification.setImg(it.disaster.imgLink)
-                        tvTitleNotif.text = it.title
+                        tvTitleNotif.text = caption.title
                         tvNotif.text = Util.getFormattedStr(it)
 
                         cardNotifications.apply {

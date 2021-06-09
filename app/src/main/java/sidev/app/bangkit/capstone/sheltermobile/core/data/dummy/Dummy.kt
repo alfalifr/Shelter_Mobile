@@ -1,5 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.core.data.dummy
 
+import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.LoginBody
 import sidev.app.bangkit.capstone.sheltermobile.core.data.remote.data.request.SignupBody
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.*
@@ -86,7 +87,7 @@ Not supposed to be dummy
     val emptyTimeStr = TimeString("", "")
     val emptyLocation = Location(-1, "", Coordinate(0.0, 0.0))
     val emptySafeWarningList = listOf<WarningStatus>(
-        WarningStatus(safeDisaster, emergencyList[0], "", emptyTimeStr, emptyLocation, "")
+        WarningStatus(safeDisaster, emergencyList[0], "", emptyTimeStr, emptyLocation, "R.drawable.ic_check_circle")
     )
     /// =========== Placeholder for empty prediction - END ==============
 /*

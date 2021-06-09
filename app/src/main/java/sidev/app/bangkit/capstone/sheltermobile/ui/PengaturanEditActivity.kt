@@ -10,6 +10,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.LocationAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.LocationViewModel
@@ -30,9 +31,12 @@ class PengaturanEditActivity : AppCompatActivity() {
     private lateinit var vm : ProfileViewModel
     private lateinit var locationVm : LocationViewModel
 
-    //private lateinit var location: Location
+    private lateinit var location: Location
     private lateinit var currentUser: User
 
+    private var isOldPswdValid = true
+    private var isNewPswdValid = true
+    private var isNewRePswdValid = true
     private var isNameValid = true
     private var isEmailValid = true
     private val isAllValid: Boolean get()= isNameValid && isEmailValid
@@ -89,7 +93,8 @@ class PengaturanEditActivity : AppCompatActivity() {
             currentLocation.observe(this@PengaturanEditActivity) {
                 if(it != null) {
                     binding.tvLocationSet.text = it.name
-                    this@PengaturanEditActivity.currentUser = this@PengaturanEditActivity.currentUser.copy(location = it)
+                    this@PengaturanEditActivity.location = it
+                    //this@PengaturanEditActivity.currentUser = this@PengaturanEditActivity.currentUser.copy(location = it)
                 }
             }
             onSaveProfile.observe(this@PengaturanEditActivity) {
@@ -208,7 +213,7 @@ class PengaturanEditActivity : AppCompatActivity() {
                 R.id.radio_wanita -> Const.GENDER_FEMALE
                 else -> throw IllegalStateException("No such view id for gender (${id asResNameOrNullBy this@PengaturanEditActivity})")
             }
-            val user = User(email, name, gender, currentUser.location)
+            val user = User(email, name, gender, location)
             vm.saveCurrentUser(user) // TODO Alif 3 Juni 2021: Buat ganti pswd
         }
     }

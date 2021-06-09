@@ -165,7 +165,9 @@ object DataMapper {
         _gender = gender,
     )
 
-    fun Form.toReportReqBody(email: String): ReportReqBody = ReportReqBody(email, desc, photoLinkList.firstOrNull() ?: "")
+    fun Form.toReportReqBody(email: String): ReportReqBody = ReportReqBody(
+        email, "$title: $desc", photoLinkList.firstOrNull() ?: ""
+    )
 
     fun getGenderName(char: Char): String = when(char) {
         Const.GENDER_MALE -> "Pria"

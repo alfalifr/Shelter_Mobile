@@ -95,6 +95,10 @@ class ProfileViewModel(app: Context?, private val useCase: UserUseCase): AsyncVm
         }
     }
 
+    fun getCurrentPassword(){
+
+    }
+
     fun logout() {
         startJob(Const.KEY_LOGOUT) {
             mOnLogout.postValue(useCase.logout() is Success)

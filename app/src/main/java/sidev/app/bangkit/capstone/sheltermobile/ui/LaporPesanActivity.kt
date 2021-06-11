@@ -36,7 +36,6 @@ import java.io.File
 class LaporPesanActivity : AppCompatActivity() {
 
     companion object {
-        private const val CAMERA_PERMISSION_CODE = 1
         private const val CAMERA_REQUEST_CODE = 2
     }
 
@@ -174,39 +173,12 @@ class LaporPesanActivity : AppCompatActivity() {
                 startActivityForResult(intent, CAMERA_REQUEST_CODE)
             } else {
                 actPermissionLauncher.launch(arrayOf(Manifest.permission.CAMERA))
-/*
-                ActivityCompat.requestPermissions(
-                    (
-                            this),
-                    arrayOf(Manifest.permission.CAMERA),
-                    CAMERA_PERMISSION_CODE
-                )
- */
+
             }
 
         }
     }
-/*
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(intent, CAMERA_REQUEST_CODE)
-            } else {
-                Toast.makeText(
-                    this,
-                    "Ups anda menolak Shelter menggunakan kamera anda",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-    }
- */
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

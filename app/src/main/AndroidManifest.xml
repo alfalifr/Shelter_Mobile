@@ -31,7 +31,7 @@
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.LoginActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/fullscreen" />
         <activity android:name=".ui.WebViewPage" />
         <activity android:name=".ui.ReportHistoryListActivity"/>

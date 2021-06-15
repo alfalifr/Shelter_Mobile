@@ -7,18 +7,13 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import sidev.app.bangkit.capstone.sheltermobile.MainActivity
-import sidev.app.bangkit.capstone.sheltermobile.R
-import sidev.app.bangkit.capstone.sheltermobile.core.di.RepoDi
+import sidev.app.bangkit.capstone.sheltermobile.ui.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.core.di.UseCaseDi
-import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Success
-import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.WarningRepo
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.usecase.DashboardUseCase
 import sidev.app.bangkit.capstone.sheltermobile.core.util.CaptionMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
-import sidev.app.bangkit.capstone.sheltermobile.intro.SplashActivity
 import sidev.lib.android.std.tool.util.`fun`.loge
 
 class AlarmNotifReceiver: BroadcastReceiver(){

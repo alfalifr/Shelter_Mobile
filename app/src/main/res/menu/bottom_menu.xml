@@ -10,16 +10,17 @@
         app:cnb_iconColor="@color/white" />
 
     <item
+        android:id="@+id/emergency"
+        android:icon="@drawable/ic_emergency"
+        android:title="@string/emergency"
+        app:cnb_iconColor="@color/white"/>
+
+    <item
         android:id="@+id/literatur"
         android:icon="@drawable/ic_news"
         android:title="@string/literatur"
         app:cnb_iconColor="@color/white" />
 
-    <item
-        android:id="@+id/emergency"
-        android:icon="@drawable/ic_emergency"
-        android:title="@string/emergency"
-        app:cnb_iconColor="@color/white"/>
     <item
         android:id="@+id/profil"
         android:icon="@drawable/ic_user"

@@ -1,12 +1,10 @@
-package sidev.app.bangkit.capstone.sheltermobile
+package sidev.app.bangkit.capstone.sheltermobile.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import sidev.app.bangkit.capstone.sheltermobile.R
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.setWithBnv
 import sidev.app.bangkit.capstone.sheltermobile.databinding.ActivityMainBinding
-import sidev.app.bangkit.capstone.sheltermobile.receiver.AlarmNotifReceiver
-import sidev.app.bangkit.capstone.sheltermobile.ui.MainViewPagerAdapter
-import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,8 +23,8 @@ class MainActivity : AppCompatActivity() {
                 setWithBnv(
                     bottomNavigation,
                     R.id.home,
-                    R.id.literatur,
                     R.id.emergency,
+                    R.id.literatur,
                     R.id.profil,
                 )
                 adapter = vpAdp

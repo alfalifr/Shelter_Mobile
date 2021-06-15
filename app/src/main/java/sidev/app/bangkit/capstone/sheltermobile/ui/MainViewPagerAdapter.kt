@@ -28,8 +28,8 @@ class MainViewPagerAdapter(act: FragmentActivity): FragmentStateAdapter(act) {
      */
     override fun createFragment(position: Int): Fragment = when(position) {
         0 -> HomeFragment()
-        1 -> ArticleNewsFragment()
-        2 -> LaporFragment()
+        1 -> LaporFragment()
+        2 -> ArticleNewsFragment()
         3 -> PengaturanFragment()
         else -> throw IllegalStateException("No such page index ($position)")
     }

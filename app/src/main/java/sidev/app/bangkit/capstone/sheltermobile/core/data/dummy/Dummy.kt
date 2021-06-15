@@ -82,7 +82,7 @@ Not supposed to be dummy
     }
 
     /// =========== Placeholder for empty prediction ==============
-    val safeDisaster = Disaster(-1, Const.NO_NAME, "")
+    val safeDisaster = Disaster(-1, Const.NO_NAME, "R.drawable.ic_check_circle")
     //val safeEmergency = Emergency(-1, "<no_name>", "", -1)
     val emptyTimeStr = TimeString("", "")
     val emptyLocation = Location(-1, "", Coordinate(0.0, 0.0))

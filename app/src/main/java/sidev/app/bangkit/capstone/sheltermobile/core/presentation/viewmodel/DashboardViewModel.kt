@@ -3,6 +3,7 @@ package sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel
 import android.content.Context
 import androidx.lifecycle.*
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.Location
+import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.User
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WarningStatus
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.model.WeatherForecast
 import sidev.app.bangkit.capstone.sheltermobile.core.domain.repo.Fail
@@ -44,12 +45,25 @@ class DashboardViewModel(app: Context?, val useCase: DashboardUseCase): AsyncVm(
     val currentLocation: LiveData<Location> get()= mCurrentLocation
     private val mCurrentLocation = MutableLiveData<Location>()
 
+    val currentUser: LiveData<User> get()= mCurrentUser
+    private val mCurrentUser = MutableLiveData<User>()
+
     fun getCurrentLocation(forceLoad: Boolean = false){
         if(currentLocation.value != null && !forceLoad) return
         startJob(Const.KEY_CURRENT_LOC) {
             when(val result = useCase.getCurrentLocation()){
                 is Success -> mCurrentLocation.postValue(result.data)
                 is Fail -> doCallNotSuccess(Const.KEY_CURRENT_LOC, result.code, result.error)
+            }
+        }
+    }
+
+    fun getCurrentUser(forceLoad: Boolean = false){
+        if(currentUser.value != null && !forceLoad) return
+        startJob(Const.KEY_CURRENT_USER) {
+            when(val result = useCase.getCurrentUser()){
+                is Success -> mCurrentUser.postValue(result.data)
+                is Fail -> doCallNotSuccess(Const.KEY_CURRENT_USER, result.code, result.error)
             }
         }
     }

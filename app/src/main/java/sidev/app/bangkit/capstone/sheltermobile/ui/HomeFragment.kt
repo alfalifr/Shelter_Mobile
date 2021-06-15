@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import sidev.app.bangkit.capstone.sheltermobile.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.DisasterWarningAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.DashboardViewModel
@@ -24,7 +23,6 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Util
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.setImg
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentHomeBinding
 import sidev.app.bangkit.capstone.sheltermobile.receiver.AlarmNotifReceiver
-import sidev.lib.android.std.tool.util.`fun`.bgColorTint
 import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.toast
 
@@ -106,6 +104,13 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+            currentUser.observe(viewLifecycleOwner){
+                if(it != null) {
+                    binding.apply {
+                        tvUser.text = it.name.split(" ")[0]
+                    }
+                }
+            }
             weatherForecast.observe(viewLifecycleOwner){
                 if(it != null) {
                     binding.apply {
@@ -181,6 +186,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         vm.apply {
+            getCurrentUser(true)
             getCurrentLocation(true)
             getDisasterGroupList(true)
             getWeatherForecast(true)

@@ -12,6 +12,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Const
 import sidev.app.bangkit.capstone.sheltermobile.core.util.DataMapper
 import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.setGenderImg
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentProfilBinding
+import sidev.app.bangkit.capstone.sheltermobile.receiver.AlarmNotifReceiver
 import sidev.lib.android.std.tool.util.`fun`.startAct
 import sidev.lib.android.std.tool.util.`fun`.toast
 
@@ -90,6 +91,7 @@ class PengaturanFragment : Fragment() {
                 //loge("onLogout.observe it= $it")
                 if(it != null) {
                     if(it) {
+                        AlarmNotifReceiver.setOn(requireContext(), false)
                         startAct<LoginActivity>()
                         requireActivity().finish()
                     } else {

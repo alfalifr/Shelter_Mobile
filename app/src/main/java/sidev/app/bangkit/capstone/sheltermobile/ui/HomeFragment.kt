@@ -22,6 +22,7 @@ import sidev.app.bangkit.capstone.sheltermobile.core.util.Util.setImg
 import sidev.app.bangkit.capstone.sheltermobile.databinding.FragmentHomeBinding
 import sidev.app.bangkit.capstone.sheltermobile.receiver.AlarmNotifReceiver
 import sidev.lib.android.std.tool.util.`fun`.bgColorTint
+import sidev.lib.android.std.tool.util.`fun`.loge
 import sidev.lib.android.std.tool.util.`fun`.toast
 
 
@@ -157,7 +158,9 @@ class HomeFragment : Fragment() {
             }
         }
         warningReceiver = WarningReceiver()
-        initAlarm = AlarmNotifReceiver.setOn(requireContext())
+        initAlarm = AlarmNotifReceiver.setOn(requireContext()).also {
+            loge("HomeFragment AlarmNotifReceiver.setOn() successfully on = $it")
+        }
     }
 
     /**

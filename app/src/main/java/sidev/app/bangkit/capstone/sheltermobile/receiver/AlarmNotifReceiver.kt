@@ -39,14 +39,20 @@ class AlarmNotifReceiver: BroadcastReceiver(){
         fun setOn(c: Context, on: Boolean = true): Boolean {
             return if(on){
                 val pi = getAlarmPendingIntent(c, PendingIntent.FLAG_NO_CREATE)
-                if(pi != null){
+                if(pi != null) return false
+
+                val newPi = getAlarmPendingIntent(c)
+                if(newPi != null) {
                     Util.setAlarm(
-                        c, pi,
+                        c, newPi,
                         9, // Set the time for the notification here
                         interval = Const.INTERVAL_2_WEEKS,
                     )
                     true
-                } else false
+                } else {
+                    loge("Something wrong happen. Currently alarm was off, but can't set up new alarm.")
+                    false
+                }
             } else {
                 val pi = getAlarmPendingIntent(c, PendingIntent.FLAG_NO_CREATE)
                     ?: run {

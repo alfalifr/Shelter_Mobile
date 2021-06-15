@@ -4,6 +4,8 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import androidx.core.app.NotificationCompat
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import sidev.app.bangkit.capstone.sheltermobile.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.R
@@ -71,7 +73,7 @@ class AlarmNotifReceiver: BroadcastReceiver(){
     override fun onReceive(context: Context?, intent: Intent?) {
         if(context != null){
             if(intent?.action == Const.ACTION_ALARM_NOTIF){
-                runBlocking {
+                runBlocking(Dispatchers.IO) {
                     val timeStr = Util.getTimeString()
 
                     val locRes = dashboardUseCase.getCurrentLocation()
@@ -103,7 +105,8 @@ class AlarmNotifReceiver: BroadcastReceiver(){
                             context, 0,
                             Intent(context, MainActivity::class.java),
                             PendingIntent.FLAG_ONE_SHOT
-                        )
+                        ),
+                        priority = NotificationCompat.PRIORITY_MAX,
                     )
                     val broadcast = Intent(Const.ACTION_ALARM_NOTIF_ACT)
                     context.sendBroadcast(broadcast)

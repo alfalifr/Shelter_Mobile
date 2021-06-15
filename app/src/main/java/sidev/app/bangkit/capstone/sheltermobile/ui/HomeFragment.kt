@@ -1,5 +1,6 @@
 package sidev.app.bangkit.capstone.sheltermobile.ui
 
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -11,7 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import sidev.app.bangkit.capstone.sheltermobile.MainActivity
 import sidev.app.bangkit.capstone.sheltermobile.core.di.ViewModelDi
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.adapter.DisasterWarningAdapter
 import sidev.app.bangkit.capstone.sheltermobile.core.presentation.viewmodel.DashboardViewModel
@@ -143,6 +146,12 @@ class HomeFragment : Fragment() {
                                 requireContext(),
                                 title = caption.title,
                                 desc = caption.desc,
+                                pendingIntent = PendingIntent.getActivity(
+                                    context, 0,
+                                    Intent(context, MainActivity::class.java),
+                                    PendingIntent.FLAG_ONE_SHOT
+                                ),
+                                priority = NotificationCompat.PRIORITY_MAX,
                             )
                         }
                     }

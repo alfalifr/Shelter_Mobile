@@ -237,7 +237,7 @@ object Util {
     @Suppress(SuppressLiteral.NAME_SHADOWING)
     fun showNotif(
         c: Context,
-        smIcon: Int = R.mipmap.ic_launcher_shelter_round,
+        smIcon: Int = R.drawable.ic_app_logo_holo,
         title: String = c.getString(R.string.template_title),
         desc: String = c.getString(R.string.template_text),
         channelId: String = "CHANNEL_ID",
@@ -245,6 +245,7 @@ object Util {
         channelDesc: String = "CHANNEL_DESC",
         notifId: Int = 1,
         pendingIntent: PendingIntent?= null,
+        priority: Int = NotificationCompat.PRIORITY_MIN,
     ){
         val manager = c.getSystemService<NotificationManager>()!!
 
@@ -253,6 +254,7 @@ object Util {
             .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
             .setContentTitle(title)
             .setContentText(desc)
+            .setPriority(priority)
             .setAutoCancel(true)
 
         if(pendingIntent != null)

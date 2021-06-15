@@ -155,10 +155,6 @@ class HomeFragment : Fragment() {
                     showLoading(binding.pbWarningDisaster, binding.rvCard, false)
                 }
             }
-            getCurrentLocation()
-            getDisasterGroupList()
-            getWeatherForecast()
-            getHighlightedWarningStatus()
         }
         warningReceiver = WarningReceiver()
         initAlarm = AlarmNotifReceiver.setOn(requireContext())
@@ -172,7 +168,12 @@ class HomeFragment : Fragment() {
      */
     override fun onResume() {
         super.onResume()
-        vm.getCurrentLocation(true)
+        vm.apply {
+            getCurrentLocation(true)
+            getDisasterGroupList(true)
+            getWeatherForecast(true)
+            getHighlightedWarningStatus(true)
+        }
         val intentFilter = IntentFilter(Const.ACTION_ALARM_NOTIF_ACT)
         requireActivity().registerReceiver(warningReceiver, intentFilter)
     }
